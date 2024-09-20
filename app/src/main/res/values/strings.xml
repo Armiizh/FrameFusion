@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">FrameFusion</string>
+    <string name="Сomedies">Комедии</string>
+    <string name="melodramas">Мелодрамы</string>
+    <string name="adventures">Приключения</string>
+    <string name="western">Вестерны</string>
+    <string name="fighters">Боевики</string>
+    <string name="horrors">Хорроры</string>
+    <string name="thrillers">Триллеры</string>
+    <string name="detectives">Детективы</string>
+    <string name="dramas">Драмы</string>
+    <string name="fantastic">Фантастика</string>
+    <string name="fantasy">Фэнтензи</string>
+    <string name="musical">Мюзиклы</string>
 </resources>

@@ -8,8 +8,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreen
-import com.example.framefusion.search.SearchScreen
 import com.example.framefusion.person.PersonScreen
+import com.example.framefusion.search.SearchScreen
+import com.example.framefusion.utils.Constants
 
 @Composable
 fun NavHostContainer(
@@ -19,29 +20,26 @@ fun NavHostContainer(
 
     NavHost(
         navController = navController,
-
-        // set the start destination as home
-        startDestination = "home",
-
-        // Set the padding provided by scaffold
+        startDestination = NavRoute.Home.route,
         modifier = Modifier.padding(paddingValues = padding),
-
         builder = {
 
-            // route : Home
-            composable("home") {
+            composable(NavRoute.Home.route) {
                 HomeScreen()
             }
 
-            // route : search
-            composable("search") {
+            composable(NavRoute.Search.route) {
                 SearchScreen()
             }
 
-            // route : profile
-            composable("person") {
+            composable(NavRoute.Person.route) {
                 PersonScreen()
             }
         }
     )
+}
+sealed class NavRoute(val route: String) {
+    data object Home: NavRoute(Constants.Screens.HOME_SCREEN)
+    data object Search: NavRoute(Constants.Screens.SEARCH_SCREEN)
+    data object Person: NavRoute(Constants.Screens.PERSON_SCREEN)
 }

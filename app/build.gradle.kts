@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.kapt)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -70,4 +72,19 @@ dependencies {
     //Navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation (libs.gson)
+    implementation ("androidx.sqlite:sqlite:2.4.0")
+}
+kapt {
+    correctErrorTypes = true
+    arguments {
+        arg("room.schemaLocation", "false")
+    }
 }
