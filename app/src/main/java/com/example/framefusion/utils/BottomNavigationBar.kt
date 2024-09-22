@@ -3,6 +3,7 @@ package com.example.framefusion.utils
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +37,7 @@ fun BottomNavigationBar(
                         tint = if (currentRoute == navItem.route) {
                             Color.Blue
                         } else {
-                            Color.White
+                            MaterialTheme.colorScheme.onPrimaryContainer
                         }
                     )
                 },

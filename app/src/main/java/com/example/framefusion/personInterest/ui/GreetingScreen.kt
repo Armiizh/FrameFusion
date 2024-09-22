@@ -25,45 +25,39 @@ import com.example.framefusion.R
 fun GreetingScreen(
     onNext:() -> Unit
 ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            modifier = Modifier.fillMaxWidth(),
+            painter = painterResource(id = R.drawable.greetingpic),
+            contentDescription = null
+        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Привет",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold
+            )
+            ElevatedButton(
+                modifier = Modifier.padding(vertical = 12.dp),
+                onClick = { onNext() },
+                elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.elevatedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
 
-    Scaffold(
-        content = { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    modifier = Modifier.fillMaxWidth(),
-                    painter = painterResource(id = R.drawable.greetingpic),
-                    contentDescription = null
                 )
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Привет",
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    ElevatedButton(
-                        modifier = Modifier.padding(vertical = 12.dp),
-                        onClick = { onNext() },
-                        elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.elevatedButtonColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                            
-                        )
-                    ) {
-                        Text(text = "Давай знакомиться")
-                    }
-                }
+            ) {
+                Text(text = "Давай знакомиться")
             }
         }
-    )
+    }
 }

@@ -1,30 +1,44 @@
 package com.example.framefusion.personInterest.ui
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.framefusion.R
@@ -32,25 +46,30 @@ import com.example.framefusion.personInterest.PersonInterestViewModel
 import com.example.framefusion.personInterest.data.UserGenres
 import kotlinx.coroutines.launch
 
-
 @Composable
 fun OnboardingScreen(
     onFinish: () -> Unit,
     viewModel: PersonInterestViewModel
 ) {
-    var genres by remember { mutableStateOf("") }
-    val comedies by remember { mutableStateOf(mutableStateOf(false)) }
-    val melodramas by remember { mutableStateOf(mutableStateOf(false)) }
-    val adventures by remember { mutableStateOf(mutableStateOf(false)) }
-    val western by remember { mutableStateOf(mutableStateOf(false)) }
-    val fighters by remember { mutableStateOf(mutableStateOf(false)) }
-    val horrors by remember { mutableStateOf(mutableStateOf(false)) }
-    val thrillers by remember { mutableStateOf(mutableStateOf(false)) }
-    val detectives by remember { mutableStateOf(mutableStateOf(false)) }
-    val dramas by remember { mutableStateOf(mutableStateOf(false)) }
-    val fantastic by remember { mutableStateOf(mutableStateOf(false)) }
-    val fantasy by remember { mutableStateOf(mutableStateOf(false)) }
-    val musical by remember { mutableStateOf(mutableStateOf(false)) }
+    val genres = listOf(
+        Genres("Комедии", false, R.drawable.comedies),
+        Genres("Мультфильмы", false, R.drawable.cartoons),
+        Genres("Ужасы", false, R.drawable.horrors),
+        Genres("Фантастика", false, R.drawable.fantastic),
+        Genres("Триллеры", false, R.drawable.thrillers),
+        Genres("Боевики", false, R.drawable.fighters),
+        Genres("Мелодрамы", false, R.drawable.melodramas),
+        Genres("Детективы", false, R.drawable.detectives),
+        Genres("Приключения", false, R.drawable.adventures),
+        Genres("Фэнтензи", false, R.drawable.fantasy),
+        Genres("Драмы", false, R.drawable.drama),
+        Genres("Мюзиклы", false, R.drawable.musicals)
+    )
+
+    val genreStates = genres.associateWith { genre ->
+        val state = remember { mutableStateOf(genre.isSelected) }
+        state
+    }
     val scope = rememberCoroutineScope()
 
     Scaffold(
@@ -59,7 +78,6 @@ fun OnboardingScreen(
                 modifier = Modifier
                     .padding(paddingValues)
                     .padding(horizontal = 8.dp)
-                    .padding(top = 8.dp)
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -67,86 +85,94 @@ fun OnboardingScreen(
                     text = "Выберите несколько ваших любимых жанров кино и сериалов",
                     fontSize = 28.sp
                 )
-                LazyColumn {
-                    item { CheckItem(stringResource(R.string.Сomedies), comedies) }
-                    item { CheckItem(stringResource(R.string.melodramas), melodramas) }
-                    item { CheckItem(stringResource(R.string.adventures), adventures) }
-                    item { CheckItem(stringResource(R.string.western), western) }
-                    item { CheckItem(stringResource(R.string.fighters), fighters) }
-                    item { CheckItem(stringResource(R.string.horrors), horrors) }
-                    item { CheckItem(stringResource(R.string.thrillers), thrillers) }
-                    item { CheckItem(stringResource(R.string.detectives), detectives) }
-                    item { CheckItem(stringResource(R.string.dramas), dramas) }
-                    item { CheckItem(stringResource(R.string.fantastic), fantastic) }
-                    item { CheckItem(stringResource(R.string.fantasy), fantasy) }
-                    item { CheckItem(stringResource(R.string.musical), musical) }
+
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    items(genres) { genre ->
+                        CheckItem(genre.name, genreStates[genre]!!, genre.imageResId)
+                    }
                 }
             }
         },
         bottomBar = {
-            BottomAppBar(
-                actions = {
-                    Button(
-                        onClick = {
-                            val selectedGenres = mutableListOf<String>()
-                            if (comedies.value) selectedGenres.add("Комедии")
-                            if (melodramas.value) selectedGenres.add("Мелодрамы")
-                            if (adventures.value) selectedGenres.add("Приключения")
-                            if (western.value) selectedGenres.add("Вестерны")
-                            if (fighters.value) selectedGenres.add("Боевики")
-                            if (horrors.value) selectedGenres.add("Хорроры")
-                            if (thrillers.value) selectedGenres.add("Триллеры")
-                            if (dramas.value) selectedGenres.add("Драмы")
-                            if (fantastic.value) selectedGenres.add("Фантастика")
-                            if (fantasy.value) selectedGenres.add("Фэнтензи")
-                            if (musical.value) selectedGenres.add("Мюзиклы")
-                            genres = selectedGenres.joinToString(separator = ", ")
-                            val userGenres = UserGenres(genres = genres)
-                            scope.launch {
-                                viewModel.insertGenres(userGenres)
-                            }
-                            onFinish()
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ElevatedButton(
+                    onClick = {
+                        val selectedGenres =
+                            genreStates.filterValues { it.value }
+                                .keys.joinToString(
+                                    separator = ", "
+                                ) { it.name }
+                        val userGenres = UserGenres(genres = selectedGenres)
+                        scope.launch {
+                            viewModel.insertGenres(userGenres)
                         }
-                    ) {
-                        Text(text = "Перейти к приложению")
-                    }
+                        onFinish()
+                    },
+                    elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                ) {
+                    Text(
+                        text = "Начать"
+                    )
                 }
-            )
+            }
         }
     )
 }
 
+data class Genres(
+    val name: String,
+    val isSelected: Boolean,
+    val imageResId: Int
+)
+
 @Composable
 private fun CheckItem(
     nameItem: String,
-    place: MutableState<Boolean>
+    place: MutableState<Boolean>,
+    imageResId: Int
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center
+    val cardColor = animateColorAsState(
+        targetValue = if (place.value) colorResource(id = R.color.green) else MaterialTheme.colorScheme.primaryContainer,
+        animationSpec = tween(durationMillis = 300), label = ""
+    )
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable { place.value = !place.value },
+        colors = CardDefaults.cardColors(containerColor = cardColor.value),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.elevatedCardElevation(4.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .height(100.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row {
-                Text(
-                    text = nameItem,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Checkbox(checked = place.value, onCheckedChange = {
-                place.value = it
-            })
+            Image(
+                painter = painterResource(id = imageResId),
+                contentDescription = nameItem,
+                modifier = Modifier.fillMaxHeight(),
+                contentScale = ContentScale.FillHeight
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = nameItem,
+                fontSize = 22.sp
+            )
         }
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 1.dp),
-            thickness = 1.dp,
-            color = Color.LightGray
-        )
     }
 }
