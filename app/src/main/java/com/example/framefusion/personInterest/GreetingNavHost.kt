@@ -32,7 +32,6 @@ fun GreetingNavHost(
         }
     )
 }
-
 sealed class GreetingNavRoute(val route: String) {
     data object Greeting : GreetingNavRoute(Constants.GreetingScreens.GREETING_SCREEN)
     data object Onboarding : GreetingNavRoute(Constants.GreetingScreens.ONBOARDING_SCREEN)

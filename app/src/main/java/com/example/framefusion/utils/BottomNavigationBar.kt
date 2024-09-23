@@ -35,7 +35,7 @@ fun BottomNavigationBar(
                         imageVector = navItem.icon,
                         contentDescription = navItem.label,
                         tint = if (currentRoute == navItem.route) {
-                            Color.Blue
+                            MaterialTheme.colorScheme.onPrimaryContainer
                         } else {
                             MaterialTheme.colorScheme.onPrimaryContainer
                         }
