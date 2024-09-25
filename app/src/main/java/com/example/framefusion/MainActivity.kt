@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                             GreetingNavHost(
                                 navController = navController,
                                 onFinish = {
-                                    //prefs.edit().putBoolean("first_launch", false).apply()
+                                    prefs.edit().putBoolean("first_launch", false).apply()
                                     isFirstLaunch.value = false
                                 },
                                 modifier = Modifier.padding(paddingValues),

@@ -81,6 +81,12 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation (libs.gson)
     implementation ("androidx.sqlite:sqlite:2.4.0")
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.runtime.livedata)
 }
 kapt {
     correctErrorTypes = true

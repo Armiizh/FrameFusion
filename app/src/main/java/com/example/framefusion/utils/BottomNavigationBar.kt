@@ -8,23 +8,29 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.framefusion.R
 
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController
 ) {
-
-    NavigationBar {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.primary
+    ) {
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        Constants.BottomNavItems.forEach { navItem ->
 
-            // Place the bottom nav items
+        Constants.BottomNavItems.forEach { navItem ->
+            val color = if (currentRoute == navItem.route) {
+                colorResource(id = R.color.color1)
+            } else {
+                MaterialTheme.colorScheme.primaryContainer
+            }
             BottomNavigationItem(
                 selected = currentRoute == navItem.route,
                 onClick = {
@@ -34,15 +40,14 @@ fun BottomNavigationBar(
                     Icon(
                         imageVector = navItem.icon,
                         contentDescription = navItem.label,
-                        tint = if (currentRoute == navItem.route) {
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        } else {
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        }
+                        tint = color
                     )
                 },
                 label = {
-                    Text(text = navItem.label)
+                    Text(
+                        text = navItem.label,
+                        color = color
+                    )
                 },
                 alwaysShowLabel = false
             )

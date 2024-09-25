@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.framefusion.home.HomeScreen
+import com.example.framefusion.home.ui.HomeScreen
 import com.example.framefusion.person.PersonScreen
 import com.example.framefusion.search.SearchScreen
 import com.example.framefusion.utils.Constants
