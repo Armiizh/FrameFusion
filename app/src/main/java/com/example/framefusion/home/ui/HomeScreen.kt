@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -24,9 +25,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.framefusion.R
+import com.example.framefusion.home.HomeScreenViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    homeScreenViewModel: HomeScreenViewModel
+) {
+    LaunchedEffect(Unit) {
+        homeScreenViewModel.PreviewLog()
+    }
 
     Scaffold(
         content = { paddingValues ->
@@ -37,7 +45,7 @@ fun HomeScreen() {
             ) {
                 Text(
                     modifier = Modifier.padding(start = 24.dp),
-                    text = "Топ 10 за месяц",
+                    text = "Сериалы на основе ваших интересов",
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground

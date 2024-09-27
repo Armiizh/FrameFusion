@@ -1,14 +1,11 @@
 package com.example.framefusion.home.data.rest
 
-import com.example.framefusion.home.data.model.Movie
+import com.example.framefusion.home.data.rest.models.MovieResponse
 import retrofit2.Response
+import retrofit2.http.GET
 
 interface KinopoiskApi {
 
-
-    //Получение топ-10 фильмов
-    suspend fun getTop10Movies(): Response<List<Movie>>
-
-    //Получение деталей фильма
-    suspend fun getMovieDetails(movieId: Int): Response<Movie>
+    @GET
+    suspend fun getPersonalMovie(): Response<MovieResponse>
 }

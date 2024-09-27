@@ -10,7 +10,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonInterestViewModel @Inject constructor(
-    private val insertGenresUseCase: InsertGenresUseCase
+    private val insertGenresUseCase: InsertGenresUseCase,
+
 ) : ViewModel() {
 
     fun insertGenres(uGenres: UserGenres) {

@@ -33,13 +33,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
+import com.example.framefusion.R
 import com.example.framefusion.personInterest.PersonInterestViewModel
 import com.example.framefusion.personInterest.data.UserGenres
+import com.example.framefusion.personInterest.utils.Genres
 import com.example.framefusion.utils.Constants
-import com.example.framefusion.utils.Genres
 import kotlinx.coroutines.launch
 
 @Composable
@@ -77,7 +79,7 @@ private fun Content(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Выберите несколько ваших любимых жанров кино и сериалов",
+            text = stringResource(R.string.Choose_yout_favorite_genres),
             fontSize = 28.sp
         )
 
@@ -110,7 +112,7 @@ private fun BottomBarContent(
                 val selectedGenres =
                     genreStates.filterValues { it.value }
                         .keys.joinToString(
-                            separator = ", "
+                            separator = ","
                         ) { it.name }
                 val userGenres = UserGenres(genres = selectedGenres)
                 viewModel.viewModelScope.launch {
