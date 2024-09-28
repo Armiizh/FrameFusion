@@ -15,6 +15,7 @@ object Constants {
 
     const val BASE_URL = "https://api.kinopoisk.dev/v1.4/"
     const val X_API_KEY = "EB5RC3V-SQR4HTS-Q1DPVG0-86M9TK1"
+    const val REQUEST_PERMISSION_CODE = 123
 
     object Slugs{
         const val TOP250_MOVIES = "top250"
