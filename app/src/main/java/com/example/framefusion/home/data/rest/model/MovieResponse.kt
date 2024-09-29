@@ -1,4 +1,4 @@
-package com.example.framefusion.home.data.rest.models
+package com.example.framefusion.home.data.rest.model
 
 import com.example.framefusion.home.data.local.model.Movie
 

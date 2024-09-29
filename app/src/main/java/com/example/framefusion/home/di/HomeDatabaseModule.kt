@@ -3,7 +3,7 @@ package com.example.framefusion.home.di
 import android.content.Context
 import androidx.room.Room
 import com.example.framefusion.home.data.local.HomeDatabase
-import com.example.framefusion.home.data.local.dao.HomeDao
+import com.example.framefusion.home.data.local.localDao.LocalHomeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +21,7 @@ object HomeDatabaseModule {
     }
 
     @Provides
-    fun provideHomeDao(database: HomeDatabase): HomeDao {
+    fun provideHomeDao(database: HomeDatabase): LocalHomeDao {
         return database.homeDao()
     }
 }

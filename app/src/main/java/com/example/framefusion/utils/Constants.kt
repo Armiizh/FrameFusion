@@ -17,11 +17,6 @@ object Constants {
     const val X_API_KEY = "EB5RC3V-SQR4HTS-Q1DPVG0-86M9TK1"
     const val REQUEST_PERMISSION_CODE = 123
 
-    object Slugs{
-        const val TOP250_MOVIES = "top250"
-        const val TOP250_SERIALS = "series-top250"
-    }
-
     object GreetingScreens {
         const val GREETING_SCREEN = "greeting_screen"
         const val ONBOARDING_SCREEN = "onboarding_screen"

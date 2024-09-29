@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -54,10 +55,6 @@ class MainActivity : ComponentActivity() {
                                 onFinish = {
                                     prefs.edit().putBoolean("first_launch", false).apply()
                                     isFirstLaunch.value = false
-                                    homeScreenViewModel.viewModelScope.launch {
-                                        homeScreenViewModel.getGenres()
-                                        homeScreenViewModel.PreviewLog()
-                                    }
                                 },
                                 modifier = Modifier.padding(paddingValues),
                                 viewModel = personViewModel
@@ -66,6 +63,9 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 if (!isFirstLaunch.value) {
+                    LaunchedEffect(Unit) {
+                        homeScreenViewModel.getPersonalMovie()
+                    }
                     Scaffold(
                         content = { padding -> NavHostContainer(navController, padding, homeScreenViewModel) },
                         bottomBar = { BottomNavigationBar(navController) }

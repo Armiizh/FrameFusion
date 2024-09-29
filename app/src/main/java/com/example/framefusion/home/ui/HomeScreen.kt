@@ -32,9 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel
 ) {
-    LaunchedEffect(Unit) {
-        homeScreenViewModel.PreviewLog()
-    }
 
     Scaffold(
         content = { paddingValues ->

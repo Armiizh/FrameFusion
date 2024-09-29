@@ -28,7 +28,8 @@ data class Movie(
     val poster: Poster,
     val backdrop: Backdrop,
     val genres: List<Genre>,
-    val persons: List<Person>
+    val persons: List<Person>,
+    val top250: Int?
 )
 
 data class Rating(
@@ -54,11 +55,11 @@ data class Genre(
 )
 
 data class Person(
-    val id: Int,
-    val photo: String,
-    val name: String,
-    val enName: String,
+    val id: Int?,
+    val photo: String?,
+    val name: String?,
+    val enName: String?,
     val description: String?,
-    val profession: String,
-    val enProfession: String
+    val profession: String?,
+    val enProfession: String?
 )
