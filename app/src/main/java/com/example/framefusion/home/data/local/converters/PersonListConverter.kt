@@ -10,18 +10,51 @@ class PersonListConverter {
     }
 
     @TypeConverter
-    fun toPersonList(personsString: String): List<Person> {
-        return personsString.split(",").map {
-            val parts = it.split(",")
-            Person(
-                id = parts[0].toInt(),
-                photo = parts[1],
-                name = parts[2],
-                enName = parts[3],
-                description = parts[4],
-                profession = parts[5],
-                enProfession = parts[6]
-            )
+    fun toPersonList(personsString: String): List<Person>? {
+        if (personsString == null || personsString == "null") {
+            return emptyList()
+        }
+        val persons = personsString.split(",")
+        if (persons.size % 7 != 0) {
+            return emptyList()
+        }
+        return try {
+            persons.chunked(7).map {
+                Person(
+                    id = it[0].toInt(),
+                    photo = it[1],
+                    name = it[2],
+                    enName = it[3],
+                    description = it[4],
+                    profession = it[5],
+                    enProfession = it[6]
+                )
+            }
+        } catch (e: NumberFormatException) {
+            emptyList()
         }
     }
 }
+//
+//class PersonListConverter {
+//    @TypeConverter
+//    fun fromPersonList(persons: List<Person>): String {
+//        return persons.joinToString { "${it.id},${it.photo},${it.name},${it.enName},${it.description},${it.profession},${it.enProfession}" }
+//    }
+//
+//    @TypeConverter
+//    fun toPersonList(personsString: String): List<Person> {
+//        return personsString.split(",").map {
+//            val parts = it.split(",")
+//            Person(
+//                id = parts[0].toInt(),
+//                photo = parts[1],
+//                name = parts[2],
+//                enName = parts[3],
+//                description = parts[4],
+//                profession = parts[5],
+//                enProfession = parts[6]
+//            )
+//        }
+//    }
+//}

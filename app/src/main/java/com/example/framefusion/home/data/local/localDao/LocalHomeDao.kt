@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.framefusion.home.data.local.model.Movie
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LocalHomeDao {
@@ -18,6 +19,9 @@ interface LocalHomeDao {
 
     @Query("SELECT * FROM movie WHERE id = :id")
     suspend fun getMovie(id: Int?): Movie?
+
+    @Query("SELECT * FROM movie")
+    fun getMovies(): Flow<List<Movie>>
 
     @Update
     suspend fun updateUser(movie: Movie)

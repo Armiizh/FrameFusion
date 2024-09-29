@@ -10,11 +10,32 @@ class BackdropConverter {
     }
 
     @TypeConverter
-    fun toBackdrop(backdropString: String): Backdrop {
+    fun toBackdrop(backdropString: String): Backdrop? {
+        if (backdropString == null || backdropString == "null") {
+            return Backdrop("", "")
+        }
         val parts = backdropString.split(",")
+        if (parts.size < 2) {
+            return Backdrop("", "")
+        }
         return Backdrop(
             url = parts[0],
             previewUrl = parts[1]
         )
     }
 }
+//class BackdropConverter {
+//    @TypeConverter
+//    fun fromBackdrop(backdrop: Backdrop): String {
+//        return "${backdrop.url},${backdrop.previewUrl}"
+//    }
+//
+//    @TypeConverter
+//    fun toBackdrop(backdropString: String): Backdrop {
+//        val parts = backdropString.split(",")
+//        return Backdrop(
+//            url = parts[0],
+//            previewUrl = parts[1]
+//        )
+//    }
+//}

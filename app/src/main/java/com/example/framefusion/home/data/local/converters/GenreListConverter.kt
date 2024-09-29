@@ -11,6 +11,9 @@ class GenreListConverter {
 
     @TypeConverter
     fun toGenreList(genresString: String): List<Genre> {
+        if (genresString == null || genresString == "null") {
+            return emptyList()
+        }
         return genresString.split(",").map { Genre(it) }
     }
 }
