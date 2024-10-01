@@ -1,11 +1,11 @@
 package com.example.framefusion.home.data.rest.model
 
-import com.example.framefusion.home.data.local.model.Backdrop
-import com.example.framefusion.home.data.local.model.Genre
-import com.example.framefusion.home.data.local.model.Movie
-import com.example.framefusion.home.data.local.model.Person
-import com.example.framefusion.home.data.local.model.Poster
-import com.example.framefusion.home.data.local.model.Rating
+import com.example.framefusion.home.data.local.models.Backdrop
+import com.example.framefusion.home.data.local.models.Genre
+import com.example.framefusion.home.data.local.models.Movie
+import com.example.framefusion.home.data.local.models.Person
+import com.example.framefusion.home.data.local.models.Poster
+import com.example.framefusion.home.data.local.models.Rating
 
 fun MovieResponse.toMovieList(): List<Movie> {
     return docs.map { movie ->

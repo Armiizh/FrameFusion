@@ -1,7 +1,7 @@
 package com.example.framefusion.home.data.local.converters
 
 import androidx.room.TypeConverter
-import com.example.framefusion.home.data.local.model.Genre
+import com.example.framefusion.home.data.local.models.Genre
 
 class GenreListConverter {
     @TypeConverter

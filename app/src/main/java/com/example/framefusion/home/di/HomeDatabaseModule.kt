@@ -2,8 +2,10 @@ package com.example.framefusion.home.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.framefusion.home.data.local.HomeDatabase
-import com.example.framefusion.home.data.local.localDao.LocalHomeDao
+import com.example.framefusion.home.data.local.MovieDatabase
+import com.example.framefusion.home.data.local.TvSeriesDatabase
+import com.example.framefusion.home.data.local.localDao.HomeMovieDao
+import com.example.framefusion.home.data.local.localDao.HomeTvSeriesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,13 +17,24 @@ import dagger.hilt.components.SingletonComponent
 object HomeDatabaseModule {
 
     @Provides
-    fun provideDatabase(@ApplicationContext appContext: Context): HomeDatabase {
-        return Room.databaseBuilder(appContext, HomeDatabase::class.java, "movie")
+    fun provideMovieDatabase(@ApplicationContext appContext: Context): MovieDatabase {
+        return Room.databaseBuilder(appContext, MovieDatabase::class.java, "movie")
             .build()
     }
 
     @Provides
-    fun provideHomeDao(database: HomeDatabase): LocalHomeDao {
-        return database.homeDao()
+    fun provideHomeMovieDao(movieDatabase: MovieDatabase): HomeMovieDao {
+        return movieDatabase.homeDao()
+    }
+
+    @Provides
+    fun provideTvSeriesDatabase(@ApplicationContext appContext: Context): TvSeriesDatabase {
+        return Room.databaseBuilder(appContext, TvSeriesDatabase::class.java, "tv_series")
+            .build()
+    }
+
+    @Provides
+    fun provideHomeTvSeriesDao(tvSeriesDatabase: TvSeriesDatabase): HomeTvSeriesDao {
+        return tvSeriesDatabase.tvSeriesDao()
     }
 }

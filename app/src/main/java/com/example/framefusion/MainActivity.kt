@@ -64,7 +64,22 @@ class MainActivity : ComponentActivity() {
                 }
                 if (!isFirstLaunch.value) {
                     LaunchedEffect(Unit) {
-                        homeScreenViewModel.getPersonalMovie()
+                        homeScreenViewModel.viewModelScope.launch {
+                            homeScreenViewModel.getPersonalMovie()
+                            homeScreenViewModel.getPersonalTvSeries()
+                        }
+                    }
+                    LaunchedEffect(Unit) {
+                        homeScreenViewModel.movies.collect { movies ->
+                            if (movies.isNotEmpty()) {
+                                homeScreenViewModel._isMovieLoading.value = false
+                            }
+                        }
+                        homeScreenViewModel.tvSeries.collect { tvSeries ->
+                            if (tvSeries.isNotEmpty()) {
+                                homeScreenViewModel._isTvSeriesLoading.value = false
+                            }
+                        }
                     }
                     Scaffold(
                         content = { padding -> NavHostContainer(navController, padding, homeScreenViewModel) },

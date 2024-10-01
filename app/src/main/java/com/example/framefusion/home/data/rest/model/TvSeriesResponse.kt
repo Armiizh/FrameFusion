@@ -1,9 +1,9 @@
 package com.example.framefusion.home.data.rest.model
 
-import com.example.framefusion.home.data.local.models.Movie
+import com.example.framefusion.home.data.local.models.TvSeries
 
-data class MovieResponse(
-    val docs: List<Movie>,
+data class TvSeriesResponse(
+    val docs: List<TvSeries>,
     val total: Int?,
     val limit: Int?,
     val page: Int?,

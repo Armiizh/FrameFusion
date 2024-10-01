@@ -1,4 +1,4 @@
-package com.example.framefusion.home.data.local.model
+package com.example.framefusion.home.data.local.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -30,36 +30,4 @@ data class Movie(
     val genres: List<Genre>,
     val persons: List<Person>,
     val top250: Int?
-)
-
-data class Rating(
-    val kp: Double?,
-    val imdb: Double?,
-    val filmCritics: Double?,
-    val russianFilmCritics: Double?,
-    val await: Double?
-)
-
-data class Poster(
-    val url: String?,
-    val previewUrl: String?
-)
-
-data class Backdrop(
-    val url: String?,
-    val previewUrl: String?
-)
-
-data class Genre(
-    val name: String?
-)
-
-data class Person(
-    val id: Int?,
-    val photo: String?,
-    val name: String?,
-    val enName: String?,
-    val description: String?,
-    val profession: String?,
-    val enProfession: String?
 )

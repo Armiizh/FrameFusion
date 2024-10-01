@@ -29,8 +29,7 @@ object Constants {
     object GenresObject {
         val allGenres = listOf(
             Genres("Комедия", false, R.drawable.comedies),
-            Genres("Мультфильм", false, R.drawable.cartoons),
-            Genres("Ужас", false, R.drawable.horrors),
+            Genres("Ужасы", false, R.drawable.horrors),
             Genres("Фантастика", false, R.drawable.fantastic),
             Genres("Триллер", false, R.drawable.thrillers),
             Genres("Боевик", false, R.drawable.fighters),

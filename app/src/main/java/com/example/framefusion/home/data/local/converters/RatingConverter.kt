@@ -1,7 +1,7 @@
 package com.example.framefusion.home.data.local.converters
 
 import androidx.room.TypeConverter
-import com.example.framefusion.home.data.local.model.Rating
+import com.example.framefusion.home.data.local.models.Rating
 
 class RatingConverter {
     @TypeConverter
