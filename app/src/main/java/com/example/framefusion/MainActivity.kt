@@ -67,18 +67,7 @@ class MainActivity : ComponentActivity() {
                         homeScreenViewModel.viewModelScope.launch {
                             homeScreenViewModel.getPersonalMovie()
                             homeScreenViewModel.getPersonalTvSeries()
-                        }
-                    }
-                    LaunchedEffect(Unit) {
-                        homeScreenViewModel.movies.collect { movies ->
-                            if (movies.isNotEmpty()) {
-                                homeScreenViewModel._isMovieLoading.value = false
-                            }
-                        }
-                        homeScreenViewModel.tvSeries.collect { tvSeries ->
-                            if (tvSeries.isNotEmpty()) {
-                                homeScreenViewModel._isTvSeriesLoading.value = false
-                            }
+                            homeScreenViewModel.initData()
                         }
                     }
                     Scaffold(

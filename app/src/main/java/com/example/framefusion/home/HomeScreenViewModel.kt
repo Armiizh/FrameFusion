@@ -18,8 +18,8 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val getPersonalMovieUseCase: GetPersonalMovieUseCase,
     private val getPersonalTvSeriesUseCase: GetPersonalTvSeriesUseCase,
-    movieDatabase: MovieDatabase,
-    tvSeriesDatabase: TvSeriesDatabase
+    private val movieDatabase: MovieDatabase,
+    private val tvSeriesDatabase: TvSeriesDatabase
 ) : ViewModel() {
 
     private val _movies = MutableStateFlow<List<Movie>>(emptyList())
@@ -27,12 +27,20 @@ class HomeScreenViewModel @Inject constructor(
     val movies: StateFlow<List<Movie>> = _movies
     val tvSeries: StateFlow<List<TvSeries>> = _tvSeries
 
-    val _isMovieLoading = MutableStateFlow(true)
+    private val _isMovieLoading = MutableStateFlow(true)
+    private val _isTvSeriesLoading = MutableStateFlow(true)
     val isMovieLoading: StateFlow<Boolean> = _isMovieLoading
-    val _isTvSeriesLoading = MutableStateFlow(true)
     val isTvSeriesLoading: StateFlow<Boolean> = _isTvSeriesLoading
 
-    init {
+    suspend fun getPersonalMovie() {
+        getPersonalMovieUseCase.invoke()
+    }
+
+    suspend fun getPersonalTvSeries() {
+        getPersonalTvSeriesUseCase.invoke()
+    }
+
+    suspend fun initData() {
         viewModelScope.launch {
             movieDatabase.homeDao().getMovies().collect { movies ->
                 _movies.value = movies
@@ -45,12 +53,5 @@ class HomeScreenViewModel @Inject constructor(
                 _isTvSeriesLoading.value = false
             }
         }
-    }
-
-    suspend fun getPersonalMovie() {
-        getPersonalMovieUseCase.invoke()
-    }
-    suspend fun getPersonalTvSeries() {
-        getPersonalTvSeriesUseCase.invoke()
     }
 }
