@@ -1,4 +1,4 @@
-package com.example.framefusion.personInterest.data
+package com.example.framefusion.personInterest.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

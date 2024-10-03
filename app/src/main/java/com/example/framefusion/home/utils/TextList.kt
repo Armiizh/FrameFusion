@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 internal fun TextList(title: String) {
     Text(
-        modifier = Modifier.padding(start = 24.dp),
+        modifier = Modifier.padding(start = 8.dp),
         text = title,
         fontSize = 30.sp,
         fontWeight = FontWeight.Bold,

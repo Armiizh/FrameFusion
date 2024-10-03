@@ -1,9 +1,10 @@
-package com.example.framefusion.personInterest.data
+package com.example.framefusion.personInterest.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.framefusion.personInterest.data.model.UserGenres
 
 @Dao
 interface UserGenresDao {
@@ -13,7 +14,6 @@ interface UserGenresDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGenres(genres: UserGenres)
-//
-//    @Update
-//    suspend fun updateGenres(genres: UserGenres)
+
+
 }

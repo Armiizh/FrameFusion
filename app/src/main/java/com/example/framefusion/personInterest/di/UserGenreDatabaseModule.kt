@@ -2,7 +2,7 @@ package com.example.framefusion.personInterest.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.framefusion.personInterest.data.UserGenresDao
+import com.example.framefusion.personInterest.data.dao.UserGenresDao
 import com.example.framefusion.personInterest.data.UserGenresDatabase
 import dagger.Module
 import dagger.Provides

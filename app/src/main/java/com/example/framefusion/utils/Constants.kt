@@ -25,9 +25,12 @@ object Constants {
         const val HOME_SCREEN = "home_screen"
         const val SEARCH_SCREEN = "search_screen"
         const val PERSON_SCREEN = "person_screen"
+        const val PERSON_GENRES_SCREEN = "person_genres_screen"
+        const val PERSON_FAVORITE_MOVIES_SCREEN = "person_favorite_movies_screen"
+        const val PERSON_SETTINGS_SCREEN = "person_settings_screen"
     }
     object GenresObject {
-        val allGenres = listOf(
+        val greetingGenres = listOf(
             Genres("Комедия", false, R.drawable.comedies),
             Genres("Ужасы", false, R.drawable.horrors),
             Genres("Фантастика", false, R.drawable.fantastic),
@@ -39,6 +42,38 @@ object Constants {
             Genres("Фэнтези", false, R.drawable.fantasy),
             Genres("Драма", false, R.drawable.drama),
             Genres("Мюзикл", false, R.drawable.musicals)
+        )
+    }
+    object AllGenresObject {
+        val allGenres = listOf(
+            Genres("Комедия", false, R.drawable.comedies),
+            Genres("Мультфильм", false, R.drawable.comedies),
+            Genres("Ужасы", false, R.drawable.comedies),
+            Genres("Фантастика", false, R.drawable.comedies),
+            Genres("Триллер", false, R.drawable.comedies),
+            Genres("Боевик", false, R.drawable.comedies),
+            Genres("Мелодрама", false, R.drawable.comedies),
+            Genres("Детектив", false, R.drawable.comedies),
+            Genres("Приключения", false, R.drawable.comedies),
+            Genres("Фэнтези", false, R.drawable.comedies),
+            Genres("Военный", false, R.drawable.comedies),
+            Genres("Семейный", false, R.drawable.comedies),
+            Genres("Аниме", false, R.drawable.comedies),
+            Genres("История", false, R.drawable.comedies),
+            Genres("Драма", false, R.drawable.comedies),
+            Genres("Документальный", false, R.drawable.comedies),
+            Genres("Детский", false, R.drawable.comedies),
+            Genres("Криминал", false, R.drawable.comedies),
+            Genres("Биография", false, R.drawable.comedies),
+            Genres("Вестерн", false, R.drawable.comedies),
+            Genres("Фильм-нуар", false, R.drawable.comedies),
+            Genres("Спорт", false, R.drawable.comedies),
+            Genres("Реальное ТВ", false, R.drawable.comedies),
+            Genres("Короткометражка", false, R.drawable.comedies),
+            Genres("Музыка", false, R.drawable.comedies),
+            Genres("Мюзикл", false, R.drawable.comedies),
+            Genres("Ток-шоу", false, R.drawable.comedies),
+            Genres("Игра", false, R.drawable.comedies),
         )
     }
     object Colors {

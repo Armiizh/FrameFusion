@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.rememberNavController
 import com.example.framefusion.home.HomeScreenViewModel
+import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.personInterest.GreetingNavHost
 import com.example.framefusion.personInterest.PersonInterestViewModel
 import com.example.framefusion.ui.theme.FrameFusionTheme
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var personViewModel: PersonInterestViewModel
     private lateinit var homeScreenViewModel: HomeScreenViewModel
+    private lateinit var personScreenViewModel: PersonScreenViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,7 @@ class MainActivity : ComponentActivity() {
 
         personViewModel = ViewModelProvider(this)[PersonInterestViewModel::class.java]
         homeScreenViewModel = ViewModelProvider(this)[HomeScreenViewModel::class.java]
+        personScreenViewModel = ViewModelProvider(this)[PersonScreenViewModel::class.java]
         requestNotificationPermission()
 
         setContent {
@@ -71,7 +74,9 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     Scaffold(
-                        content = { padding -> NavHostContainer(navController, padding, homeScreenViewModel) },
+                        content = { padding ->
+                            val pad= padding
+                            NavHostContainer(navController, homeScreenViewModel, personScreenViewModel) },
                         bottomBar = { BottomNavigationBar(navController) }
                     )
                 }
