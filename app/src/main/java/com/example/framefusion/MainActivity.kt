@@ -68,8 +68,8 @@ class MainActivity : ComponentActivity() {
                 if (!isFirstLaunch.value) {
                     LaunchedEffect(Unit) {
                         homeScreenViewModel.viewModelScope.launch {
-                            homeScreenViewModel.getPersonalMovie()
-                            homeScreenViewModel.getPersonalTvSeries()
+//                            homeScreenViewModel.getPersonalMovie()
+//                            homeScreenViewModel.getPersonalTvSeries()
                             homeScreenViewModel.initData()
                         }
                     }

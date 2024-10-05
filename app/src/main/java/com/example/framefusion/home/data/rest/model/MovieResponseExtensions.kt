@@ -46,7 +46,7 @@ fun MovieResponse.toMovieList(): List<Movie> {
                     enProfession = person.enProfession
                 )
             },
-            top250 = movie.top250
+            popular_films = movie.popular_films
         )
     }
 }

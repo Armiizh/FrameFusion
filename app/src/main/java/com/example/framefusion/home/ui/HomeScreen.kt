@@ -30,6 +30,7 @@ fun HomeScreen(
     val isMovieLoading by homeScreenViewModel.isMovieLoading.collectAsState()
     val isTvSeriesLoading by homeScreenViewModel.isTvSeriesLoading.collectAsState()
 
+
     Scaffold(
         content = { paddingValues ->
             Column(

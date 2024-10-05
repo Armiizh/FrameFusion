@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4ba28b20a18c8d9f9581e3760c9ab877",
+    "identityHash": "121f839428f6f7063777def36c69012e",
     "entities": [
       {
         "tableName": "movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `year` INTEGER, `shortDescription` TEXT, `rating` TEXT NOT NULL, `movieLength` TEXT, `poster` TEXT NOT NULL, `backdrop` TEXT NOT NULL, `genres` TEXT NOT NULL, `persons` TEXT NOT NULL, `top250` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `year` INTEGER, `shortDescription` TEXT, `rating` TEXT NOT NULL, `movieLength` TEXT, `poster` TEXT NOT NULL, `backdrop` TEXT NOT NULL, `genres` TEXT NOT NULL, `persons` TEXT NOT NULL, `popular_films` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -69,8 +69,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "top250",
-            "columnName": "top250",
+            "fieldPath": "popular_films",
+            "columnName": "popular_films",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -88,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4ba28b20a18c8d9f9581e3760c9ab877')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '121f839428f6f7063777def36c69012e')"
     ]
   }
 }

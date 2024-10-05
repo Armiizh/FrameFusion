@@ -1,6 +1,7 @@
 package com.example.framefusion
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,9 +14,10 @@ import com.example.framefusion.person.ui.PersonScreen
 import com.example.framefusion.person.ui.PersonSettingsScreen
 import com.example.framefusion.search.SearchScreen
 import com.example.framefusion.utils.Constants
+import kotlinx.coroutines.launch
 
 @Composable
-fun NavHostContainer (
+fun NavHostContainer(
     navController: NavHostController,
     homeScreenViewModel: HomeScreenViewModel,
     personScreenViewModel: PersonScreenViewModel
@@ -38,7 +40,14 @@ fun NavHostContainer (
             }
 
             composable(NavRoute.PersonGenres.route) {
-                PersonGenresScreen(personScreenViewModel, navController)
+                PersonGenresScreen(
+                    personScreenViewModel,
+                    navController,
+                    updateGenres = {
+                        homeScreenViewModel.viewModelScope.launch {
+                            homeScreenViewModel.initData()
+                        }
+                    })
             }
 
             composable(NavRoute.PersonFavorite.route) {
@@ -51,11 +60,12 @@ fun NavHostContainer (
         }
     )
 }
+
 sealed class NavRoute(val route: String) {
-    data object Home: NavRoute(Constants.Screens.HOME_SCREEN)
-    data object Search: NavRoute(Constants.Screens.SEARCH_SCREEN)
-    data object Person: NavRoute(Constants.Screens.PERSON_SCREEN)
-    data object PersonGenres: NavRoute(Constants.Screens.PERSON_GENRES_SCREEN)
-    data object PersonFavorite: NavRoute(Constants.Screens.PERSON_FAVORITE_MOVIES_SCREEN)
-    data object PersonSettings: NavRoute(Constants.Screens.PERSON_SETTINGS_SCREEN)
+    data object Home : NavRoute(Constants.Screens.HOME_SCREEN)
+    data object Search : NavRoute(Constants.Screens.SEARCH_SCREEN)
+    data object Person : NavRoute(Constants.Screens.PERSON_SCREEN)
+    data object PersonGenres : NavRoute(Constants.Screens.PERSON_GENRES_SCREEN)
+    data object PersonFavorite : NavRoute(Constants.Screens.PERSON_FAVORITE_MOVIES_SCREEN)
+    data object PersonSettings : NavRoute(Constants.Screens.PERSON_SETTINGS_SCREEN)
 }

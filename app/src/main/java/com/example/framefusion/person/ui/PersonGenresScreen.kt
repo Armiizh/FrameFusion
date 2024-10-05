@@ -44,7 +44,8 @@ import com.example.framefusion.utils.Constants
 @Composable
 fun PersonGenresScreen(
     personScreenViewModel: PersonScreenViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    updateGenres: () -> Unit
 ) {
 
     val allGenres = Constants.AllGenresObject.allGenres
@@ -62,7 +63,14 @@ fun PersonGenresScreen(
                     allGenreStates[genre]?.value = selectedGenres.contains(genre.name)
                 }
             }
-            Content(paddingValues, allGenres, allGenreStates, navController, personScreenViewModel)
+            Content(
+                paddingValues,
+                allGenres,
+                allGenreStates,
+                navController,
+                personScreenViewModel,
+                updateGenres
+            )
         }
     )
 }
@@ -73,10 +81,13 @@ private fun Content(
     allGenres: List<Genres>,
     allGenreStates: Map<Genres, MutableState<Boolean>>,
     navController: NavHostController,
-    personScreenViewModel: PersonScreenViewModel
+    personScreenViewModel: PersonScreenViewModel,
+    updateGenres: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(paddingValues).fillMaxSize()
+        modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize()
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -95,6 +106,7 @@ private fun Content(
                             .joinToString(separator = ",") { it.name }
                     val userGenres = UserGenres(genres = selectedGenres)
                     personScreenViewModel.insertGenres(userGenres)
+                    updateGenres()
                     navController.navigate(NavRoute.Person.route)
                 }
             ) {

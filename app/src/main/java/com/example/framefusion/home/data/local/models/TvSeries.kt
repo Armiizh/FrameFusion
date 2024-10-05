@@ -29,6 +29,5 @@ data class TvSeries(
     val poster: Poster,
     val backdrop: Backdrop,
     val genres: List<Genre>,
-    val persons: List<Person>,
-    val top250: Int?
+    val persons: List<Person>
 )

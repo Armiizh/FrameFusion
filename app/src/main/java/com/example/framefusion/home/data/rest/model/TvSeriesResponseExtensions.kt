@@ -46,8 +46,7 @@ fun TvSeriesResponse.toTvSeriesList(): List<TvSeries> {
                     profession = person.profession,
                     enProfession = person.enProfession
                 )
-            },
-            top250 = tvSeries.top250
+            }
         )
     }
 }

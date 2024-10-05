@@ -29,5 +29,5 @@ data class Movie(
     val backdrop: Backdrop,
     val genres: List<Genre>,
     val persons: List<Person>,
-    val top250: Int?
+    val popular_films: Int?
 )
