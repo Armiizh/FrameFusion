@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.ui.HomeScreen
+import com.example.framefusion.itemDetails.ui.MovieItemDetailsScreen
+import com.example.framefusion.itemDetails.ui.TvSeriesItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.ui.PersonFavoriteMoviesScreen
 import com.example.framefusion.person.ui.PersonGenresScreen
@@ -26,9 +28,15 @@ fun NavHostContainer(
         navController = navController,
         startDestination = NavRoute.Home.route,
         builder = {
-
             composable(NavRoute.Home.route) {
-                HomeScreen(homeScreenViewModel)
+                HomeScreen(
+                    homeScreenViewModel,
+                    provideMovieId = { movieId ->
+                        navController.navigate(NavRoute.MovieDetails.createRoute(movieId!!))
+                    },
+                    provideTvSeriesId = { tvSeriesId ->
+                        navController.navigate(NavRoute.TvSeriesDetails.createRoute(tvSeriesId!!))
+                    })
             }
 
             composable(NavRoute.Search.route) {
@@ -57,6 +65,16 @@ fun NavHostContainer(
             composable(NavRoute.PersonSettings.route) {
                 PersonSettingsScreen()
             }
+
+            composable(NavRoute.MovieDetails.route) { backStackEntry ->
+                val movieId = backStackEntry.arguments?.getInt("movieId")
+                MovieItemDetailsScreen(navController, movieId ?: 0)
+            }
+
+            composable(NavRoute.TvSeriesDetails.route) { backStackEntry ->
+                val tvSeriesId = backStackEntry.arguments?.getInt("tvSeriesId")
+                TvSeriesItemDetailsScreen(navController, tvSeriesId ?: 0)
+            }
         }
     )
 }
@@ -68,4 +86,10 @@ sealed class NavRoute(val route: String) {
     data object PersonGenres : NavRoute(Constants.Screens.PERSON_GENRES_SCREEN)
     data object PersonFavorite : NavRoute(Constants.Screens.PERSON_FAVORITE_MOVIES_SCREEN)
     data object PersonSettings : NavRoute(Constants.Screens.PERSON_SETTINGS_SCREEN)
+    data object MovieDetails : NavRoute("${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/{movieId}") {
+        fun createRoute(movieId: Int) = "${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/$movieId"
+    }
+    data object TvSeriesDetails : NavRoute("${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/{tvSeriesId}") {
+        fun createRoute(tvSeriesId: Int) = "${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/$tvSeriesId"
+    }
 }

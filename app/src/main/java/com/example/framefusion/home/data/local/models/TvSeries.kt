@@ -19,15 +19,8 @@ import com.example.framefusion.home.data.local.converters.RatingConverter
 )
 data class TvSeries(
     @PrimaryKey
-    val id: Int?,
-    val name: String?,
-    val year: Int?,
-    val shortDescription: String?,
-    val rating: Rating,
-    val seriesLength: String?,
-    val totalSeriesLength: String?,
+    val id: Int? = 0,
+    val name: String? = "",
     val poster: Poster,
-    val backdrop: Backdrop,
     val genres: List<Genre>,
-    val persons: List<Person>
 )

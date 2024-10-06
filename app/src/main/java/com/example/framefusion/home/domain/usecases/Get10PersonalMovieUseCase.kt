@@ -15,25 +15,13 @@ class Get10PersonalMovieUseCase @Inject constructor(
         val selectedFields = listOf(
             "id",
             "name",
-            "year",
-            "shortDescription",
-            "rating",
-            "movieLength",
             "poster",
-            "backdrop",
             "genres",
-            "persons"
         )
         val notNullFields = listOf(
             "id",
             "name",
-            "year",
-            "shortDescription",
-            "rating.kp",
-            "movieLength",
             "poster.url",
-            "backdrop.url",
-            "genres.name"
         )
         val response = kinopoiskApi.getPersonalMovie(
             page = 1,

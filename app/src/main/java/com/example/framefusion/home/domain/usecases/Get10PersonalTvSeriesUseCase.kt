@@ -27,15 +27,7 @@ class Get10PersonalTvSeriesUseCase @Inject constructor(
         )
         val notNullFields = listOf(
             "id",
-            "name",
-            "year",
-            "shortDescription",
-            "rating.kp",
-            "seriesLength",
-            "totalSeriesLength",
-            "poster.url",
-            "backdrop.url",
-            "genres.name"
+            "poster.url"
         )
 
         val response = kinopoiskApi.getPersonalTvSeries(
