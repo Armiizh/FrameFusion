@@ -15,7 +15,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import com.example.framefusion.R
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.utils.MovieItem
 import com.example.framefusion.home.utils.TextList
@@ -23,7 +25,9 @@ import com.example.framefusion.home.utils.TvSeriesItem
 
 @Composable
 fun HomeScreen(
-    homeScreenViewModel: HomeScreenViewModel
+    homeScreenViewModel: HomeScreenViewModel,
+    provideMovieId:(Int?) -> Unit,
+    provideTvSeriesId:(Int?) -> Unit,
 ) {
     val movies by homeScreenViewModel.movies.collectAsState()
     val tvSeries by homeScreenViewModel.tvSeries.collectAsState()
@@ -42,33 +46,36 @@ fun HomeScreen(
                 if (isMovieLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier
-                            .size(50.dp)
-                            .align(Alignment.CenterHorizontally)
+                            .size(240.dp)
+                            .align(Alignment.CenterHorizontally),
+                        color = colorResource(id = R.color.color1)
                     )
                 } else {
                     LazyRow(
                         modifier = Modifier.padding(start = 8.dp)
                     ) {
                         items(movies) { movie ->
-                            MovieItem(movie = movie)
+                            MovieItem(movie, provideMovieId )
                         }
                     }
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 TextList("Сериалы на основе ваших интересов:")
                 Spacer(modifier = Modifier.height(12.dp))
+
                 if (isTvSeriesLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier
-                            .size(50.dp)
-                            .align(Alignment.CenterHorizontally)
+                            .size(240.dp)
+                            .align(Alignment.CenterHorizontally),
+                        color = colorResource(id = R.color.color1)
                     )
                 } else {
                     LazyRow(
                         modifier = Modifier.padding(start = 8.dp)
                     ) {
                         items(tvSeries) { tvSeries ->
-                            TvSeriesItem(tvSeries = tvSeries)
+                            TvSeriesItem(tvSeries, provideTvSeriesId)
                         }
                     }
                 }

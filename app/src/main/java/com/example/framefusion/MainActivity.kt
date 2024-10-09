@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.rememberNavController
 import com.example.framefusion.home.HomeScreenViewModel
+import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.personInterest.GreetingNavHost
 import com.example.framefusion.personInterest.PersonInterestViewModel
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var personViewModel: PersonInterestViewModel
     private lateinit var homeScreenViewModel: HomeScreenViewModel
     private lateinit var personScreenViewModel: PersonScreenViewModel
+    private lateinit var detailsScreenViewModel: DetailsScreenViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class MainActivity : ComponentActivity() {
         personViewModel = ViewModelProvider(this)[PersonInterestViewModel::class.java]
         homeScreenViewModel = ViewModelProvider(this)[HomeScreenViewModel::class.java]
         personScreenViewModel = ViewModelProvider(this)[PersonScreenViewModel::class.java]
+        detailsScreenViewModel = ViewModelProvider(this)[DetailsScreenViewModel::class.java]
         requestNotificationPermission()
 
         setContent {
@@ -68,15 +71,13 @@ class MainActivity : ComponentActivity() {
                 if (!isFirstLaunch.value) {
                     LaunchedEffect(Unit) {
                         homeScreenViewModel.viewModelScope.launch {
-                            homeScreenViewModel.getPersonalMovie()
-                            homeScreenViewModel.getPersonalTvSeries()
                             homeScreenViewModel.initData()
                         }
                     }
                     Scaffold(
                         content = { padding ->
                             val pad= padding
-                            NavHostContainer(navController, homeScreenViewModel, personScreenViewModel) },
+                            NavHostContainer(navController, homeScreenViewModel, personScreenViewModel, detailsScreenViewModel) },
                         bottomBar = { BottomNavigationBar(navController) }
                     )
                 }

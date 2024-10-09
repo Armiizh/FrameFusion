@@ -1,7 +1,7 @@
-package com.example.framefusion.home.data.local.converters
+package com.example.framefusion.itemDetails.data.local.convertes
 
 import androidx.room.TypeConverter
-import com.example.framefusion.home.data.local.models.Backdrop
+import com.example.framefusion.itemDetails.data.local.models.Backdrop
 
 class BackdropConverter {
     @TypeConverter

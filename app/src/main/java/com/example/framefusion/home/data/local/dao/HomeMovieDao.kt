@@ -1,4 +1,4 @@
-package com.example.framefusion.home.data.local.localDao
+package com.example.framefusion.home.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -14,6 +14,15 @@ interface HomeMovieDao {
     @Query("SELECT * FROM movie")
     fun getMovies(): Flow<List<Movie>>
 
+    @Query("DELETE FROM movie")
+    suspend fun deleteAllMovies()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovies(movies: List<Movie>)
+
+    @Update
+    suspend fun updateMovies(movies: List<Movie>) {
+        deleteAllMovies()
+        insertMovies(movies)
+    }
 }

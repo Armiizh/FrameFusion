@@ -1,46 +1,38 @@
 package com.example.framefusion.home.domain.usecases
 
-import com.example.framefusion.home.data.local.localDao.HomeMovieDao
-import com.example.framefusion.home.data.local.models.Movie
+import com.example.framefusion.home.data.local.dao.HomeMovieDao
 import com.example.framefusion.home.data.rest.KinopoiskApi
 import com.example.framefusion.home.data.rest.model.toMovieList
 import javax.inject.Inject
 
-class GetPersonalMovieUseCase @Inject constructor(
+class Get10PersonalMovieUseCase @Inject constructor(
     private val kinopoiskApi: KinopoiskApi,
     private val returnGenresUseCase: ReturnGenresUseCase,
     private val homeMovieDao: HomeMovieDao
 ) {
-    suspend fun invoke(): List<Movie> {
+    suspend fun invoke() {
         val genresString = returnGenresUseCase.invoke().split(",")
-        val slug = "top250"
         val selectedFields = listOf(
             "id",
             "name",
-            "year",
-            "shortDescription",
-            "rating",
-            "movieLength",
             "poster",
-            "backdrop",
             "genres",
-            "persons",
-            "top250"
         )
-
+        val notNullFields = listOf(
+            "id",
+            "name",
+            "poster.url",
+        )
         val response = kinopoiskApi.getPersonalMovie(
             page = 1,
             limit = 10,
             selectedFields = selectedFields,
-            notNullFields = slug,
-            sortField = slug,
-            sortType = 1,
+            notNullFields = notNullFields,
             type = "movie",
             genresName = genresString,
-            lists = slug
+            lists = "popular-films"
         )
         val movies = response.body()!!.toMovieList()
-        homeMovieDao.insertMovies(movies)
-        return movies
+        homeMovieDao.updateMovies(movies)
     }
 }

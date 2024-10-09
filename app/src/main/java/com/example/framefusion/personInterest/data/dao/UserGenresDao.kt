@@ -14,6 +14,4 @@ interface UserGenresDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGenres(genres: UserGenres)
-
-
 }

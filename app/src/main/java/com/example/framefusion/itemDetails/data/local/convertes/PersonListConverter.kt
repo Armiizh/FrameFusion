@@ -1,7 +1,7 @@
-package com.example.framefusion.home.data.local.converters
+package com.example.framefusion.itemDetails.data.local.convertes
 
 import androidx.room.TypeConverter
-import com.example.framefusion.home.data.local.models.Person
+import com.example.framefusion.itemDetails.data.local.models.Person
 
 class PersonListConverter {
     @TypeConverter

@@ -1,4 +1,4 @@
-package com.example.framefusion.home.data.local.models
+package com.example.framefusion.itemDetails.data.local.models
 
 data class Person(
     val id: Int?,

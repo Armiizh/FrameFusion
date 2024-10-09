@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.framefusion.home.data.local.MovieDatabase
 import com.example.framefusion.home.data.local.TvSeriesDatabase
-import com.example.framefusion.home.data.local.localDao.HomeMovieDao
-import com.example.framefusion.home.data.local.localDao.HomeTvSeriesDao
+import com.example.framefusion.home.data.local.dao.HomeMovieDao
+import com.example.framefusion.home.data.local.dao.HomeTvSeriesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,12 +1,14 @@
 package com.example.framefusion.home.data.local.converters
 
+import android.util.Log
 import androidx.room.TypeConverter
 import com.example.framefusion.home.data.local.models.Genre
 
-class GenreListConverter {
+class GenreListConverterForMovies {
     @TypeConverter
     fun fromGenreList(genres: List<Genre>): String {
-        return genres.joinToString { it.name.toString() }
+        Log.d("CheckGenre", "Genre from fromGenreListForMovie - $genres")
+        return genres.joinToString { it.name.toString() } ?: ""
     }
 
     @TypeConverter
@@ -14,6 +16,6 @@ class GenreListConverter {
         if (genresString == null || genresString == "null") {
             return emptyList()
         }
-        return genresString.split(",").map { Genre(it) }
+        return genresString.split(",").map { Genre(it) } ?: emptyList()
     }
 }
