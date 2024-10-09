@@ -1,6 +1,6 @@
 package com.example.framefusion.home.domain.usecases
 
-import com.example.framefusion.home.data.local.localDao.HomeMovieDao
+import com.example.framefusion.home.data.local.dao.HomeMovieDao
 import com.example.framefusion.home.data.rest.KinopoiskApi
 import com.example.framefusion.home.data.rest.model.toMovieList
 import javax.inject.Inject

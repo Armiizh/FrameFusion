@@ -1,5 +1,6 @@
 package com.example.framefusion
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -7,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.ui.HomeScreen
+import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.ui.MovieItemDetailsScreen
 import com.example.framefusion.itemDetails.ui.TvSeriesItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
@@ -22,7 +24,8 @@ import kotlinx.coroutines.launch
 fun NavHostContainer(
     navController: NavHostController,
     homeScreenViewModel: HomeScreenViewModel,
-    personScreenViewModel: PersonScreenViewModel
+    personScreenViewModel: PersonScreenViewModel,
+    detailsScreenViewModel: DetailsScreenViewModel
 ) {
     NavHost(
         navController = navController,
@@ -32,7 +35,10 @@ fun NavHostContainer(
                 HomeScreen(
                     homeScreenViewModel,
                     provideMovieId = { movieId ->
-                        navController.navigate(NavRoute.MovieDetails.createRoute(movieId!!))
+                        Log.d("CheckId", "movie ID - $movieId")
+                        val route = NavRoute.MovieDetails.createRoute(movieId!!.toString())
+                        Log.d("CheckId", "route - $route")
+                        navController.navigate(route)
                     },
                     provideTvSeriesId = { tvSeriesId ->
                         navController.navigate(NavRoute.TvSeriesDetails.createRoute(tvSeriesId!!))
@@ -65,15 +71,15 @@ fun NavHostContainer(
             composable(NavRoute.PersonSettings.route) {
                 PersonSettingsScreen()
             }
-
-            composable(NavRoute.MovieDetails.route) { backStackEntry ->
-                val movieId = backStackEntry.arguments?.getInt("movieId")
-                MovieItemDetailsScreen(navController, movieId ?: 0)
+            composable(NavRoute.MovieDetails.route) {
+                val movieId = navController.currentBackStackEntry?.arguments?.getString("movieId")
+                Log.d("CheckId", "movieId - $movieId")
+                MovieItemDetailsScreen(navController, detailsScreenViewModel, movieId?.toIntOrNull() ?: 0)
             }
 
             composable(NavRoute.TvSeriesDetails.route) { backStackEntry ->
                 val tvSeriesId = backStackEntry.arguments?.getInt("tvSeriesId")
-                TvSeriesItemDetailsScreen(navController, tvSeriesId ?: 0)
+                TvSeriesItemDetailsScreen(navController, detailsScreenViewModel, tvSeriesId ?: 0)
             }
         }
     )
@@ -86,10 +92,18 @@ sealed class NavRoute(val route: String) {
     data object PersonGenres : NavRoute(Constants.Screens.PERSON_GENRES_SCREEN)
     data object PersonFavorite : NavRoute(Constants.Screens.PERSON_FAVORITE_MOVIES_SCREEN)
     data object PersonSettings : NavRoute(Constants.Screens.PERSON_SETTINGS_SCREEN)
-    data object MovieDetails : NavRoute("${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/{movieId}") {
-        fun createRoute(movieId: Int) = "${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/$movieId"
+
+    data object MovieDetails :
+        NavRoute("${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/{movieId}") {
+        fun createRoute(movieId: String): String {
+            Log.d("CheckId", "movieId in createRoute - $movieId")
+            return "${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/$movieId"
+        }
     }
-    data object TvSeriesDetails : NavRoute("${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/{tvSeriesId}") {
-        fun createRoute(tvSeriesId: Int) = "${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/$tvSeriesId"
+
+    data object TvSeriesDetails :
+        NavRoute("${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/{tvSeriesId}") {
+        fun createRoute(tvSeriesId: Int) =
+            "${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/$tvSeriesId"
     }
 }

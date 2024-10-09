@@ -26,9 +26,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.framefusion.R
+import com.example.framefusion.itemDetails.DetailsScreenViewModel
 
 @Composable
-fun TvSeriesItemDetailsScreen(navController: NavHostController, id: Int) {
+fun TvSeriesItemDetailsScreen(
+    navController: NavHostController,
+    detailsScreenViewModel: DetailsScreenViewModel,
+    id: Int) {
 
     Scaffold(
         content = { paddingValues ->

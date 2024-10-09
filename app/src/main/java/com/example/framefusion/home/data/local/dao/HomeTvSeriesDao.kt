@@ -1,4 +1,4 @@
-package com.example.framefusion.home.data.local.localDao
+package com.example.framefusion.home.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

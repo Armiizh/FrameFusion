@@ -17,7 +17,7 @@ fun MovieResponse.toMovieList(): List<Movie> {
                 Genre(
                     name = genre.name
                 )
-            },
+            }
         )
     }
 }

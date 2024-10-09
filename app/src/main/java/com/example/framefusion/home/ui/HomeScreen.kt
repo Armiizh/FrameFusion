@@ -34,7 +34,6 @@ fun HomeScreen(
     val isMovieLoading by homeScreenViewModel.isMovieLoading.collectAsState()
     val isTvSeriesLoading by homeScreenViewModel.isTvSeriesLoading.collectAsState()
 
-
     Scaffold(
         content = { paddingValues ->
             Column(
@@ -56,7 +55,7 @@ fun HomeScreen(
                         modifier = Modifier.padding(start = 8.dp)
                     ) {
                         items(movies) { movie ->
-                            MovieItem(movie, provideId =  provideMovieId )
+                            MovieItem(movie, provideMovieId )
                         }
                     }
                 }

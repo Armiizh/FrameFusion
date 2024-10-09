@@ -1,6 +1,6 @@
 package com.example.framefusion.home.domain.usecases
 
-import com.example.framefusion.home.data.local.localDao.HomeTvSeriesDao
+import com.example.framefusion.home.data.local.dao.HomeTvSeriesDao
 import com.example.framefusion.home.data.rest.KinopoiskApi
 import com.example.framefusion.home.data.rest.model.toTvSeriesList
 import javax.inject.Inject
