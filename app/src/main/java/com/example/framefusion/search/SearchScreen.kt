@@ -1,5 +1,6 @@
 package com.example.framefusion.search
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,10 +22,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.framefusion.R
 
 @Preview
 @Composable
@@ -35,6 +39,12 @@ fun SearchScreen() {
     }
     Scaffold(
         content = { paddingValues ->
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                painter = painterResource(id = R.drawable.background1),
+                contentDescription = null
+            )
             Column(
                 modifier = Modifier
                     .padding(paddingValues)

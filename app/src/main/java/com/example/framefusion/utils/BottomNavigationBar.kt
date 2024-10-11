@@ -18,12 +18,11 @@ fun BottomNavigationBar(
     navController: NavHostController
 ) {
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.primary
+        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
     ) {
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
-
 
         Constants.BottomNavItems.forEach { navItem ->
             val color = if (currentRoute == navItem.route) {

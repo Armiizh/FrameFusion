@@ -73,7 +73,6 @@ fun NavHostContainer(
             }
             composable(NavRoute.MovieDetails.route) {
                 val movieId = navController.currentBackStackEntry?.arguments?.getString("movieId")
-                Log.d("CheckId", "movieId - $movieId")
                 MovieItemDetailsScreen(navController, detailsScreenViewModel, movieId?.toIntOrNull() ?: 0)
             }
 
@@ -96,7 +95,6 @@ sealed class NavRoute(val route: String) {
     data object MovieDetails :
         NavRoute("${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/{movieId}") {
         fun createRoute(movieId: String): String {
-            Log.d("CheckId", "movieId in createRoute - $movieId")
             return "${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/$movieId"
         }
     }

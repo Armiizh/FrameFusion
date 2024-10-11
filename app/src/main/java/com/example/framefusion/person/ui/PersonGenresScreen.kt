@@ -1,6 +1,7 @@
 package com.example.framefusion.person.ui
 
 //noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,6 +30,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,15 +57,20 @@ fun PersonGenresScreen(
         state
     }
     val genres by personScreenViewModel.genres.collectAsState(initial = emptyList())
-
+    LaunchedEffect(Unit) {
+        val selectedGenres = genres.map { it.trim() }
+        allGenres.forEach { genre ->
+            allGenreStates[genre]?.value = selectedGenres.contains(genre.name)
+        }
+    }
     Scaffold(
         content = { paddingValues ->
-            LaunchedEffect(Unit) {
-                val selectedGenres = genres.map { it.trim() }
-                allGenres.forEach { genre ->
-                    allGenreStates[genre]?.value = selectedGenres.contains(genre.name)
-                }
-            }
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                painter = painterResource(id = R.drawable.background1),
+                contentDescription = null
+            )
             Content(
                 paddingValues,
                 allGenres,

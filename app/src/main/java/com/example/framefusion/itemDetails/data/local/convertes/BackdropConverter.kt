@@ -10,7 +10,7 @@ class BackdropConverter {
     }
 
     @TypeConverter
-    fun toBackdrop(backdropString: String): Backdrop? {
+    fun toBackdrop(backdropString: String): Backdrop {
         if (backdropString == null || backdropString == "null") {
             return Backdrop("", "")
         }

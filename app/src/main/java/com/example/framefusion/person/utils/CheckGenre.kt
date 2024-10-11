@@ -2,6 +2,7 @@ package com.example.framefusion.person.utils
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -26,7 +28,7 @@ fun CheckGenre(
     place: MutableState<Boolean>
 ) {
     val cardColor = animateColorAsState(
-        targetValue = if (place.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer,
+        targetValue = if (place.value) MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
         animationSpec = tween(durationMillis = 300), label = ""
     )
 
@@ -42,7 +44,8 @@ fun CheckGenre(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp),
+                .height(80.dp)
+                .background(color = Color.Transparent),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
