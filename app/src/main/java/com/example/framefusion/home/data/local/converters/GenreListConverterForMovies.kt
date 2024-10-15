@@ -7,7 +7,6 @@ import com.example.framefusion.home.data.local.models.Genre
 class GenreListConverterForMovies {
     @TypeConverter
     fun fromGenreList(genres: List<Genre>): String {
-        Log.d("CheckGenre", "Genre from fromGenreListForMovie - $genres")
         return genres.joinToString { it.name.toString() } ?: ""
     }
 

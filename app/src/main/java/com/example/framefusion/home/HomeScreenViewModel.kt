@@ -7,7 +7,6 @@ import com.example.framefusion.home.data.local.TvSeriesDatabase
 import com.example.framefusion.home.data.local.models.Movie
 import com.example.framefusion.home.data.local.models.TvSeries
 import com.example.framefusion.home.domain.usecases.GetPersonalTvAndMovie
-import com.example.framefusion.person.domain.usecases.GetPersonGenresUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

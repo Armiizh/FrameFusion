@@ -1,6 +1,7 @@
 package com.example.framefusion.person.ui
 
 //noinspection UsingMaterialAndMaterial3Libraries
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.framefusion.NavRoute
 import com.example.framefusion.R
@@ -43,6 +45,7 @@ import com.example.framefusion.person.utils.CheckGenre
 import com.example.framefusion.personInterest.data.model.UserGenres
 import com.example.framefusion.personInterest.utils.Genres
 import com.example.framefusion.utils.Constants
+import kotlinx.coroutines.launch
 
 @Composable
 fun PersonGenresScreen(
@@ -113,8 +116,11 @@ private fun Content(
                         allGenres.filter { allGenreStates[it]?.value == true }
                             .joinToString(separator = ",") { it.name }
                     val userGenres = UserGenres(genres = selectedGenres)
-                    personScreenViewModel.insertGenres(userGenres)
-                    updateGenres()
+                    Log.d("CHECK", "userGenres - $userGenres")
+                    personScreenViewModel.viewModelScope.launch {
+                        personScreenViewModel.insertGenres(userGenres)
+                        updateGenres()
+                    }
                     navController.navigate(NavRoute.Person.route)
                 }
             ) {

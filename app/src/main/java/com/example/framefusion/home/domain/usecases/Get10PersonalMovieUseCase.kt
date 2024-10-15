@@ -1,5 +1,6 @@
 package com.example.framefusion.home.domain.usecases
 
+import android.util.Log
 import com.example.framefusion.home.data.local.dao.HomeMovieDao
 import com.example.framefusion.home.data.rest.KinopoiskApi
 import com.example.framefusion.home.data.rest.model.toMovieList
@@ -16,13 +17,13 @@ class Get10PersonalMovieUseCase @Inject constructor(
             "id",
             "name",
             "poster",
-            "genres",
+            "genres"
         )
         val notNullFields = listOf(
             "id",
-            "name",
-            "poster.url",
+            "poster.url"
         )
+
         val response = kinopoiskApi.getPersonalMovie(
             page = 1,
             limit = 10,

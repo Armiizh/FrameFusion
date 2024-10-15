@@ -61,7 +61,8 @@ fun NavHostContainer(
                         homeScreenViewModel.viewModelScope.launch {
                             homeScreenViewModel.initData()
                         }
-                    })
+                    }
+                )
             }
 
             composable(NavRoute.PersonFavorite.route) {

@@ -39,9 +39,7 @@ fun PersonScreen(
                 LazyColumn {
                     item {
                         MenuItem("Ваши жанры") {
-                            personScreenViewModel.viewModelScope.launch {
-                                personScreenViewModel.getPersonGenres()
-                            }
+                            personScreenViewModel.getPersonGenres()
                             navController.navigate(NavRoute.PersonGenres.route)
                         }
                     }

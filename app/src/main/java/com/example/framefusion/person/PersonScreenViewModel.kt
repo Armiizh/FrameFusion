@@ -26,7 +26,7 @@ class PersonScreenViewModel @Inject constructor(
             _genres.value = genres
         }
     }
-    fun insertGenres(uGenres: UserGenres) {
-        viewModelScope.launch { insertGenresUseCase.invoke(uGenres) }
+    suspend fun insertGenres(uGenres: UserGenres) {
+         insertGenresUseCase.invoke(uGenres)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.framefusion.home.domain.usecases
 
+import android.util.Log
 import com.example.framefusion.home.data.local.dao.HomeTvSeriesDao
 import com.example.framefusion.home.data.rest.KinopoiskApi
 import com.example.framefusion.home.data.rest.model.toTvSeriesList
@@ -15,15 +16,8 @@ class Get10PersonalTvSeriesUseCase @Inject constructor(
         val selectedFields = listOf(
             "id",
             "name",
-            "year",
-            "shortDescription",
-            "rating",
-            "seriesLength",
-            "totalSeriesLength",
             "poster",
-            "backdrop",
-            "genres",
-            "persons"
+            "genres"
         )
         val notNullFields = listOf(
             "id",
