@@ -1,7 +1,5 @@
 package com.example.framefusion.itemDetails.ui
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -64,6 +62,7 @@ import com.example.framefusion.itemDetails.utils.genreFormatted
 import com.example.framefusion.itemDetails.utils.minutesToHoursAndMinutes
 import com.example.framefusion.itemDetails.utils.ratingColor
 import com.example.framefusion.utils.Background
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 @Composable
@@ -119,7 +118,6 @@ private fun Content(
     movieDetails: MovieDetails,
     navController: NavHostController
 ) {
-    val context = LocalContext.current
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -144,8 +142,7 @@ private fun Content(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp)
-                .verticalScroll(rememberScrollState()),
+                .padding(horizontal = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(12.dp))
@@ -155,6 +152,14 @@ private fun Content(
             Spacer(modifier = Modifier.height(2.dp))
             MovieParams(movieDetails, time, movieDetails.rating.kp!!, ratingKp)
             Spacer(modifier = Modifier.height(18.dp))
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Описание", fontSize = 18.sp)
             }
@@ -181,7 +186,6 @@ private fun Content(
                 maxLines = 2
             ) {
                 movieDetails.persons.take(4).forEach { person ->
-                    Log.d("PersonItem", "person: $person")
                     PersonItem(person)
                 }
             }
@@ -190,17 +194,11 @@ private fun Content(
             ) {
                 Text(
                     text = "Полный актерский состав здесь",
+                    color = MaterialTheme.colorScheme.onBackground,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable {
-                        Toast.makeText(
-                            context,
-                            "Пока что не реализовано, но скоро появится",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    modifier = Modifier.clickable { navController.navigate(NavRoute.FullItemCast.route) }
                 )
             }
-
         }
     }
 }

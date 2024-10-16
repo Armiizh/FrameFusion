@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.ui.HomeScreen
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
+import com.example.framefusion.itemDetails.ui.FullItemCastScreen
 import com.example.framefusion.itemDetails.ui.MovieItemDetailsScreen
 import com.example.framefusion.itemDetails.ui.TvSeriesItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
@@ -70,6 +71,7 @@ fun NavHostContainer(
             composable(NavRoute.PersonSettings.route) {
                 PersonSettingsScreen()
             }
+
             composable(NavRoute.MovieDetails.route) {
                 val movieId = navController.currentBackStackEntry?.arguments?.getString("movieId")
                 MovieItemDetailsScreen(navController, detailsScreenViewModel, movieId?.toIntOrNull() ?: 0)
@@ -78,6 +80,9 @@ fun NavHostContainer(
             composable(NavRoute.TvSeriesDetails.route) { backStackEntry ->
                 val tvSeriesId = backStackEntry.arguments?.getInt("tvSeriesId")
                 TvSeriesItemDetailsScreen(navController, detailsScreenViewModel, tvSeriesId ?: 0)
+            }
+            composable(NavRoute.FullItemCast.route) {
+                FullItemCastScreen(navController, detailsScreenViewModel)
             }
         }
     )
@@ -90,6 +95,7 @@ sealed class NavRoute(val route: String) {
     data object PersonGenres : NavRoute(Constants.Screens.PERSON_GENRES_SCREEN)
     data object PersonFavorite : NavRoute(Constants.Screens.PERSON_FAVORITE_MOVIES_SCREEN)
     data object PersonSettings : NavRoute(Constants.Screens.PERSON_SETTINGS_SCREEN)
+    data object FullItemCast : NavRoute(Constants.Screens.FULL_ITEM_CAST_SCREEN)
 
     data object MovieDetails :
         NavRoute("${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/{movieId}") {

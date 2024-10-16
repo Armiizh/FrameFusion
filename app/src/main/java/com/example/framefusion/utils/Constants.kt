@@ -30,6 +30,7 @@ object Constants {
         const val PERSON_SETTINGS_SCREEN = "person_settings_screen"
         const val MOVIE_ITEM_DETAILS_SCREEN = "movie_item_details_screen"
         const val TV_SERIES_ITEM_DETAILS_SCREEN = "tv_series_item_details_screen"
+        const val FULL_ITEM_CAST_SCREEN = "full_item_cast_screen"
     }
     object GenresObject {
         val greetingGenres = listOf(
