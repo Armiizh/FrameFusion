@@ -1,4 +1,4 @@
-package com.example.framefusion.personInterest.utils
+package com.example.framefusion.personInterest.utils.composable
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween

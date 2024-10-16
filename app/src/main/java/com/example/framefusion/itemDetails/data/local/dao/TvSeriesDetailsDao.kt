@@ -12,17 +12,19 @@ import kotlinx.coroutines.flow.Flow
 interface TvSeriesDetailsDao {
 
     @Query("SELECT * FROM tv_series_details")
-    fun getTvSeries(): Flow<List<TvSeriesDetails>>
+    fun getTvSeries(): Flow<TvSeriesDetails>
 
     @Query("DELETE FROM tv_series_details")
     suspend fun deleteAllTvSeries()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTvSeries(tvSeries: List<TvSeriesDetails>)
+    suspend fun insertTvSeries(tvSeries: TvSeriesDetails)
 
     @Update
-    suspend fun updateTvSeries(tvSeries: List<TvSeriesDetails>) {
+    suspend fun updateTvSeries(tvSeries: TvSeriesDetails) {
         deleteAllTvSeries()
-        insertTvSeries(tvSeries)
+        if (tvSeries != null) {
+            insertTvSeries(tvSeries)
+        }
     }
 }

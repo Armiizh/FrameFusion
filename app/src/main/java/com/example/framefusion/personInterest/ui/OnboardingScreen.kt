@@ -28,9 +28,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.framefusion.R
 import com.example.framefusion.personInterest.PersonInterestViewModel
 import com.example.framefusion.personInterest.data.model.UserGenres
-import com.example.framefusion.personInterest.utils.CheckItem
-import com.example.framefusion.personInterest.utils.Genres
-import com.example.framefusion.utils.Background
+import com.example.framefusion.personInterest.utils.composable.CheckItem
+import com.example.framefusion.personInterest.data.model.Genres
+import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.Constants
 import kotlinx.coroutines.launch
 

@@ -1,6 +1,5 @@
 package com.example.framefusion
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -74,15 +73,27 @@ fun NavHostContainer(
 
             composable(NavRoute.MovieDetails.route) {
                 val movieId = navController.currentBackStackEntry?.arguments?.getString("movieId")
-                MovieItemDetailsScreen(navController, detailsScreenViewModel, movieId?.toIntOrNull() ?: 0)
+                MovieItemDetailsScreen(
+                    navController,
+                    detailsScreenViewModel,
+                    movieId?.toIntOrNull() ?: 0,
+                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route + "/movie") }
+                )
             }
 
-            composable(NavRoute.TvSeriesDetails.route) { backStackEntry ->
-                val tvSeriesId = backStackEntry.arguments?.getInt("tvSeriesId")
-                TvSeriesItemDetailsScreen(navController, detailsScreenViewModel, tvSeriesId ?: 0)
+            composable(NavRoute.TvSeriesDetails.route) {
+                val tvSeriesId =
+                    navController.currentBackStackEntry?.arguments?.getString("tvSeriesId")
+                TvSeriesItemDetailsScreen(
+                    navController,
+                    detailsScreenViewModel,
+                    tvSeriesId?.toIntOrNull() ?: 0,
+                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route + "/tvSeries") }
+                )
             }
-            composable(NavRoute.FullItemCast.route) {
-                FullItemCastScreen(navController, detailsScreenViewModel)
+            composable(NavRoute.FullItemCast.route + "/{caller}") {
+                val caller = navController.currentBackStackEntry?.arguments?.getString("caller")
+                FullItemCastScreen(navController, detailsScreenViewModel, caller)
             }
         }
     )

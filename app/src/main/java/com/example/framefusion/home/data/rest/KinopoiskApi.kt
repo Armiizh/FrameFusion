@@ -3,6 +3,7 @@ package com.example.framefusion.home.data.rest
 import com.example.framefusion.home.data.rest.model.MovieResponse
 import com.example.framefusion.home.data.rest.model.TvSeriesResponse
 import com.example.framefusion.itemDetails.data.local.models.MovieDetails
+import com.example.framefusion.itemDetails.data.local.models.TvSeriesDetails
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -40,5 +41,5 @@ interface KinopoiskApi {
     @GET("movie/{id}")
     suspend fun getTvSeriesDetails(
        @Path("id") id: Int
-    ): Response<TvSeriesResponse>
+    ): Response<TvSeriesDetails>
 }

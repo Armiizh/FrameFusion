@@ -31,5 +31,6 @@ data class TvSeriesDetails(
     val totalSeriesLength: String? = "",
     val rating: Rating,
     val shortDescription: String? = "",
+    val description: String? = "",
     val persons: List<Person>
 )

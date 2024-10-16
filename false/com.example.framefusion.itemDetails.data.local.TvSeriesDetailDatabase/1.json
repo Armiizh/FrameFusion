@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ff343db52e217ca9acd7911f6ebe941f",
+    "identityHash": "5727107e952d56fb6e0705ceb096b32b",
     "entities": [
       {
         "tableName": "tv_series_details",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `year` TEXT, `poster` TEXT NOT NULL, `backdrop` TEXT NOT NULL, `genres` TEXT NOT NULL, `seriesLength` TEXT, `totalSeriesLength` TEXT, `rating` TEXT NOT NULL, `shortDescription` TEXT, `persons` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `year` TEXT, `poster` TEXT NOT NULL, `backdrop` TEXT NOT NULL, `genres` TEXT NOT NULL, `seriesLength` TEXT, `totalSeriesLength` TEXT, `rating` TEXT NOT NULL, `shortDescription` TEXT, `description` TEXT, `persons` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -69,6 +69,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "persons",
             "columnName": "persons",
             "affinity": "TEXT",
@@ -88,7 +94,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ff343db52e217ca9acd7911f6ebe941f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5727107e952d56fb6e0705ceb096b32b')"
     ]
   }
 }

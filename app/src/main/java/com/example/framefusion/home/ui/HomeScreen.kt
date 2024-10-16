@@ -19,10 +19,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.example.framefusion.R
 import com.example.framefusion.home.HomeScreenViewModel
-import com.example.framefusion.home.utils.MovieItem
-import com.example.framefusion.home.utils.TextList
-import com.example.framefusion.home.utils.TvSeriesItem
-import com.example.framefusion.utils.Background
+import com.example.framefusion.home.utils.composable.MovieItem
+import com.example.framefusion.home.utils.composable.TextList
+import com.example.framefusion.home.utils.composable.TvSeriesItem
+import com.example.framefusion.utils.ui.Background
 
 @Composable
 fun HomeScreen(

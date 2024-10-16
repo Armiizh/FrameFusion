@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.rememberNavController
 import com.example.framefusion.home.HomeScreenViewModel
@@ -24,9 +23,9 @@ import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.personInterest.GreetingNavHost
 import com.example.framefusion.personInterest.PersonInterestViewModel
-import com.example.framefusion.ui.theme.FrameFusionTheme
 import com.example.framefusion.utils.BottomNavigationBar
 import com.example.framefusion.utils.Constants.REQUEST_PERMISSION_CODE
+import com.example.framefusion.utils.ui.theme.FrameFusionTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

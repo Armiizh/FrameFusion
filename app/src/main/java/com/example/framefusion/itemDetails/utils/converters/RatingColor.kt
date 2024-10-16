@@ -1,4 +1,4 @@
-package com.example.framefusion.itemDetails.utils
+package com.example.framefusion.itemDetails.utils.converters
 
 import androidx.compose.ui.graphics.Color
 

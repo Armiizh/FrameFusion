@@ -8,68 +8,51 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.size.Size
-import com.example.framefusion.NavRoute
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.MovieDetails
-import com.example.framefusion.itemDetails.data.local.models.Person
-import com.example.framefusion.itemDetails.utils.ErrorContent
-import com.example.framefusion.itemDetails.utils.genreFormatted
-import com.example.framefusion.itemDetails.utils.minutesToHoursAndMinutes
-import com.example.framefusion.itemDetails.utils.ratingColor
-import com.example.framefusion.utils.Background
-import com.google.gson.Gson
+import com.example.framefusion.itemDetails.utils.composable.Backdrop
+import com.example.framefusion.itemDetails.utils.composable.Description
+import com.example.framefusion.itemDetails.utils.composable.ErrorContent
+import com.example.framefusion.itemDetails.utils.composable.IconBack
+import com.example.framefusion.itemDetails.utils.composable.ItemGenres
+import com.example.framefusion.itemDetails.utils.composable.ItemName
+import com.example.framefusion.itemDetails.utils.composable.PersonItem
+import com.example.framefusion.itemDetails.utils.composable.ProgressContent
+import com.example.framefusion.itemDetails.utils.converters.genreFormatted
+import com.example.framefusion.itemDetails.utils.converters.minutesToHoursAndMinutes
+import com.example.framefusion.itemDetails.utils.converters.ratingColor
+import com.example.framefusion.utils.ui.Background
 import kotlinx.coroutines.launch
 
 @Composable
 fun MovieItemDetailsScreen(
     navController: NavHostController,
     detailsScreenViewModel: DetailsScreenViewModel,
-    id: Int
+    id: Int,
+    onFullCastScreen:() -> Unit
 ) {
     val movieDetails by detailsScreenViewModel.movieDetails.collectAsState()
     val isMovieLoading by detailsScreenViewModel.isMovieLoading.collectAsState()
@@ -90,20 +73,12 @@ fun MovieItemDetailsScreen(
                     .padding(bottom = 80.dp)
             ) {
                 if (isMovieLoading) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.fillMaxSize(),
-                            color = colorResource(id = R.color.color1)
-                        )
-                    }
+                    ProgressContent()
                 } else {
                     if (movieDetails == null) {
                         ErrorContent()
                     } else {
-                        Content(movieDetails!!, navController)
+                        MovieContent(movieDetails!!, navController, onFullCastScreen)
                     }
                 }
             }
@@ -111,12 +86,12 @@ fun MovieItemDetailsScreen(
     )
 }
 
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun Content(
+private fun MovieContent(
     movieDetails: MovieDetails,
-    navController: NavHostController
+    navController: NavHostController,
+    onFullCastScreen: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -124,19 +99,15 @@ private fun Content(
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            if (movieDetails.backdrop.url != null && movieDetails.backdrop.url != "null") {
-                Backdrop(movieDetails)
+            val url = if (movieDetails.backdrop.url != null && movieDetails.backdrop.url != "null") {
+                movieDetails.backdrop.url.toString()
+            } else {
+                null
             }
-            Icon(
-                modifier = Modifier
-                    .clickable { navController.navigate(NavRoute.Home.route) }
-                    .padding(12.dp),
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground
-            )
+            Backdrop(url)
+            IconBack(navController)
         }
-        val detailsGenres = genreFormatted(movieDetails)
+        val detailsGenres = genreFormatted(movieDetails.genres)
         val ratingKp = movieDetails.rating.kp
         val time = minutesToHoursAndMinutes(movieDetails.movieLength?.toIntOrNull())
         Column(
@@ -146,11 +117,29 @@ private fun Content(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(12.dp))
-            MovieName(movieDetails)
+            ItemName(movieDetails.name.toString())
             Spacer(modifier = Modifier.height(12.dp))
-            MovieGenres(movieDetails, detailsGenres)
+            if (movieDetails.genres.isNotEmpty()) {
+                ItemGenres(detailsGenres)
+            }
             Spacer(modifier = Modifier.height(2.dp))
-            MovieParams(movieDetails, time, movieDetails.rating.kp!!, ratingKp)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                val yearText = movieDetails.year ?: ""
+                val totalLengthText = if (time.isNotEmpty()) " * $time" else ""
+                Text(text = "$yearText$totalLengthText")
+                if (movieDetails.rating.kp != null && ratingKp?.toFloat() != 0.0f) {
+                    Row {
+                        Text(text = " *")
+                        Text(
+                            text = " $ratingKp",
+                            color = ratingColor(ratingKp!!)
+                        )
+                    }
+                }
+            }
             Spacer(modifier = Modifier.height(18.dp))
         }
         Column(
@@ -161,7 +150,7 @@ private fun Content(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Описание", fontSize = 18.sp)
+                Text(text = stringResource(R.string.Description), fontSize = 18.sp)
             }
             HorizontalDivider(
                 thickness = DividerDefaults.Thickness,
@@ -170,11 +159,16 @@ private fun Content(
                     .fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Description(movieDetails)
-
-
+            val textDescription = if (movieDetails.description != null) {
+                "${movieDetails.description}"
+            } else if (movieDetails.shortDescription != null) {
+                "${movieDetails.shortDescription}"
+            } else {
+                stringResource(R.string.Null_Description)
+            }
+            Description(textDescription)
             Spacer(modifier = Modifier.height(12.dp))
-            Row(Modifier.fillMaxWidth()) { Text(text = "Актерский состав") }
+            Row(Modifier.fillMaxWidth()) { Text(text = stringResource(R.string.Cast)) }
             HorizontalDivider(
                 thickness = DividerDefaults.Thickness,
                 modifier = Modifier
@@ -189,189 +183,17 @@ private fun Content(
                     PersonItem(person)
                 }
             }
+            Spacer(modifier = Modifier.height(12.dp))
             Row(
                 Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Полный актерский состав здесь",
+                    text = stringResource(R.string.Full_Cast),
                     color = MaterialTheme.colorScheme.onBackground,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable { navController.navigate(NavRoute.FullItemCast.route) }
+                    modifier = Modifier.clickable { onFullCastScreen() }
                 )
             }
         }
-    }
-}
-
-@Composable
-fun PersonItem(person: Person) {
-    val name = if (person.name != null && person.name != "null") {
-        person.name
-    } else if (person.enName != null && person.enName != "null") {
-        person.enName
-    } else {
-        "Чел без имени"
-    }
-    val fio = name.split(" ")
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth(0.5f)
-            .padding(vertical = 8.dp)
-    ) {
-        AsyncImage(
-            model = ImageRequest
-                .Builder(LocalContext.current)
-                .data(person.photo)
-                .size(Size.ORIGINAL)
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            modifier = Modifier
-                .size(80.dp)
-                .clip(shape = CircleShape),
-            contentScale = ContentScale.FillWidth
-        )
-        Column(
-            modifier = Modifier
-                .wrapContentHeight()
-                .wrapContentWidth()
-                .padding(start = 8.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = fio[0])
-            if (fio.size > 1) {
-                Text(text = fio[1])
-            }
-            if (fio.size > 2) {
-                Text(text = fio[2])
-            }
-            if (fio.size > 3) {
-                Text(text = fio[3])
-            }
-        }
-    }
-
-}
-
-@Composable
-private fun MovieName(movieDetails: MovieDetails) {
-    Text(
-        textAlign = TextAlign.Center,
-        text = movieDetails.name.toString(),
-        fontSize = 32.sp,
-        fontWeight = FontWeight.Bold
-    )
-}
-
-@Composable
-private fun MovieGenres(
-    movieDetails: MovieDetails,
-    detailsGenres: String
-) {
-    if (movieDetails.genres.isNotEmpty()) {
-        Text(
-            textAlign = TextAlign.Center,
-            text = " $detailsGenres"
-        )
-    }
-}
-
-@Composable
-private fun MovieParams(
-    movieDetails: MovieDetails,
-    time: String,
-    kp: Double,
-    ratingKp: Double?
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        if (movieDetails.year != null) {
-            Text(text = "${movieDetails.year}")
-        }
-        if (time != "") {
-            Text(text = " * $time")
-        }
-        if (movieDetails.rating.kp != null && kp.toFloat() != 0.0f) {
-            Row {
-                Text(text = " *")
-                Text(
-                    text = " $ratingKp",
-                    color = ratingColor(ratingKp!!)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun Description(movieDetails: MovieDetails) {
-    val textDescription = if (movieDetails.description != null) {
-        "${movieDetails.description}"
-    } else if (movieDetails.shortDescription != null) {
-        "${movieDetails.shortDescription}"
-    } else {
-        "Ребята пока не добавили описание к своему фильму.\n\nЗдесь могла бы быть ваша реклама :)"
-    }
-
-    var isExpanded by remember { mutableStateOf(false) }
-    var actualLineCount by remember { mutableIntStateOf(0) }
-    var maxLines by remember { mutableIntStateOf(6) }
-
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            textAlign = TextAlign.Justify,
-            modifier = Modifier.fillMaxWidth(),
-            text = textDescription,
-            maxLines = if (isExpanded) Int.MAX_VALUE else maxLines,
-            onTextLayout = { textLayoutResult ->
-                actualLineCount = textLayoutResult.lineCount
-                if (actualLineCount > 5 && !isExpanded) {
-                    maxLines = 6
-                }
-            }
-        )
-        if (actualLineCount > 5) {
-            TextButton(
-                onClick = {
-                    isExpanded = !isExpanded
-                },
-            ) {
-                Text(
-                    text = if (isExpanded) {
-                        "Свернуть"
-                    } else {
-                        "Развернуть"
-                    },
-                    modifier = Modifier.padding(8.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun Backdrop(movieDetails: MovieDetails) {
-    if (movieDetails.backdrop.url == null) {
-        Spacer(modifier = Modifier.height(1.dp))
-    } else {
-        AsyncImage(
-            modifier = Modifier
-                .fillMaxWidth(),
-            model = ImageRequest
-                .Builder(LocalContext.current)
-                .data(movieDetails.backdrop.url)
-                .size(Size.ORIGINAL)
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-        )
     }
 }

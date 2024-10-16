@@ -6,7 +6,7 @@ import com.example.framefusion.home.data.local.MovieDatabase
 import com.example.framefusion.home.data.local.TvSeriesDatabase
 import com.example.framefusion.home.data.local.models.Movie
 import com.example.framefusion.home.data.local.models.TvSeries
-import com.example.framefusion.home.domain.usecases.GetPersonalTvAndMovie
+import com.example.framefusion.home.domain.usecases.GetPersonalTvAndMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val getPersonalTvAndMovie: GetPersonalTvAndMovie,
+    private val getPersonalTvAndMovieUseCase: GetPersonalTvAndMovieUseCase,
     private val movieDatabase: MovieDatabase,
     private val tvSeriesDatabase: TvSeriesDatabase
 ) : ViewModel() {
@@ -31,7 +31,7 @@ class HomeScreenViewModel @Inject constructor(
     val isTvSeriesLoading: StateFlow<Boolean> = _isTvSeriesLoading
 
     suspend fun initData() {
-        getPersonalTvAndMovie.invoke()
+        getPersonalTvAndMovieUseCase.invoke()
         viewModelScope.launch {
             movieDatabase.homeDao().getMovies().collect { movies ->
                 _movies.value = movies

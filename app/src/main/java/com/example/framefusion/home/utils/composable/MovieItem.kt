@@ -1,4 +1,4 @@
-package com.example.framefusion.home.utils
+package com.example.framefusion.home.utils.composable
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,19 +12,19 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.framefusion.home.data.local.models.TvSeries
+import com.example.framefusion.home.data.local.models.Movie
 
 @Composable
-internal fun TvSeriesItem(tvSeries: TvSeries, provideId: (Int?) -> Unit) {
+internal fun MovieItem(movie: Movie, provideId: (Int?) -> Unit) {
     AsyncImage(
         modifier = Modifier
             .fillMaxWidth()
             .padding(end = 12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable { provideId(tvSeries.id) },
+            .clickable { provideId(movie.id) },
         model = ImageRequest
             .Builder(LocalContext.current)
-            .data(tvSeries.poster.url)
+            .data(movie.poster.url)
             .size(Size.ORIGINAL)
             .crossfade(true)
             .build(),

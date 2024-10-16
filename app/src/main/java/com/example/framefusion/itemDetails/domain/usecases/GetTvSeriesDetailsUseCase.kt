@@ -3,21 +3,21 @@ package com.example.framefusion.itemDetails.domain.usecases
 import com.example.framefusion.home.data.local.models.Genre
 import com.example.framefusion.home.data.local.models.Poster
 import com.example.framefusion.home.data.rest.KinopoiskApi
-import com.example.framefusion.itemDetails.data.local.dao.MovieDetailsDao
+import com.example.framefusion.itemDetails.data.local.dao.TvSeriesDetailsDao
 import com.example.framefusion.itemDetails.data.local.models.Backdrop
-import com.example.framefusion.itemDetails.data.local.models.MovieDetails
 import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.data.local.models.Rating
+import com.example.framefusion.itemDetails.data.local.models.TvSeriesDetails
 import javax.inject.Inject
 
-class GetMovieDetails @Inject constructor(
+class GetTvSeriesDetailsUseCase @Inject constructor(
     private val kinopoiskApi: KinopoiskApi,
-    private val movieDetailsDao: MovieDetailsDao
+    private val tvSeriesDetailsDao: TvSeriesDetailsDao
 ) {
     suspend fun invoke(id: Int) {
-        val response = kinopoiskApi.getMovieDetails(id)
+        val response = kinopoiskApi.getTvSeriesDetails(id)
         if (response.body() != null) {
-            val movie = MovieDetails(
+            val tvSeries = TvSeriesDetails(
                 id = response.body()?.id,
                 name = response.body()?.name,
                 year = response.body()?.year,
@@ -25,12 +25,17 @@ class GetMovieDetails @Inject constructor(
                     url = response.body()?.poster?.url,
                     previewUrl = response.body()?.poster?.previewUrl
                 ),
+                backdrop = Backdrop(
+                    url = response.body()?.backdrop?.url,
+                    previewUrl = response.body()?.backdrop?.previewUrl
+                ),
                 genres = response.body()?.genres!!.map { genre ->
                     Genre(
                         name = genre.name
                     )
                 },
-                movieLength = response.body()?.movieLength,
+                seriesLength = response.body()?.seriesLength,
+                totalSeriesLength = response.body()?.totalSeriesLength,
                 rating = Rating(
                     kp = response.body()?.rating?.kp,
                     imdb = response.body()?.rating?.imdb,
@@ -51,12 +56,8 @@ class GetMovieDetails @Inject constructor(
                         enProfession = person.enProfession
                     )
                 },
-                backdrop = Backdrop(
-                    url = response.body()?.backdrop?.url,
-                    previewUrl = response.body()?.backdrop?.previewUrl
-                )
             )
-            movieDetailsDao.updateMovie(movie)
+            tvSeriesDetailsDao.updateTvSeries(tvSeries)
         }
     }
 }

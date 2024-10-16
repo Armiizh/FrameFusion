@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -34,7 +33,7 @@ import com.example.framefusion.R
 @Composable
 fun SearchScreen() {
     
-    var search by remember {
+    val search by remember {
         mutableStateOf("")
     }
     Scaffold(

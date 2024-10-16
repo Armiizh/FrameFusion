@@ -10,13 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.framefusion.NavRoute
 import com.example.framefusion.R
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.person.utils.MenuItem
-import kotlinx.coroutines.launch
+import com.example.framefusion.person.utils.composable.MenuItem
 
 @Composable
 fun PersonScreen(

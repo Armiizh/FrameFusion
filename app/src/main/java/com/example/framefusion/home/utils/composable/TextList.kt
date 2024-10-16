@@ -1,4 +1,4 @@
-package com.example.framefusion.home.utils
+package com.example.framefusion.home.utils.composable
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme

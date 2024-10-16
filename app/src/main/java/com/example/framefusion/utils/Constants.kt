@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.framefusion.BottomNavItem
 import com.example.framefusion.NavRoute
 import com.example.framefusion.R
-import com.example.framefusion.personInterest.utils.Genres
+import com.example.framefusion.personInterest.data.model.Genres
 
 object Constants {
 

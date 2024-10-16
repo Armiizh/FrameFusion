@@ -1,4 +1,4 @@
-package com.example.framefusion.personInterest.utils
+package com.example.framefusion.personInterest.data.model
 
 data class Genres(
     val name: String,

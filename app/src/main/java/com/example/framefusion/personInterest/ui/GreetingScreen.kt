@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.framefusion.R
-import com.example.framefusion.utils.Background
+import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.Constants.Colors.horizontalGradientBrush
 import com.example.framefusion.utils.drawNeonStroke
 

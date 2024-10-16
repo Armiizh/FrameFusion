@@ -1,4 +1,4 @@
-package com.example.framefusion.utils
+package com.example.framefusion.utils.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize

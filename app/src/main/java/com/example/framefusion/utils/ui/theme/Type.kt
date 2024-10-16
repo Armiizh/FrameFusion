@@ -1,4 +1,4 @@
-package com.example.framefusion.ui.theme
+package com.example.framefusion.utils.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

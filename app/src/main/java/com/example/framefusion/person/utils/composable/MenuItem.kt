@@ -1,4 +1,4 @@
-package com.example.framefusion.person.utils
+package com.example.framefusion.person.utils.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

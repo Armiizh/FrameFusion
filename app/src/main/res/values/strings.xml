@@ -14,4 +14,8 @@
     <string name="musical">Мюзиклы</string>
     <string name="Choose_yout_favorite_genres">Выберите несколько ваших любимых жанров кино и сериалов</string>
     <string name="Full_item_cast">Полный актерский состав</string>
+    <string name="Description">Описание</string>
+    <string name="Null_Description">Ребята пока не добавили описание к своему фильму.\n\nЗдесь могла бы быть ваша реклама :)</string>
+    <string name="Cast">Актерский состав</string>
+    <string name="Full_Cast">Полный актерский состав здесь</string>
 </resources>

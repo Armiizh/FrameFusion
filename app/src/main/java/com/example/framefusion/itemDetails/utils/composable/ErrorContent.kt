@@ -1,4 +1,4 @@
-package com.example.framefusion.itemDetails.utils
+package com.example.framefusion.itemDetails.utils.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
