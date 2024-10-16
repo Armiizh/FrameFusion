@@ -16,8 +16,8 @@ class GetMovieDetails @Inject constructor(
 ) {
     suspend fun invoke(id: Int) {
         val response = kinopoiskApi.getMovieDetails(id)
-        val movie = response.body()?.persons?.let {
-            MovieDetails(
+        if (response.body() != null) {
+            val movie = MovieDetails(
                 id = response.body()?.id,
                 name = response.body()?.name,
                 year = response.body()?.year,
@@ -56,8 +56,6 @@ class GetMovieDetails @Inject constructor(
                     previewUrl = response.body()?.backdrop?.previewUrl
                 )
             )
-        }
-        if (movie != null) {
             movieDetailsDao.updateMovie(movie)
         }
     }

@@ -1,17 +1,25 @@
 package com.example.framefusion.itemDetails.ui
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
@@ -32,11 +40,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
@@ -47,15 +57,14 @@ import coil.size.Size
 import com.example.framefusion.NavRoute
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
-import com.example.framefusion.itemDetails.data.local.models.Backdrop
 import com.example.framefusion.itemDetails.data.local.models.MovieDetails
+import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.utils.ErrorContent
 import com.example.framefusion.itemDetails.utils.genreFormatted
 import com.example.framefusion.itemDetails.utils.minutesToHoursAndMinutes
 import com.example.framefusion.itemDetails.utils.ratingColor
 import com.example.framefusion.utils.Background
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @Composable
 fun MovieItemDetailsScreen(
@@ -104,11 +113,13 @@ fun MovieItemDetailsScreen(
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Content(
     movieDetails: MovieDetails,
     navController: NavHostController
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -133,21 +144,19 @@ private fun Content(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp),
+                .padding(horizontal = 8.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(12.dp))
             MovieName(movieDetails)
             Spacer(modifier = Modifier.height(12.dp))
             MovieGenres(movieDetails, detailsGenres)
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(2.dp))
             MovieParams(movieDetails, time, movieDetails.rating.kp!!, ratingKp)
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(18.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = "Описание",
-                    fontSize = 18.sp
-                )
+                Text(text = "Описание", fontSize = 18.sp)
             }
             HorizontalDivider(
                 thickness = DividerDefaults.Thickness,
@@ -157,19 +166,94 @@ private fun Content(
             )
             Spacer(modifier = Modifier.height(12.dp))
             Description(movieDetails)
+
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(Modifier.fillMaxWidth()) { Text(text = "Актерский состав") }
+            HorizontalDivider(
+                thickness = DividerDefaults.Thickness,
+                modifier = Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+            )
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 2
+            ) {
+                movieDetails.persons.take(4).forEach { person ->
+                    Log.d("PersonItem", "person: $person")
+                    PersonItem(person)
+                }
+            }
+            Row(
+                Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Полный актерский состав здесь",
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.clickable {
+                        Toast.makeText(
+                            context,
+                            "Пока что не реализовано, но скоро появится",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
+            }
+
         }
     }
 }
 
 @Composable
-private fun Spacer() {
-    Spacer(modifier = Modifier.height(12.dp))
-    HorizontalDivider(
-        thickness = DividerDefaults.Thickness,
+fun PersonItem(person: Person) {
+    val name = if (person.name != null && person.name != "null") {
+        person.name
+    } else if (person.enName != null && person.enName != "null") {
+        person.enName
+    } else {
+        "Чел без имени"
+    }
+    val fio = name.split(" ")
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .height(1.dp)
-            .fillMaxWidth()
-    )
+            .fillMaxWidth(0.5f)
+            .padding(vertical = 8.dp)
+    ) {
+        AsyncImage(
+            model = ImageRequest
+                .Builder(LocalContext.current)
+                .data(person.photo)
+                .size(Size.ORIGINAL)
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            modifier = Modifier
+                .size(80.dp)
+                .clip(shape = CircleShape),
+            contentScale = ContentScale.FillWidth
+        )
+        Column(
+            modifier = Modifier
+                .wrapContentHeight()
+                .wrapContentWidth()
+                .padding(start = 8.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(text = fio[0])
+            if (fio.size > 1) {
+                Text(text = fio[1])
+            }
+            if (fio.size > 2) {
+                Text(text = fio[2])
+            }
+            if (fio.size > 3) {
+                Text(text = fio[3])
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -177,7 +261,7 @@ private fun MovieName(movieDetails: MovieDetails) {
     Text(
         textAlign = TextAlign.Center,
         text = movieDetails.name.toString(),
-        fontSize = 24.sp,
+        fontSize = 32.sp,
         fontWeight = FontWeight.Bold
     )
 }
@@ -238,39 +322,38 @@ private fun Description(movieDetails: MovieDetails) {
     var actualLineCount by remember { mutableIntStateOf(0) }
     var maxLines by remember { mutableIntStateOf(6) }
 
-    LazyColumn(
+    Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            Text(
-                textAlign = TextAlign.Justify,
-                modifier = Modifier.fillMaxWidth(),
-                text = textDescription,
-                maxLines = if (isExpanded) Int.MAX_VALUE else maxLines,
-                onTextLayout = { textLayoutResult ->
-                    actualLineCount = textLayoutResult.lineCount
-                    if (actualLineCount > 5 && !isExpanded) {
-                        maxLines = 6
-                    }
+
+        Text(
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.fillMaxWidth(),
+            text = textDescription,
+            maxLines = if (isExpanded) Int.MAX_VALUE else maxLines,
+            onTextLayout = { textLayoutResult ->
+                actualLineCount = textLayoutResult.lineCount
+                if (actualLineCount > 5 && !isExpanded) {
+                    maxLines = 6
                 }
-            )
-            if (actualLineCount > 5) {
-                TextButton(
-                    onClick = {
-                        isExpanded = !isExpanded
+            }
+        )
+        if (actualLineCount > 5) {
+            TextButton(
+                onClick = {
+                    isExpanded = !isExpanded
+                },
+            ) {
+                Text(
+                    text = if (isExpanded) {
+                        "Свернуть"
+                    } else {
+                        "Развернуть"
                     },
-                ) {
-                    Text(
-                        text = if (isExpanded) {
-                            "Свернуть"
-                        } else {
-                            "Развернуть"
-                        },
-                        modifier = Modifier.padding(8.dp),
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                }
+                    modifier = Modifier.padding(8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
         }
     }
@@ -279,7 +362,7 @@ private fun Description(movieDetails: MovieDetails) {
 @Composable
 private fun Backdrop(movieDetails: MovieDetails) {
     if (movieDetails.backdrop.url == null) {
-        androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(1.dp))
+        Spacer(modifier = Modifier.height(1.dp))
     } else {
         AsyncImage(
             modifier = Modifier

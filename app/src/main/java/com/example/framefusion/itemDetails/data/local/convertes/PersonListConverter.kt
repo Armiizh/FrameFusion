@@ -1,5 +1,6 @@
 package com.example.framefusion.itemDetails.data.local.convertes
 
+import android.util.Log
 import androidx.room.TypeConverter
 import com.example.framefusion.itemDetails.data.local.models.Person
 
@@ -12,25 +13,30 @@ class PersonListConverter {
     @TypeConverter
     fun toPersonList(personsString: String): List<Person>? {
         if (personsString == null || personsString == "null") {
+            Log.d("CHECK", "Ошибка - null")
+            Log.d("CHECK", "personsString - $personsString")
             return emptyList()
         }
         val persons = personsString.split(",")
         if (persons.size % 7 != 0) {
+            Log.d("CHECK", "Ошибка - Размер чет не соответствует - ${persons.size}")
             return emptyList()
         }
         return try {
-            persons.chunked(7).map {
+            Log.d("CHECK", "Все ок, вставили")
+            persons.filter { it.trim().isNotEmpty() }.chunked(7).map {
                 Person(
-                    id = it[0].toInt(),
-                    photo = it[1],
-                    name = it[2],
-                    enName = it[3],
-                    description = it[4],
-                    profession = it[5],
-                    enProfession = it[6]
+                    id = it[0].trim().toInt(),
+                    photo = it[1].trim(),
+                    name = it[2].trim().takeIf { it.isNotEmpty() },
+                    enName = it[3].trim().takeIf { it.isNotEmpty() },
+                    description = it[4].trim().takeIf { it.isNotEmpty() },
+                    profession = it[5].trim().takeIf { it.isNotEmpty() },
+                    enProfession = it[6].trim().takeIf { it.isNotEmpty() }
                 )
             }
         } catch (e: NumberFormatException) {
+            Log.d("CHECK", "Ошибка - ${e.message}")
             emptyList()
         }
     }

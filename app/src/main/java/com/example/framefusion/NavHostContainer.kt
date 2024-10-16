@@ -35,14 +35,12 @@ fun NavHostContainer(
                 HomeScreen(
                     homeScreenViewModel,
                     provideMovieId = { movieId ->
-                        Log.d("CheckId", "movie ID - $movieId")
-                        val route = NavRoute.MovieDetails.createRoute(movieId!!.toString())
-                        Log.d("CheckId", "route - $route")
-                        navController.navigate(route)
+                        navController.navigate(NavRoute.MovieDetails.createRoute(movieId!!.toString()))
                     },
                     provideTvSeriesId = { tvSeriesId ->
                         navController.navigate(NavRoute.TvSeriesDetails.createRoute(tvSeriesId!!))
-                    })
+                    }
+                )
             }
 
             composable(NavRoute.Search.route) {

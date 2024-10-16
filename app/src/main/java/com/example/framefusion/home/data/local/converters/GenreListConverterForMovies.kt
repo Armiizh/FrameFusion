@@ -1,6 +1,5 @@
 package com.example.framefusion.home.data.local.converters
 
-import android.util.Log
 import androidx.room.TypeConverter
 import com.example.framefusion.home.data.local.models.Genre
 

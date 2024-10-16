@@ -30,6 +30,7 @@ import com.example.framefusion.personInterest.PersonInterestViewModel
 import com.example.framefusion.personInterest.data.model.UserGenres
 import com.example.framefusion.personInterest.utils.CheckItem
 import com.example.framefusion.personInterest.utils.Genres
+import com.example.framefusion.utils.Background
 import com.example.framefusion.utils.Constants
 import kotlinx.coroutines.launch
 
@@ -46,6 +47,7 @@ fun OnboardingScreen(
 
     Scaffold(
         content = { paddingValues ->
+            Background()
             Content(paddingValues, genres, genreStates)
         },
         bottomBar = {
