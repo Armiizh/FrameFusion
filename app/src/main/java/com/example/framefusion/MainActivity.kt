@@ -23,6 +23,7 @@ import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.personInterest.GreetingNavHost
 import com.example.framefusion.personInterest.PersonInterestViewModel
+import com.example.framefusion.search.SearchItemViewModel
 import com.example.framefusion.utils.BottomNavigationBar
 import com.example.framefusion.utils.Constants.REQUEST_PERMISSION_CODE
 import com.example.framefusion.utils.ui.theme.FrameFusionTheme
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
     private val homeScreenViewModel: HomeScreenViewModel by viewModels()
     private val personScreenViewModel: PersonScreenViewModel by viewModels()
     private val detailsScreenViewModel: DetailsScreenViewModel by viewModels()
+    private val searchItemViewModel: SearchItemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +75,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         content = { padding ->
                             val pad= padding
-                            NavHostContainer(navController, homeScreenViewModel, personScreenViewModel, detailsScreenViewModel) },
+                            NavHostContainer(navController, homeScreenViewModel, personScreenViewModel, detailsScreenViewModel, searchItemViewModel) },
                         bottomBar = { BottomNavigationBar(navController) }
                     )
                 }

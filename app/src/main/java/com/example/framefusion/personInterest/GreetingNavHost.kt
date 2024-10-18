@@ -23,7 +23,7 @@ fun GreetingNavHost(
         builder = {
 
             composable(GreetingNavRoute.Greeting.route) {
-                GreetingScreen(onNext = { navController.navigate(GreetingNavRoute.Onboarding.route) })
+                GreetingScreen { navController.navigate(GreetingNavRoute.Onboarding.route) }
             }
 
             composable(GreetingNavRoute.Onboarding.route) {

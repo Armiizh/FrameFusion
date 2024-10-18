@@ -4,12 +4,13 @@ import com.example.framefusion.home.data.rest.model.MovieResponse
 import com.example.framefusion.home.data.rest.model.TvSeriesResponse
 import com.example.framefusion.itemDetails.data.local.models.MovieDetails
 import com.example.framefusion.itemDetails.data.local.models.TvSeriesDetails
+import com.example.framefusion.search.data.rest.models.SearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface KinopoiskApi {
+interface RestApi {
 
     @GET("movie")
     suspend fun getPersonalMovie(
@@ -33,6 +34,7 @@ interface KinopoiskApi {
         @Query("lists") lists: String,
     ): Response<TvSeriesResponse>
 
+
     @GET("movie/{id}")
     suspend fun getMovieDetails(
         @Path("id") id: Int
@@ -40,6 +42,14 @@ interface KinopoiskApi {
 
     @GET("movie/{id}")
     suspend fun getTvSeriesDetails(
-       @Path("id") id: Int
+        @Path("id") id: Int
     ): Response<TvSeriesDetails>
+
+
+    @GET("movie/search")
+    suspend fun getSearchItem(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("query") name: String,
+    ): Response<SearchResponse>
 }

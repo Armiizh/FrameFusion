@@ -2,7 +2,7 @@ package com.example.framefusion.itemDetails.domain.usecases
 
 import com.example.framefusion.home.data.local.models.Genre
 import com.example.framefusion.home.data.local.models.Poster
-import com.example.framefusion.home.data.rest.KinopoiskApi
+import com.example.framefusion.home.data.rest.RestApi
 import com.example.framefusion.itemDetails.data.local.dao.TvSeriesDetailsDao
 import com.example.framefusion.itemDetails.data.local.models.Backdrop
 import com.example.framefusion.itemDetails.data.local.models.Person
@@ -11,11 +11,11 @@ import com.example.framefusion.itemDetails.data.local.models.TvSeriesDetails
 import javax.inject.Inject
 
 class GetTvSeriesDetailsUseCase @Inject constructor(
-    private val kinopoiskApi: KinopoiskApi,
+    private val restApi: RestApi,
     private val tvSeriesDetailsDao: TvSeriesDetailsDao
 ) {
     suspend fun invoke(id: Int) {
-        val response = kinopoiskApi.getTvSeriesDetails(id)
+        val response = restApi.getTvSeriesDetails(id)
         if (response.body() != null) {
             val tvSeries = TvSeriesDetails(
                 id = response.body()?.id,

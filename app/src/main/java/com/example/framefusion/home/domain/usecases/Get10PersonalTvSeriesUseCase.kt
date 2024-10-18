@@ -1,13 +1,12 @@
 package com.example.framefusion.home.domain.usecases
 
-import android.util.Log
 import com.example.framefusion.home.data.local.dao.HomeTvSeriesDao
-import com.example.framefusion.home.data.rest.KinopoiskApi
+import com.example.framefusion.home.data.rest.RestApi
 import com.example.framefusion.home.data.rest.model.toTvSeriesList
 import javax.inject.Inject
 
 class Get10PersonalTvSeriesUseCase @Inject constructor(
-    private val kinopoiskApi: KinopoiskApi,
+    private val restApi: RestApi,
     private val returnGenresUseCase: ReturnGenresUseCase,
     private val homeTvSeriesDao: HomeTvSeriesDao
 ) {
@@ -24,7 +23,7 @@ class Get10PersonalTvSeriesUseCase @Inject constructor(
             "poster.url"
         )
 
-        val response = kinopoiskApi.getPersonalTvSeries(
+        val response = restApi.getPersonalTvSeries(
             page = 1,
             limit = 10,
             selectedFields = selectedFields,

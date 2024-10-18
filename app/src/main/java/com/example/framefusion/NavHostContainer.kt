@@ -16,7 +16,8 @@ import com.example.framefusion.person.ui.PersonFavoriteMoviesScreen
 import com.example.framefusion.person.ui.PersonGenresScreen
 import com.example.framefusion.person.ui.PersonScreen
 import com.example.framefusion.person.ui.PersonSettingsScreen
-import com.example.framefusion.search.SearchScreen
+import com.example.framefusion.search.SearchItemViewModel
+import com.example.framefusion.search.ui.SearchScreen
 import com.example.framefusion.utils.Constants
 import kotlinx.coroutines.launch
 
@@ -25,7 +26,8 @@ fun NavHostContainer(
     navController: NavHostController,
     homeScreenViewModel: HomeScreenViewModel,
     personScreenViewModel: PersonScreenViewModel,
-    detailsScreenViewModel: DetailsScreenViewModel
+    detailsScreenViewModel: DetailsScreenViewModel,
+    searchItemViewModel: SearchItemViewModel
 ) {
     NavHost(
         navController = navController,
@@ -44,7 +46,8 @@ fun NavHostContainer(
             }
 
             composable(NavRoute.Search.route) {
-                SearchScreen()
+                SearchScreen(searchItemViewModel,
+                    provideSearchItemId = {})
             }
 
             composable(NavRoute.Person.route) {
@@ -120,4 +123,6 @@ sealed class NavRoute(val route: String) {
         fun createRoute(tvSeriesId: Int) =
             "${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/$tvSeriesId"
     }
+
+
 }

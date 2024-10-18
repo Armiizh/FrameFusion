@@ -4,7 +4,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
-import com.example.framefusion.home.data.rest.KinopoiskApi
+import com.example.framefusion.home.data.rest.RestApi
 import com.example.framefusion.utils.Constants.BASE_URL
 import com.example.framefusion.utils.interceptors.AuthorizationInterceptor
 import dagger.Module
@@ -76,7 +76,7 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideApiService(retrofit: Retrofit): KinopoiskApi {
-        return retrofit.create(KinopoiskApi::class.java)
+    fun provideApiService(retrofit: Retrofit): RestApi {
+        return retrofit.create(RestApi::class.java)
     }
 }

@@ -44,7 +44,6 @@ object Constants {
             Genres("Приключения", false, R.drawable.adventures),
             Genres("Фэнтези", false, R.drawable.fantasy),
             Genres("Драма", false, R.drawable.drama),
-            Genres("Мюзикл", false, R.drawable.musicals)
         )
     }
     object AllGenresObject {
