@@ -7,18 +7,8 @@ import com.example.framefusion.home.data.local.converters.GenreListConverterForM
 import com.example.framefusion.home.data.local.converters.PosterConverter
 import com.example.framefusion.home.data.local.models.Genre
 import com.example.framefusion.home.data.local.models.Poster
-import com.example.framefusion.itemDetails.data.local.convertes.BackdropConverter
-import com.example.framefusion.itemDetails.data.local.convertes.PersonListConverter
 import com.example.framefusion.itemDetails.data.local.convertes.RatingConverter
-import com.example.framefusion.itemDetails.data.local.models.Backdrop
-import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.data.local.models.Rating
-import com.example.framefusion.search.data.local.converters.CountryListConverter
-import com.example.framefusion.search.data.local.converters.ExternalIdConverter
-import com.example.framefusion.search.data.local.converters.LogoConverter
-import com.example.framefusion.search.data.local.converters.NameListConverter
-import com.example.framefusion.search.data.local.converters.ReleaseYearListConverter
-import com.example.framefusion.search.data.local.converters.VotesConverter
 
 @Entity(tableName = "search_item")
 @TypeConverters(

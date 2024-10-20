@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.framefusion.home.data.local.models.Poster
 
 @Composable
 fun Poster(url: String) {
