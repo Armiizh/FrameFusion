@@ -46,8 +46,15 @@ fun NavHostContainer(
             }
 
             composable(NavRoute.Search.route) {
-                SearchScreen(searchItemViewModel,
-                    provideSearchItemId = {})
+                SearchScreen(
+                    searchItemViewModel,
+                    provideMovieId = { movieId ->
+                        navController.navigate(NavRoute.MovieDetails.createRoute(movieId!!.toString()))
+                    },
+                    provideTvSeriesId = { tvSeriesId ->
+                        navController.navigate(NavRoute.TvSeriesDetails.createRoute(tvSeriesId!!))
+                    }
+                )
             }
 
             composable(NavRoute.Person.route) {

@@ -108,7 +108,7 @@ private fun TvSeriesContent(
             Backdrop(url)
             Icon(
                 modifier = Modifier
-                    .clickable { navController.navigate(NavRoute.Home.route) }
+                    .clickable { navController.popBackStack() }
                     .padding(12.dp),
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = null,

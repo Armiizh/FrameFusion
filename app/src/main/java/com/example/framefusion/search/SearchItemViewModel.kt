@@ -32,4 +32,7 @@ class SearchItemViewModel @Inject constructor(
             }
         }
     }
+    suspend fun deleteSearch() {
+        searchDatabase.searchItemDao().deleteSearchItem()
+    }
 }

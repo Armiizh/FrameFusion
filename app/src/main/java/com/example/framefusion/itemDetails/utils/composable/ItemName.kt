@@ -7,9 +7,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ItemName(name: String) {
+fun ItemName(name: String, textAlign: TextAlign = TextAlign.Center) {
     Text(
-        textAlign = TextAlign.Center,
+        textAlign = textAlign,
         text = name,
         fontSize = 32.sp,
         fontWeight = FontWeight.Bold

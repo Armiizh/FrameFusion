@@ -94,11 +94,13 @@ private fun BottomBarContent(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 4.dp),
+            .padding(top = 4.dp, bottom = 16.dp)
+            .padding(horizontal = 4.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         ElevatedButton(
+            modifier = Modifier.fillMaxWidth(),
             onClick = {
                 val selectedGenres =
                     genreStates.filterValues { it.value }

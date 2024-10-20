@@ -12,7 +12,7 @@ class GetSearchItemUseCase @Inject constructor(
     suspend fun invoke(name: String) {
         val response = restApi.getSearchItem(
             page = 1,
-            limit = 10,
+            limit = 13,
             name = name
         )
         val searchItem = response.body()!!.toSearchItemList()

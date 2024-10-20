@@ -13,13 +13,11 @@ import com.example.framefusion.utils.Constants
 fun GreetingNavHost(
     navController: NavHostController,
     onFinish: () -> Unit,
-    modifier: Modifier,
     viewModel: PersonInterestViewModel
 ) {
     NavHost(
         navController = navController,
         startDestination = Constants.GreetingScreens.GREETING_SCREEN,
-        modifier = modifier,
         builder = {
 
             composable(GreetingNavRoute.Greeting.route) {

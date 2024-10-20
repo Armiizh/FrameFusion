@@ -6,10 +6,11 @@ import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun ItemGenres(
-    detailsGenres: String
+    detailsGenres: String,
+    textAlign: TextAlign = TextAlign.Center
 ) {
     Text(
-        textAlign = TextAlign.Center,
-        text = " $detailsGenres"
+        textAlign = textAlign,
+        text = detailsGenres
     )
 }
