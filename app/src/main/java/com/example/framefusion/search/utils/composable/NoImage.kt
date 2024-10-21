@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.example.framefusion.R
 
 @Composable
-fun NoImage() {
+internal fun NoImage() {
     Image(
         modifier = Modifier
             .padding(end = 16.dp)

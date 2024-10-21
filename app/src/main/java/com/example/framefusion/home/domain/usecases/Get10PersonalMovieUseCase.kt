@@ -14,9 +14,7 @@ class Get10PersonalMovieUseCase @Inject constructor(
         val genresString = returnGenresUseCase.invoke().split(",")
         val selectedFields = listOf(
             "id",
-            "name",
-            "poster",
-            "genres"
+            "poster"
         )
         val notNullFields = listOf(
             "id",

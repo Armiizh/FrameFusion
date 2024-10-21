@@ -27,8 +27,7 @@ import com.example.framefusion.utils.ui.Background
 @Composable
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel,
-    provideMovieId:(Int?) -> Unit,
-    provideTvSeriesId:(Int?) -> Unit,
+    provideId:(Int?) -> Unit
 ) {
     val movies by homeScreenViewModel.movies.collectAsState()
     val tvSeries by homeScreenViewModel.tvSeries.collectAsState()
@@ -58,7 +57,7 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         items(movies) { movie ->
-                            MovieItem(movie, provideMovieId )
+                            MovieItem(movie, provideId )
                         }
                     }
                 }
@@ -79,7 +78,7 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         items(tvSeries) { tvSeries ->
-                            TvSeriesItem(tvSeries, provideTvSeriesId)
+                            TvSeriesItem(tvSeries, provideId)
                         }
                     }
                 }

@@ -19,8 +19,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.personInterest.GreetingNavHost
-import com.example.framefusion.personInterest.PersonInterestViewModel
+import com.example.framefusion.greeting.GreetingNavHost
+import com.example.framefusion.greeting.PersonInterestViewModel
 import com.example.framefusion.search.SearchItemViewModel
 import com.example.framefusion.utils.BottomNavigationBar
 import com.example.framefusion.utils.Constants.REQUEST_PERMISSION_CODE

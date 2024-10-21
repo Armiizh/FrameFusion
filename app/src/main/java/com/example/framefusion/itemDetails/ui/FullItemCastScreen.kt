@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.framefusion.NavRoute
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.Person
@@ -36,11 +37,10 @@ import com.example.framefusion.utils.ui.Background
 @Composable
 fun FullItemCastScreen(
     navController: NavHostController,
-    detailsScreenViewModel: DetailsScreenViewModel,
-    screenType: String?
+    detailsScreenViewModel: DetailsScreenViewModel
 ) {
-    val movieDetails by detailsScreenViewModel.movieDetails.collectAsState()
-    val tvSeriesDetails by detailsScreenViewModel.tvSeriesDetails.collectAsState()
+    
+    val itemDetails by detailsScreenViewModel.itemDetails.collectAsState()
 
     Scaffold(
         topBar = {
@@ -73,13 +73,7 @@ fun FullItemCastScreen(
                     .padding(bottom = 80.dp)
                     .verticalScroll(rememberScrollState()),
             ) {
-                when (screenType) {
-                    "tvSeries" -> MovieContent(tvSeriesDetails!!.persons)
-                    "movie" -> MovieContent(movieDetails!!.persons)
-                    else -> {
-                        ErrorContent()
-                    }
-                }
+                MovieContent(persons = itemDetails!!.persons)
             }
         }
     )

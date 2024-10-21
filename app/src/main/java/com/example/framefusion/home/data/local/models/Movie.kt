@@ -8,13 +8,10 @@ import com.example.framefusion.home.data.local.converters.PosterConverter
 
 @Entity(tableName = "movie")
 @TypeConverters(
-    PosterConverter::class,
-    GenreListConverterForMovies::class,
+    PosterConverter::class
 )
 data class Movie(
     @PrimaryKey
     val id: Int? = 0,
-    val name: String? = "",
-    val poster: Poster,
-    val genres: List<Genre>,
+    val poster: Poster
 )

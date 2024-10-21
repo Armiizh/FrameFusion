@@ -7,7 +7,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.example.framefusion.search.data.local.models.SearchItem
 
 @Composable
-fun SearchScreenDescription(searchItem: SearchItem) {
+internal fun SearchScreenDescription(searchItem: SearchItem) {
     val textDescription =
         if (searchItem.description != null && searchItem.description != "") {
             "${searchItem.description}"

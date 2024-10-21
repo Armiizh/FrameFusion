@@ -9,8 +9,7 @@ import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.ui.HomeScreen
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.ui.FullItemCastScreen
-import com.example.framefusion.itemDetails.ui.MovieItemDetailsScreen
-import com.example.framefusion.itemDetails.ui.TvSeriesItemDetailsScreen
+import com.example.framefusion.itemDetails.ui.ItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.ui.PersonFavoriteMoviesScreen
 import com.example.framefusion.person.ui.PersonGenresScreen
@@ -36,11 +35,13 @@ fun NavHostContainer(
             composable(NavRoute.Home.route) {
                 HomeScreen(
                     homeScreenViewModel,
-                    provideMovieId = { movieId ->
-                        navController.navigate(NavRoute.MovieDetails.createRoute(movieId!!.toString()))
-                    },
-                    provideTvSeriesId = { tvSeriesId ->
-                        navController.navigate(NavRoute.TvSeriesDetails.createRoute(tvSeriesId!!))
+                    provideId = { id ->
+                        if (id != null) {
+                            detailsScreenViewModel.viewModelScope.launch {
+                                detailsScreenViewModel.initItemDetails(id)
+                            }
+                        }
+                        navController.navigate(NavRoute.ItemDetails.createRoute(id!!.toString()))
                     }
                 )
             }
@@ -48,11 +49,13 @@ fun NavHostContainer(
             composable(NavRoute.Search.route) {
                 SearchScreen(
                     searchItemViewModel,
-                    provideMovieId = { movieId ->
-                        navController.navigate(NavRoute.MovieDetails.createRoute(movieId!!.toString()))
-                    },
-                    provideTvSeriesId = { tvSeriesId ->
-                        navController.navigate(NavRoute.TvSeriesDetails.createRoute(tvSeriesId!!))
+                    provideId = { id ->
+                        if (id != null) {
+                            detailsScreenViewModel.viewModelScope.launch {
+                                detailsScreenViewModel.initItemDetails(id)
+                            }
+                        }
+                        navController.navigate(NavRoute.ItemDetails.createRoute(id!!.toString()))
                     }
                 )
             }
@@ -81,29 +84,16 @@ fun NavHostContainer(
                 PersonSettingsScreen()
             }
 
-            composable(NavRoute.MovieDetails.route) {
-                val movieId = navController.currentBackStackEntry?.arguments?.getString("movieId")
-                MovieItemDetailsScreen(
+            composable(NavRoute.ItemDetails.route) {
+                ItemDetailsScreen(
                     navController,
                     detailsScreenViewModel,
-                    movieId?.toIntOrNull() ?: 0,
-                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route + "/movie") }
+                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route) }
                 )
             }
 
-            composable(NavRoute.TvSeriesDetails.route) {
-                val tvSeriesId =
-                    navController.currentBackStackEntry?.arguments?.getString("tvSeriesId")
-                TvSeriesItemDetailsScreen(
-                    navController,
-                    detailsScreenViewModel,
-                    tvSeriesId?.toIntOrNull() ?: 0,
-                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route + "/tvSeries") }
-                )
-            }
-            composable(NavRoute.FullItemCast.route + "/{caller}") {
-                val caller = navController.currentBackStackEntry?.arguments?.getString("caller")
-                FullItemCastScreen(navController, detailsScreenViewModel, caller)
+            composable(NavRoute.FullItemCast.route) {
+                FullItemCastScreen(navController, detailsScreenViewModel)
             }
         }
     )
@@ -118,17 +108,10 @@ sealed class NavRoute(val route: String) {
     data object PersonSettings : NavRoute(Constants.Screens.PERSON_SETTINGS_SCREEN)
     data object FullItemCast : NavRoute(Constants.Screens.FULL_ITEM_CAST_SCREEN)
 
-    data object MovieDetails :
-        NavRoute("${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/{movieId}") {
-        fun createRoute(movieId: String): String {
-            return "${Constants.Screens.MOVIE_ITEM_DETAILS_SCREEN}/$movieId"
-        }
-    }
-
-    data object TvSeriesDetails :
-        NavRoute("${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/{tvSeriesId}") {
-        fun createRoute(tvSeriesId: Int) =
-            "${Constants.Screens.TV_SERIES_ITEM_DETAILS_SCREEN}/$tvSeriesId"
+    data object ItemDetails :
+        NavRoute("${Constants.Screens.ITEM_DETAILS_SCREEN}/{itemId}") {
+        fun createRoute(itemId: String): String =
+            "${Constants.Screens.ITEM_DETAILS_SCREEN}/$itemId"
     }
 
 

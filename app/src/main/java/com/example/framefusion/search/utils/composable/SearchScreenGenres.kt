@@ -6,7 +6,7 @@ import com.example.framefusion.home.data.local.models.Genre
 import com.example.framefusion.itemDetails.utils.composable.ItemGenres
 
 @Composable
-fun SearchScreenGenres(
+internal fun SearchScreenGenres(
     genres: List<Genre>,
     detailsGenres: String
 ) {

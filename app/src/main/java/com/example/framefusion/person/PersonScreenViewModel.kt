@@ -3,8 +3,8 @@ package com.example.framefusion.person
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.person.domain.usecases.GetPersonGenresUseCase
-import com.example.framefusion.personInterest.data.model.UserGenres
-import com.example.framefusion.personInterest.domain.InsertGenresUseCase
+import com.example.framefusion.greeting.data.model.UserGenres
+import com.example.framefusion.greeting.domain.InsertGenresUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

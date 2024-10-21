@@ -9,7 +9,7 @@ import com.example.framefusion.itemDetails.utils.converters.ratingColor
 import com.example.framefusion.search.data.local.models.SearchItem
 
 @Composable
-fun SearchScreenYearAndRating(
+internal fun SearchScreenYearAndRating(
     searchItem: SearchItem,
     ratingKp: Double?
 ) {

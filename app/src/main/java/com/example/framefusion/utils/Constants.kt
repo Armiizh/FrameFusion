@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.framefusion.BottomNavItem
 import com.example.framefusion.NavRoute
 import com.example.framefusion.R
-import com.example.framefusion.personInterest.data.model.Genres
+import com.example.framefusion.greeting.data.model.Genres
 
 object Constants {
 
@@ -28,8 +28,7 @@ object Constants {
         const val PERSON_GENRES_SCREEN = "person_genres_screen"
         const val PERSON_FAVORITE_MOVIES_SCREEN = "person_favorite_movies_screen"
         const val PERSON_SETTINGS_SCREEN = "person_settings_screen"
-        const val MOVIE_ITEM_DETAILS_SCREEN = "movie_item_details_screen"
-        const val TV_SERIES_ITEM_DETAILS_SCREEN = "tv_series_item_details_screen"
+        const val ITEM_DETAILS_SCREEN = "item_details_screen"
         const val FULL_ITEM_CAST_SCREEN = "full_item_cast_screen"
     }
     object GenresObject {

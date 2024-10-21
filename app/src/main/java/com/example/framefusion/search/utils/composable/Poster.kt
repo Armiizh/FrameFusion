@@ -13,7 +13,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 
 @Composable
-fun Poster(url: String) {
+internal fun Poster(url: String) {
     AsyncImage(
         modifier = Modifier
             .padding(end = 12.dp)

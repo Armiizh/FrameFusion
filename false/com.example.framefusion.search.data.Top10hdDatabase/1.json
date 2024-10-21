@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "504b0352ab086376af8c828e250eab09",
+    "entities": [
+      {
+        "tableName": "top10hd",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`displayId` INTEGER, `id` INTEGER, `name` TEXT, `poster` TEXT NOT NULL, PRIMARY KEY(`displayId`))",
+        "fields": [
+          {
+            "fieldPath": "displayId",
+            "columnName": "displayId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "poster",
+            "columnName": "poster",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "displayId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '504b0352ab086376af8c828e250eab09')"
+    ]
+  }
+}

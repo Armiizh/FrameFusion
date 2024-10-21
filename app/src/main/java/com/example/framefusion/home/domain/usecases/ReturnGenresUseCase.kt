@@ -1,6 +1,6 @@
 package com.example.framefusion.home.domain.usecases
 
-import com.example.framefusion.personInterest.domain.GetGenresUseCase
+import com.example.framefusion.greeting.domain.GetGenresUseCase
 import java.util.Locale
 import javax.inject.Inject
 

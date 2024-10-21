@@ -41,8 +41,8 @@ import com.example.framefusion.NavRoute
 import com.example.framefusion.R
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.utils.composable.CheckGenre
-import com.example.framefusion.personInterest.data.model.Genres
-import com.example.framefusion.personInterest.data.model.UserGenres
+import com.example.framefusion.greeting.data.model.Genres
+import com.example.framefusion.greeting.data.model.UserGenres
 import com.example.framefusion.utils.Constants
 import kotlinx.coroutines.launch
 
