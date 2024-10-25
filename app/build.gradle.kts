@@ -86,13 +86,13 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
-    implementation(libs.androidx.runtime.livedata)
     debugImplementation (libs.library)
     releaseImplementation (libs.library.no.op)
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.1")
 
-    implementation ("com.github.bumptech.glide:glide:4.11.0")
-    implementation ("io.coil-kt:coil-compose:2.4.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+//    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    implementation(libs.coil.compose)
+//    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
 
 
 }

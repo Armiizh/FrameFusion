@@ -1,8 +1,8 @@
 package com.example.framefusion.itemDetails.ui
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -11,21 +11,26 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,15 +38,13 @@ import androidx.navigation.NavHostController
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.itemDetails.utils.composable.Backdrop
-import com.example.framefusion.itemDetails.utils.composable.Description
+import com.example.framefusion.itemDetails.utils.composable.DetailsScreenShimmer
 import com.example.framefusion.itemDetails.utils.composable.ErrorContent
+import com.example.framefusion.itemDetails.utils.composable.IconBack
 import com.example.framefusion.itemDetails.utils.composable.ItemGenres
-import com.example.framefusion.itemDetails.utils.composable.ItemName
 import com.example.framefusion.itemDetails.utils.composable.PersonItem
-import com.example.framefusion.itemDetails.utils.composable.ProgressContent
 import com.example.framefusion.itemDetails.utils.converters.genreFormatted
 import com.example.framefusion.itemDetails.utils.converters.minutesToHoursAndMinutes
-import com.example.framefusion.itemDetails.utils.converters.ratingColor
 import com.example.framefusion.utils.ui.Background
 
 @Composable
@@ -63,7 +66,7 @@ fun ItemDetailsScreen(
                     .padding(bottom = 80.dp)
             ) {
                 if (isItemLoading) {
-                    ProgressContent()
+                    DetailsScreenShimmer()
                 } else {
                     if (itemDetails != null) {
                         Content(itemDetails!!, navController, onFullCastScreen)
@@ -76,7 +79,6 @@ fun ItemDetailsScreen(
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Content(
     itemDetails: ItemDetails,
@@ -86,29 +88,9 @@ private fun Content(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Box(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            val url = if (itemDetails.backdrop.url != null && itemDetails.backdrop.url != "null") {
-                itemDetails.backdrop.url.toString()
-            } else {
-                null
-            }
-            Backdrop(url)
-            Icon(
-                modifier = Modifier
-                    .clickable { navController.popBackStack() }
-                    .padding(12.dp),
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground
-            )
+        LazyColumn {
+            item { Backdrop(itemDetails.backdrop.url, navController) }
         }
-        val detailsGenres = genreFormatted(itemDetails.genres)
-        val ratingKp = itemDetails.rating.kp
-        val movieLength = minutesToHoursAndMinutes(itemDetails.movieLength?.toIntOrNull())
-        val seriesLength = minutesToHoursAndMinutes(itemDetails.seriesLength?.toIntOrNull())
-        val totalLength = minutesToHoursAndMinutes(itemDetails.totalSeriesLength?.toIntOrNull())
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -116,54 +98,17 @@ private fun Content(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(12.dp))
-            ItemName(itemDetails.name.toString())
+            if (itemDetails.backdrop.url == null || itemDetails.backdrop.url == "null" || itemDetails.backdrop.url == "") {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                    IconBack(navController)
+                }
+            }
+            ItemName(itemDetails)
             Spacer(modifier = Modifier.height(12.dp))
-            when (itemDetails.type) {
-                "movie" -> {
-                    Text(text = "Фильм")
-                }
-                "tv-series" -> {
-                    Text(text = "Сериал")
-                }
-                else -> Text(text = "${itemDetails.type}")
-            }
-            if (itemDetails.genres.isNotEmpty()) {
-                ItemGenres(detailsGenres)
-            }
+            ItemType(itemDetails)
+            ItemGenresDetailsScreen(itemDetails)
             Spacer(modifier = Modifier.height(2.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                val yearText = itemDetails.year ?: ""
-
-                val movieLengthText = if (movieLength.isNotEmpty()) " * $movieLength" else ""
-                val totalLengthText = if (totalLength.isNotEmpty()) " * $totalLength" else ""
-                val seriesLengthText = if (seriesLength.isNotEmpty()) " * $seriesLength" else ""
-
-                Text(
-                    text = when (itemDetails.type) {
-                        "movie" -> {
-                            "$yearText$movieLengthText"
-                        }
-                        "tv-series" -> {
-                            "$yearText$totalLengthText$seriesLengthText"
-                        }
-                        else -> {
-                            yearText
-                        }
-                    }
-                )
-                if (itemDetails.rating.kp != null && ratingKp?.toFloat() != 0.0f) {
-                    Row {
-                        Text(text = " *")
-                        Text(
-                            text = " $ratingKp",
-                            color = ratingColor(ratingKp!!)
-                        )
-                    }
-                }
-            }
+            YearLengthRating(itemDetails)
             Spacer(modifier = Modifier.height(18.dp))
         }
         Column(
@@ -173,49 +118,207 @@ private fun Content(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Описание", fontSize = 18.sp)
-            }
-            HorizontalDivider(
-                thickness = DividerDefaults.Thickness,
-                modifier = Modifier
-                    .height(1.dp)
-                    .fillMaxWidth()
-            )
+            Description(itemDetails)
             Spacer(modifier = Modifier.height(12.dp))
-            val textDescription = if (itemDetails.description != null) {
-                "${itemDetails.description}"
-            } else if (itemDetails.shortDescription != null) {
-                "${itemDetails.shortDescription}"
-            } else {
-                "Ребята пока не добавили описание к своему фильму.\n\nЗдесь могла бы быть ваша реклама :)"
-            }
-            Description(textDescription)
+            Cast(itemDetails)
             Spacer(modifier = Modifier.height(12.dp))
-            Row(Modifier.fillMaxWidth()) { Text(text = "Актерский состав") }
-            HorizontalDivider(
-                thickness = DividerDefaults.Thickness,
-                modifier = Modifier
-                    .height(1.dp)
-                    .fillMaxWidth()
-            )
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                maxLines = 2
-            ) {
-                itemDetails.persons.take(4).forEach { person ->
-                    PersonItem(person)
+            FullCast(onFullCastScreen)
+        }
+    }
+}
+
+@Composable
+private fun FullCast(onFullCastScreen: () -> Unit) {
+    Row(
+        Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Полный актерский состав здесь",
+            color = MaterialTheme.colorScheme.onBackground,
+            textDecoration = TextDecoration.Underline,
+            modifier = Modifier.clickable { onFullCastScreen() }
+        )
+    }
+}
+
+@Composable
+@OptIn(ExperimentalLayoutApi::class)
+private fun Cast(itemDetails: ItemDetails) {
+    Row(Modifier.fillMaxWidth()) { Text(text = "Актерский состав") }
+    HorizontalDivider(
+        thickness = DividerDefaults.Thickness,
+        modifier = Modifier
+            .height(1.dp)
+            .fillMaxWidth()
+    )
+    FlowRow(
+        modifier = Modifier.fillMaxWidth(),
+        maxLines = 2
+    ) {
+        itemDetails.persons.take(4).forEach { person ->
+            PersonItem(person)
+        }
+    }
+}
+
+@Composable
+private fun YearLengthRating(
+    itemDetails: ItemDetails
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        val yearText =
+            if (itemDetails.year != null && itemDetails.year != "null" && itemDetails.year != "") {
+                "${itemDetails.year}"
+            } else null
+        Log.d("CHECK", "yearText - $yearText")
+
+        val movieLengthText =
+            if (itemDetails.movieLength != null && itemDetails.movieLength != "null" && itemDetails.movieLength != "") {
+                minutesToHoursAndMinutes(itemDetails.movieLength.toIntOrNull())
+            } else null
+        Log.d("CHECK", "movieLengthText - $movieLengthText")
+
+        val totalLengthText =
+            if (itemDetails.totalSeriesLength != null && itemDetails.totalSeriesLength != "null" && itemDetails.totalSeriesLength != "") {
+                minutesToHoursAndMinutes(itemDetails.totalSeriesLength.toIntOrNull())
+            } else null
+        Log.d("CHECK", "totalLengthText - $totalLengthText")
+
+        val seriesLengthText =
+            if (itemDetails.seriesLength != null && itemDetails.seriesLength != "null" && itemDetails.seriesLength != "") {
+                minutesToHoursAndMinutes(itemDetails.seriesLength.toIntOrNull())
+            } else null
+        Log.d("CHECK", "seriesLengthText - $seriesLengthText")
+
+        val ratingText =
+            if (itemDetails.rating.kp != null && itemDetails.rating.kp.toFloat() != 0.0f) {
+                itemDetails.rating.kp.toString()
+            } else null
+        Log.d("CHECK", "ratingText - $ratingText")
+
+        val displayText = when (itemDetails.type) {
+            "movie" -> {
+                listOf(yearText, movieLengthText, ratingText)
+                    .filterNotNull() // Убираем null значения
+                    .joinToString(" * ") // Объединяем с разделителем " * "
+            }
+
+            "tv-series" -> {
+                listOf(yearText, totalLengthText, seriesLengthText, ratingText)
+                    .filterNotNull() // Убираем null значения
+                    .joinToString(" * ") // Объединяем с разделителем " * "
+            }
+
+            else -> yearText // Для других типов просто возвращаем год
+        }
+        Text(
+            text = displayText ?: "", // Если ничего нет, отображаем пустую строку
+            modifier = Modifier.padding(8.dp),
+            fontSize = 16.sp
+        )
+    }
+}
+
+@Composable
+private fun ItemGenresDetailsScreen(
+    itemDetails: ItemDetails
+) {
+    val detailsGenres = genreFormatted(itemDetails.genres)
+    if (itemDetails.genres.isNotEmpty()) {
+        ItemGenres(detailsGenres)
+    }
+}
+
+@Composable
+private fun ItemName(
+    itemDetails: ItemDetails,
+    textAlign: TextAlign = TextAlign.Center
+) {
+    if (itemDetails.name != null && itemDetails.name != "null" || itemDetails.name != "") {
+        Text(
+            textAlign = textAlign,
+            text = itemDetails.name.toString(),
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+private fun ItemType(itemDetails: ItemDetails) {
+    if (itemDetails.type != null && itemDetails.type != "null" || itemDetails.backdrop.url != "") {
+        when (itemDetails.type) {
+            "movie" -> {
+                Text(text = "Фильм")
+            }
+
+            "tv-series" -> {
+                Text(text = "Сериал")
+            }
+
+            else -> Text(text = "${itemDetails.type}")
+        }
+    }
+}
+
+@Composable
+fun Description(itemDetails: ItemDetails) {
+
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Text(text = "Описание", fontSize = 18.sp)
+    }
+    HorizontalDivider(
+        thickness = DividerDefaults.Thickness,
+        modifier = Modifier
+            .height(1.dp)
+            .fillMaxWidth()
+    )
+    Spacer(modifier = Modifier.height(12.dp))
+    val textDescription =
+        if (itemDetails.description != null && itemDetails.description != "" && itemDetails.description != "null") {
+            "${itemDetails.description}"
+        } else if (itemDetails.shortDescription != null && itemDetails.shortDescription != "" && itemDetails.shortDescription != "null") {
+            "${itemDetails.shortDescription}"
+        } else {
+            "Ребята пока не добавили описание к своему фильму.\n\nЗдесь могла бы быть ваша реклама :)"
+        }
+    var isExpanded by remember { mutableStateOf(false) }
+    var actualLineCount by remember { mutableIntStateOf(0) }
+    var maxLines by remember { mutableIntStateOf(6) }
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.fillMaxWidth(),
+            text = textDescription,
+            maxLines = if (isExpanded) Int.MAX_VALUE else maxLines,
+            onTextLayout = { textLayoutResult ->
+                actualLineCount = textLayoutResult.lineCount
+                if (actualLineCount > 5 && !isExpanded) {
+                    maxLines = 6
                 }
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                Modifier.fillMaxWidth()
+        )
+        if (actualLineCount > 5) {
+            TextButton(
+                onClick = {
+                    isExpanded = !isExpanded
+                },
             ) {
                 Text(
-                    text = "Полный актерский состав здесь",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable { onFullCastScreen() }
+                    text = if (isExpanded) {
+                        "Свернуть"
+                    } else {
+                        "Развернуть"
+                    },
+                    modifier = Modifier.padding(8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
         }

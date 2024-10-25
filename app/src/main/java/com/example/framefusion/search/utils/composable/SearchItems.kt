@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.framefusion.itemDetails.utils.composable.ItemName
+import com.example.framefusion.itemDetails.utils.composable.ItemName1
 import com.example.framefusion.itemDetails.utils.converters.genreFormatted
 import com.example.framefusion.search.data.local.models.SearchItem
 
@@ -49,7 +49,7 @@ internal fun SearchItems(
         Column(
             modifier = Modifier.fillMaxWidth(1f)
         ) {
-            ItemName(searchItem.name.toString(), textAlign = TextAlign.Start)
+            ItemName1(searchItem.name.toString(), textAlign = TextAlign.Start)
             Spacer(Modifier.height(12.dp))
             SearchScreenGenres(searchItem.genres, detailsGenres)
             Spacer(modifier = Modifier.height(2.dp))
