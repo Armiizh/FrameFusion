@@ -1,4 +1,4 @@
-package com.example.framefusion.person.ui
+package com.example.framefusion.person.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import com.example.framefusion.R
 
 @Composable
-fun PersonFavoriteMoviesScreen() {
+fun PersonSettingsScreen() {
     Scaffold(
         content = { paddingValues ->
             Image(
@@ -27,7 +27,7 @@ fun PersonFavoriteMoviesScreen() {
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
-                Text(text = "PersonFavoriteMoviesScreen")
+                Text(text = "PersonSettingsScreen")
             }
         }
     )

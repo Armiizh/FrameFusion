@@ -13,10 +13,7 @@ import com.example.framefusion.greeting.data.model.Genres
 
 object Constants {
 
-    const val BASE_URL = "https://api.kinopoisk.dev/v1.4/"
-    const val X_API_KEY = "EB5RC3V-SQR4HTS-Q1DPVG0-86M9TK1"
     const val REQUEST_PERMISSION_CODE = 123
-
     object GreetingScreens {
         const val GREETING_SCREEN = "greeting_screen"
         const val ONBOARDING_SCREEN = "onboarding_screen"

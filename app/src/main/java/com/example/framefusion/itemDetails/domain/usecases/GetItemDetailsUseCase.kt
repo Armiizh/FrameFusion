@@ -2,20 +2,20 @@ package com.example.framefusion.itemDetails.domain.usecases
 
 import com.example.framefusion.home.data.local.models.Genre
 import com.example.framefusion.home.data.local.models.Poster
-import com.example.framefusion.home.data.rest.RestApi
 import com.example.framefusion.itemDetails.data.local.dao.ItemDetailsDao
 import com.example.framefusion.itemDetails.data.local.models.Backdrop
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.data.local.models.Rating
+import com.example.framefusion.itemDetails.data.service.ItemDetailsService
 import javax.inject.Inject
 
 class GetItemDetailsUseCase @Inject constructor(
-    private val restApi: RestApi,
+    private val itemDetailsService: ItemDetailsService,
     private val itemDetailsDao: ItemDetailsDao
 ) {
     suspend fun invoke(id: Int, onInserted: () -> Unit) {
-        val response = restApi.getItemDetails(id)
+        val response = itemDetailsService.getItemDetails(id)
         if (response.body() != null) {
             val itemDetails = ItemDetails(
                 id = response.body()?.id,

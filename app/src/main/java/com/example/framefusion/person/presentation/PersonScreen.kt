@@ -1,4 +1,4 @@
-package com.example.framefusion.person.ui
+package com.example.framefusion.person.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

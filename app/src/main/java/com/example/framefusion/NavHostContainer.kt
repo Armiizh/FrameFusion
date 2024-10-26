@@ -6,17 +6,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreenViewModel
-import com.example.framefusion.home.ui.HomeScreen
+import com.example.framefusion.home.presentation.HomeScreen
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
-import com.example.framefusion.itemDetails.ui.FullItemCastScreen
-import com.example.framefusion.itemDetails.ui.ItemDetailsScreen
+import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
+import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.person.ui.PersonFavoriteMoviesScreen
-import com.example.framefusion.person.ui.PersonGenresScreen
-import com.example.framefusion.person.ui.PersonScreen
-import com.example.framefusion.person.ui.PersonSettingsScreen
+import com.example.framefusion.person.presentation.PersonFavoriteMoviesScreen
+import com.example.framefusion.person.presentation.PersonGenresScreen
+import com.example.framefusion.person.presentation.PersonScreen
+import com.example.framefusion.person.presentation.PersonSettingsScreen
 import com.example.framefusion.search.SearchItemViewModel
-import com.example.framefusion.search.ui.SearchScreen
+import com.example.framefusion.search.presentation.SearchScreen
 import com.example.framefusion.utils.Constants
 import kotlinx.coroutines.launch
 

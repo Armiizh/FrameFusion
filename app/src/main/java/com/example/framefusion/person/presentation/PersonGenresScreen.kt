@@ -1,4 +1,4 @@
-package com.example.framefusion.person.ui
+package com.example.framefusion.person.presentation
 
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.foundation.Image
@@ -39,10 +39,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.framefusion.NavRoute
 import com.example.framefusion.R
-import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.person.utils.composable.CheckGenre
 import com.example.framefusion.greeting.data.model.Genres
 import com.example.framefusion.greeting.data.model.UserGenres
+import com.example.framefusion.person.PersonScreenViewModel
+import com.example.framefusion.person.utils.composable.CheckGenre
 import com.example.framefusion.utils.Constants
 import kotlinx.coroutines.launch
 

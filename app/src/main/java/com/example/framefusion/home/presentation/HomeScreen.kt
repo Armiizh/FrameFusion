@@ -1,4 +1,4 @@
-package com.example.framefusion.home.ui
+package com.example.framefusion.home.presentation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

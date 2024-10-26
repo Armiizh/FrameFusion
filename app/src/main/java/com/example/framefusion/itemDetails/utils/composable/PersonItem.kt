@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import coil.size.Size
 import com.example.framefusion.itemDetails.data.local.models.Person
 
 @Composable
@@ -38,11 +38,13 @@ fun PersonItem(person: Person) {
             .fillMaxWidth(0.5f)
             .padding(vertical = 8.dp)
     ) {
+        val width = with(LocalDensity.current) { 80.dp.toPx().toInt() }
+        val height = with(LocalDensity.current) { 80.dp.toPx().toInt() }
         AsyncImage(
             model = ImageRequest
                 .Builder(LocalContext.current)
                 .data(person.photo)
-                .size(Size.ORIGINAL)
+                .size(width, height)
                 .crossfade(true)
                 .build(),
             contentDescription = null,

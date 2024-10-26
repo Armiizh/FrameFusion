@@ -1,4 +1,4 @@
-package com.example.framefusion.greeting.ui
+package com.example.framefusion.greeting.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,11 +27,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.R
 import com.example.framefusion.greeting.PersonInterestViewModel
+import com.example.framefusion.greeting.data.model.Genres
 import com.example.framefusion.greeting.data.model.UserGenres
 import com.example.framefusion.greeting.utils.composable.CheckItem
-import com.example.framefusion.greeting.data.model.Genres
-import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.Constants
+import com.example.framefusion.utils.ui.Background
 import kotlinx.coroutines.launch
 
 @Composable

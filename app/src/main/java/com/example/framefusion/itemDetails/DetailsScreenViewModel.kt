@@ -23,7 +23,6 @@ class DetailsScreenViewModel @Inject constructor(
     private val _isItemLoading = MutableStateFlow(true)
     val isItemLoading: StateFlow<Boolean> = _isItemLoading
 
-
     suspend fun initItemDetails(itemId: Int) {
         getItemDetailsUseCase.invoke(
             itemId,

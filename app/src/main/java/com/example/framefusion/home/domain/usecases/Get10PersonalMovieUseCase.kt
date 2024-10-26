@@ -1,12 +1,12 @@
 package com.example.framefusion.home.domain.usecases
 
 import com.example.framefusion.home.data.local.dao.HomeMovieDao
-import com.example.framefusion.home.data.rest.RestApi
 import com.example.framefusion.home.data.rest.model.toMovieList
+import com.example.framefusion.home.data.service.HomeService
 import javax.inject.Inject
 
 class Get10PersonalMovieUseCase @Inject constructor(
-    private val restApi: RestApi,
+    private val homeService: HomeService,
     private val returnGenresUseCase: ReturnGenresUseCase,
     private val homeMovieDao: HomeMovieDao
 ) {
@@ -20,7 +20,7 @@ class Get10PersonalMovieUseCase @Inject constructor(
             "id",
             "poster.url"
         )
-        val response = restApi.getPersonalMovie(
+        val response = homeService.getPersonalMovie(
             page = 1,
             limit = 10,
             selectedFields = selectedFields,

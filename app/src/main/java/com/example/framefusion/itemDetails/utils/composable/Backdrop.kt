@@ -1,6 +1,5 @@
 package com.example.framefusion.itemDetails.utils.composable
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -25,9 +24,7 @@ fun Backdrop(
     url: String?,
     navController: NavHostController
 ) {
-    Log.d("CHECK", "ссылка - $url")
     if (url != null && url != "null" && url != "") {
-
         Box(modifier = Modifier.fillMaxWidth()) {
             var isLoading by remember { mutableStateOf(false) }
             var hasError by remember { mutableStateOf(false) }

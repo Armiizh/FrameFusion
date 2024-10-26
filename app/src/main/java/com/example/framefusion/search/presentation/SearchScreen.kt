@@ -1,4 +1,4 @@
-package com.example.framefusion.search.ui
+package com.example.framefusion.search.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
