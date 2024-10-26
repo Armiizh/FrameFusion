@@ -12,7 +12,7 @@ import com.example.framefusion.utils.Constants
 fun GreetingNavHost(
     navController: NavHostController,
     onFinish: () -> Unit,
-    viewModel: PersonInterestViewModel
+    viewModel: GreetingScreenViewModel
 ) {
     NavHost(
         navController = navController,
