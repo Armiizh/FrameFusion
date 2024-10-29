@@ -45,16 +45,20 @@ import com.example.framefusion.itemDetails.utils.composable.ItemGenres
 import com.example.framefusion.itemDetails.utils.composable.PersonItem
 import com.example.framefusion.itemDetails.utils.converters.genreFormatted
 import com.example.framefusion.itemDetails.utils.converters.minutesToHoursAndMinutes
+import com.example.framefusion.itemDetails.utils.converters.ratingColor
+import com.example.framefusion.person.utils.composable.ChangeFavoriteStatusButton
 import com.example.framefusion.utils.ui.Background
 
 @Composable
 fun ItemDetailsScreen(
     navController: NavHostController,
     detailsScreenViewModel: DetailsScreenViewModel,
-    onFullCastScreen: () -> Unit
+    onFullCastScreen: () -> Unit,
+    changeStatus: (ItemDetails) -> Unit
 ) {
     val itemDetails by detailsScreenViewModel.itemDetails.collectAsState()
     val isItemLoading by detailsScreenViewModel.isItemLoading.collectAsState()
+
 
     Scaffold(
         content = { paddingValues ->
@@ -69,7 +73,12 @@ fun ItemDetailsScreen(
                     DetailsScreenShimmer()
                 } else {
                     if (itemDetails != null) {
-                        Content(itemDetails!!, navController, onFullCastScreen)
+                        Content(
+                            itemDetails!!,
+                            navController,
+                            onFullCastScreen,
+                            changeStatus
+                        )
                     } else {
                         ErrorContent()
                     }
@@ -83,13 +92,20 @@ fun ItemDetailsScreen(
 private fun Content(
     itemDetails: ItemDetails,
     navController: NavHostController,
-    onFullCastScreen: () -> Unit
+    onFullCastScreen: () -> Unit,
+    changeStatus: (ItemDetails) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
         LazyColumn {
-            item { Backdrop(itemDetails.backdrop.url, navController) }
+            item {
+                Backdrop(
+                    itemDetails,
+                    changeStatus,
+                    navController
+                )
+            }
         }
         Column(
             modifier = Modifier
@@ -97,10 +113,22 @@ private fun Content(
                 .padding(horizontal = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
             if (itemDetails.backdrop.url == null || itemDetails.backdrop.url == "null" || itemDetails.backdrop.url == "") {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     IconBack(navController)
+                    ChangeFavoriteStatusButton(
+                        modifier = Modifier,
+                        isLiked = itemDetails.isLiked,
+                        onClick = {
+                            val updatedItemDetails =
+                                itemDetails.copy(isLiked = !(itemDetails.isLiked ?: false))
+                            changeStatus(updatedItemDetails)
+                        }
+                    )
                 }
             }
             ItemName(itemDetails)
@@ -193,32 +221,46 @@ private fun YearLengthRating(
             } else null
         Log.d("CHECK", "seriesLengthText - $seriesLengthText")
 
-        val ratingText =
-            if (itemDetails.rating.kp != null && itemDetails.rating.kp.toFloat() != 0.0f) {
-                itemDetails.rating.kp.toString()
-            } else null
+        val ratingValue = itemDetails.rating.kp
+        val ratingText = if (ratingValue != null && ratingValue.toFloat() != 0.0f) {
+            ratingValue.toString()
+        } else null
         Log.d("CHECK", "ratingText - $ratingText")
 
         val displayText = when (itemDetails.type) {
             "movie" -> {
-                listOf(yearText, movieLengthText, ratingText)
-                    .filterNotNull() // Убираем null значения
-                    .joinToString(" * ") // Объединяем с разделителем " * "
+                listOfNotNull(yearText, movieLengthText, ratingText)
+                    .joinToString(" * ")
             }
 
             "tv-series" -> {
-                listOf(yearText, totalLengthText, seriesLengthText, ratingText)
-                    .filterNotNull() // Убираем null значения
-                    .joinToString(" * ") // Объединяем с разделителем " * "
+                listOfNotNull(
+                    yearText,
+                    totalLengthText,
+                    seriesLengthText,
+                    ratingText
+                )
+                    .joinToString(" * ")
             }
 
-            else -> yearText // Для других типов просто возвращаем год
+            else -> yearText
         }
-        Text(
-            text = displayText ?: "", // Если ничего нет, отображаем пустую строку
-            modifier = Modifier.padding(8.dp),
-            fontSize = 16.sp
-        )
+        if (displayText != null) {
+            val otherText = displayText.split(" * ").filter { it != ratingText }.joinToString(" * ")
+            Text(
+                text = "$otherText * ",
+                modifier = Modifier.padding(vertical = 8.dp),
+                fontSize = 16.sp
+            )
+        }
+        if (ratingText != null) {
+            Text(
+                text = ratingText,
+                color = ratingColor(itemDetails.rating.kp), // Устанавливаем цвет рейтинга
+                modifier = Modifier.padding(vertical = 8.dp),
+                fontSize = 16.sp
+            )
+        }
     }
 }
 
@@ -237,7 +279,7 @@ private fun ItemName(
     itemDetails: ItemDetails,
     textAlign: TextAlign = TextAlign.Center
 ) {
-    if (itemDetails.name != null && itemDetails.name != "null" || itemDetails.name != "") {
+    if (itemDetails.name != null && itemDetails.name != "null" && itemDetails.name != "") {
         Text(
             textAlign = textAlign,
             text = itemDetails.name.toString(),
@@ -249,7 +291,7 @@ private fun ItemName(
 
 @Composable
 private fun ItemType(itemDetails: ItemDetails) {
-    if (itemDetails.type != null && itemDetails.type != "null" || itemDetails.backdrop.url != "") {
+    if (itemDetails.type != null && itemDetails.type != "null" && itemDetails.backdrop.url != "") {
         when (itemDetails.type) {
             "movie" -> {
                 Text(text = "Фильм")

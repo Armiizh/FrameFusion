@@ -88,7 +88,12 @@ fun NavHostContainer(
                 ItemDetailsScreen(
                     navController,
                     detailsScreenViewModel,
-                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route) }
+                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route) },
+                    changeStatus = { item ->
+                        personScreenViewModel.viewModelScope.launch {
+                            personScreenViewModel.changeFavoriteStatus(item)
+                        }
+                    }
                 )
             }
 
@@ -113,6 +118,4 @@ sealed class NavRoute(val route: String) {
         fun createRoute(itemId: String): String =
             "${Constants.Screens.ITEM_DETAILS_SCREEN}/$itemId"
     }
-
-
 }

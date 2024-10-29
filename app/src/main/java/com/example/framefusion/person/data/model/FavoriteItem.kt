@@ -1,4 +1,4 @@
-package com.example.framefusion.itemDetails.data.local.models
+package com.example.framefusion.person.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,8 +10,11 @@ import com.example.framefusion.itemDetails.data.local.convertes.BackdropConverte
 import com.example.framefusion.itemDetails.data.local.convertes.GenreListConverter
 import com.example.framefusion.itemDetails.data.local.convertes.PersonListConverter
 import com.example.framefusion.itemDetails.data.local.convertes.RatingConverter
+import com.example.framefusion.itemDetails.data.local.models.Backdrop
+import com.example.framefusion.itemDetails.data.local.models.Person
+import com.example.framefusion.itemDetails.data.local.models.Rating
 
-@Entity(tableName = "item_details")
+@Entity(tableName = "favorite_item")
 @TypeConverters(
     PosterConverter::class,
     GenreListConverter::class,
@@ -19,7 +22,7 @@ import com.example.framefusion.itemDetails.data.local.convertes.RatingConverter
     RatingConverter::class,
     PersonListConverter::class
 )
-data class ItemDetails(
+data class FavoriteItem(
     @PrimaryKey
     val id: Int? = 0,
     val isLiked: Boolean? = false,
