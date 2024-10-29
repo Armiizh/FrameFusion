@@ -34,7 +34,7 @@ fun ChangeFavoriteStatusButton(
             )
         }
         Icon(
-            imageVector = if (isLike) Icons.Outlined.FavoriteBorder else Icons.Default.Favorite,
+            imageVector = if (isLike) Icons.Default.Favorite else Icons.Outlined.FavoriteBorder,
             contentDescription = "Like Button",
             tint = Color.White
         )

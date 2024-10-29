@@ -59,7 +59,6 @@ fun NavHostContainer(
                     }
                 )
             }
-
             composable(NavRoute.Person.route) {
                 PersonScreen(navController, personScreenViewModel)
             }
@@ -89,9 +88,12 @@ fun NavHostContainer(
                     navController,
                     detailsScreenViewModel,
                     onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route) },
-                    changeStatus = { item ->
+                    changeStatus = { item, isLiked ->
                         personScreenViewModel.viewModelScope.launch {
-                            personScreenViewModel.changeFavoriteStatus(item)
+                            personScreenViewModel.changeFavoriteStatus(item, isLiked)
+                        }
+                        detailsScreenViewModel.viewModelScope.launch {
+                            detailsScreenViewModel.updateItem(item, isLiked)
                         }
                     }
                 )

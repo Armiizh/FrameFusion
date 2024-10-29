@@ -8,8 +8,8 @@ import javax.inject.Inject
 class AddAnItemToFavoritesUseCase @Inject constructor(
     private val favoriteItemDatabase: FavoriteItemDatabase,
 ) {
-    suspend fun invoke(item: ItemDetails) {
-        val favoriteItem = item.toFavoriteItem()
+    suspend fun invoke(item: ItemDetails, isLiked: Boolean) {
+        val favoriteItem = item.toFavoriteItem().copy(isLiked = isLiked)
         favoriteItemDatabase.favoriteItemDao().insertFavoriteItem(favoriteItem)
     }
 }

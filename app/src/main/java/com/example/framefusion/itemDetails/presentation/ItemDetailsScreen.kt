@@ -54,11 +54,10 @@ fun ItemDetailsScreen(
     navController: NavHostController,
     detailsScreenViewModel: DetailsScreenViewModel,
     onFullCastScreen: () -> Unit,
-    changeStatus: (ItemDetails) -> Unit
+    changeStatus: (ItemDetails, Boolean) -> Unit
 ) {
     val itemDetails by detailsScreenViewModel.itemDetails.collectAsState()
     val isItemLoading by detailsScreenViewModel.isItemLoading.collectAsState()
-
 
     Scaffold(
         content = { paddingValues ->
@@ -93,7 +92,7 @@ private fun Content(
     itemDetails: ItemDetails,
     navController: NavHostController,
     onFullCastScreen: () -> Unit,
-    changeStatus: (ItemDetails) -> Unit
+    changeStatus: (ItemDetails, Boolean) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -124,9 +123,10 @@ private fun Content(
                         modifier = Modifier,
                         isLiked = itemDetails.isLiked,
                         onClick = {
-                            val updatedItemDetails =
-                                itemDetails.copy(isLiked = !(itemDetails.isLiked ?: false))
-                            changeStatus(updatedItemDetails)
+                            val isLiked = !(itemDetails.isLiked ?: false)
+//                            val updatedItemDetails =
+//                                itemDetails.copy(isLiked = !(itemDetails.isLiked ?: false))
+                            changeStatus(itemDetails, isLiked)
                         }
                     )
                 }
@@ -137,7 +137,7 @@ private fun Content(
             ItemGenresDetailsScreen(itemDetails)
             Spacer(modifier = Modifier.height(2.dp))
             YearLengthRating(itemDetails)
-            Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(12.dp))
         }
         Column(
             modifier = Modifier
@@ -256,7 +256,7 @@ private fun YearLengthRating(
         if (ratingText != null) {
             Text(
                 text = ratingText,
-                color = ratingColor(itemDetails.rating.kp), // Устанавливаем цвет рейтинга
+                color = ratingColor(itemDetails.rating.kp),
                 modifier = Modifier.padding(vertical = 8.dp),
                 fontSize = 16.sp
             )

@@ -11,11 +11,14 @@ import kotlinx.coroutines.flow.Flow
 interface FavoriteItemDao {
 
     @Query("SELECT * FROM favorite_item")
-    fun getFavoriteItem(): Flow<FavoriteItem>
+    fun getFavoriteItem(): Flow<List<FavoriteItem>>
 
     @Query("DELETE FROM favorite_item WHERE id = :itemId")
     suspend fun deleteFavoriteItem(itemId: Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavoriteItem(favoriteItem: FavoriteItem)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM favorite_item WHERE id = :itemId)")
+    suspend fun isItemFavorite(itemId: Int): Boolean
 }

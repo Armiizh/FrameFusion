@@ -27,7 +27,7 @@ import com.example.framefusion.person.utils.composable.ChangeFavoriteStatusButto
 @Composable
 fun Backdrop(
     itemDetails: ItemDetails?,
-    changeStatus: (ItemDetails) -> Unit,
+    changeStatus: (ItemDetails, Boolean) -> Unit,
     navController: NavHostController
 ) {
     if (itemDetails?.backdrop?.url != null && itemDetails.backdrop.url != "null" && itemDetails.backdrop.url != "") {
@@ -75,9 +75,10 @@ fun Backdrop(
                     .offset(y = 16.dp),
                 isLiked = itemDetails.isLiked ?: false,
                 onClick = {
-                    val updatedItemDetails =
-                        itemDetails.copy(isLiked = !(itemDetails.isLiked ?: false))
-                    changeStatus(updatedItemDetails)
+                    val isLiked = !(itemDetails.isLiked ?: false)
+//                    val updatedItemDetails =
+//                        itemDetails.copy(isLiked = !(itemDetails.isLiked ?: false))
+                    changeStatus(itemDetails, isLiked)
                 }
             )
         }
