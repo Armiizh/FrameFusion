@@ -76,7 +76,19 @@ fun NavHostContainer(
             }
 
             composable(NavRoute.PersonFavorite.route) {
-                PersonFavoriteMoviesScreen()
+                PersonFavoriteMoviesScreen(
+                    personScreenViewModel,
+                    provideId = { id ->
+                        if (id != null) {
+                            detailsScreenViewModel.viewModelScope.launch {
+                                detailsScreenViewModel.initItemDetails(id)
+                            }
+                        }
+                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                    },
+                    onHomeScreen = { navController.navigate(NavRoute.Home.route) },
+                    onSearchScreen = { navController.navigate(NavRoute.Search.route) }
+                )
             }
 
             composable(NavRoute.PersonSettings.route) {
@@ -91,6 +103,7 @@ fun NavHostContainer(
                     changeStatus = { item, isLiked ->
                         personScreenViewModel.viewModelScope.launch {
                             personScreenViewModel.changeFavoriteStatus(item, isLiked)
+                            personScreenViewModel.initData()
                         }
                         detailsScreenViewModel.viewModelScope.launch {
                             detailsScreenViewModel.updateItem(item, isLiked)

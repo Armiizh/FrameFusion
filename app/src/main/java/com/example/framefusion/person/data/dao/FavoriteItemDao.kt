@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavoriteItemDao {
 
-    @Query("SELECT * FROM favorite_item")
+    @Query("SELECT * FROM favorite_item WHERE isFavorite = 1")
     fun getFavoriteItem(): Flow<List<FavoriteItem>>
 
     @Query("DELETE FROM favorite_item WHERE id = :itemId")

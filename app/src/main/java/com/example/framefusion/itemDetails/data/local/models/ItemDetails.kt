@@ -22,7 +22,7 @@ import com.example.framefusion.itemDetails.data.local.convertes.RatingConverter
 data class ItemDetails(
     @PrimaryKey
     val id: Int? = 0,
-    val isLiked: Boolean? = false,
+    val isFavorite: Boolean? = false,
     val type: String? = "",
     val name: String? = "",
     val year: String? = "",

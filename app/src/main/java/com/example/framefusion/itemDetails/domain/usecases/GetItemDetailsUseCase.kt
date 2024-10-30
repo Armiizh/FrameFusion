@@ -63,9 +63,9 @@ class GetItemDetailsUseCase @Inject constructor(
             )
             val isLiked = favoriteItemDatabase.favoriteItemDao().isItemFavorite(id)
             val updatedItemDetails = if (isLiked) {
-                itemDetails.copy(isLiked = true)
+                itemDetails.copy(isFavorite = true)
             } else {
-                itemDetails.copy(isLiked = false)
+                itemDetails.copy(isFavorite = false)
             }
             itemDetailsDatabase.itemDetailsDao().updateItemDetails(updatedItemDetails, onInserted)
         }

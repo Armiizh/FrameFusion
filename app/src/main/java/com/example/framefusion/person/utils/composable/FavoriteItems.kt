@@ -15,26 +15,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.framefusion.itemDetails.utils.composable.ItemName1
 import com.example.framefusion.itemDetails.utils.converters.genreFormatted
-import com.example.framefusion.search.data.local.models.SearchItem
+import com.example.framefusion.person.data.model.FavoriteItem
 import com.example.framefusion.search.utils.composable.NoImage
 import com.example.framefusion.search.utils.composable.Poster
-import com.example.framefusion.search.utils.composable.SearchScreenDescription
 import com.example.framefusion.search.utils.composable.SearchScreenGenres
-import com.example.framefusion.search.utils.composable.SearchScreenYearAndRating
 
 @Composable
 internal fun FavoriteItems(
-    searchItem: SearchItem,
+    favoriteItem: FavoriteItem,
     provideId: (Int?) -> Unit
 ) {
-    val detailsGenres = genreFormatted(searchItem.genres!!)
-    val ratingKp = searchItem.rating?.kp
+    val detailsGenres = genreFormatted(favoriteItem.genres)
+    val ratingKp = favoriteItem.rating.kp
+
     Row(
         Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable {
-                provideId(searchItem.id)
+                provideId(favoriteItem.id)
             },
         horizontalArrangement = Arrangement.Start
     ) {
@@ -45,8 +44,8 @@ internal fun FavoriteItems(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            if (searchItem.poster?.url != null && searchItem.poster.url != "null") {
-                Poster(searchItem.poster.url)
+            if (favoriteItem.poster.url != null && favoriteItem.poster.url != "null") {
+                Poster(favoriteItem.poster.url)
             } else {
                 NoImage()
             }
@@ -54,13 +53,13 @@ internal fun FavoriteItems(
         Column(
             modifier = Modifier.fillMaxWidth(1f)
         ) {
-            ItemName1(searchItem.name.toString(), textAlign = TextAlign.Start)
+            ItemName1(favoriteItem.name.toString(), textAlign = TextAlign.Start)
             Spacer(Modifier.height(12.dp))
-            SearchScreenGenres(searchItem.genres, detailsGenres)
+            SearchScreenGenres(favoriteItem.genres, detailsGenres)
             Spacer(modifier = Modifier.height(2.dp))
-            SearchScreenYearAndRating(searchItem, ratingKp)
+            FavoriteScreenYearAndRating(favoriteItem, ratingKp)
             Spacer(modifier = Modifier.height(2.dp))
-            SearchScreenDescription(searchItem)
+            FavoriteScreenDescription(favoriteItem)
         }
     }
 }

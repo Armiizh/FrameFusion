@@ -29,6 +29,6 @@ interface ItemDetailsDao {
         callback()
     }
 
-    @Query("UPDATE item_details SET isLiked = :isLiked WHERE id = :itemId")
-    suspend fun updateItemLikedStatus(itemId: Int, isLiked: Boolean)
+    @Query("UPDATE item_details SET isFavorite = :isFavorite WHERE id = :itemId")
+    suspend fun updateItemLikedStatus(itemId: Int, isFavorite: Boolean)
 }

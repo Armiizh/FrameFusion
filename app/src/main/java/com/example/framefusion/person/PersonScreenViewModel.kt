@@ -32,6 +32,7 @@ class PersonScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             favoriteItemDatabase.favoriteItemDao().getFavoriteItem().collect { item ->
+                _favorites.value = item
             }
         }
     }
@@ -49,5 +50,13 @@ class PersonScreenViewModel @Inject constructor(
 
     suspend fun changeFavoriteStatus(item: ItemDetails, isLiked: Boolean) {
         addAnItemToFavoritesUseCase.invoke(item, isLiked)
+    }
+
+    suspend fun initData() {
+        viewModelScope.launch {
+            favoriteItemDatabase.favoriteItemDao().getFavoriteItem().collect { item ->
+                _favorites.value = item
+            }
+        }
     }
 }

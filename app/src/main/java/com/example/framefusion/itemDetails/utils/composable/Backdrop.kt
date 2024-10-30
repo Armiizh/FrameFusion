@@ -17,10 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.framefusion.R
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.person.utils.composable.ChangeFavoriteStatusButton
 
@@ -62,7 +64,10 @@ fun Backdrop(
             if (isLoading) {
                 BackDropShimmer()
             } else if (hasError) {
-                Toast.makeText(context, "Загрузка фона закончилась ошибкой", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    context,
+                    stringResource(R.string.Backdrop_error_message), Toast.LENGTH_SHORT
+                )
                     .show()
                 Spacer(modifier = Modifier.height(1.dp))
             }
@@ -73,12 +78,10 @@ fun Backdrop(
                     .padding(16.dp)
                     .align(Alignment.BottomStart)
                     .offset(y = 16.dp),
-                isLiked = itemDetails.isLiked ?: false,
+                isLiked = itemDetails.isFavorite ?: false,
                 onClick = {
-                    val isLiked = !(itemDetails.isLiked ?: false)
-//                    val updatedItemDetails =
-//                        itemDetails.copy(isLiked = !(itemDetails.isLiked ?: false))
-                    changeStatus(itemDetails, isLiked)
+                    val isFavorite = !(itemDetails.isFavorite ?: false)
+                    changeStatus(itemDetails, isFavorite)
                 }
             )
         }

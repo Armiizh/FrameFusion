@@ -9,7 +9,7 @@ class AddAnItemToFavoritesUseCase @Inject constructor(
     private val favoriteItemDatabase: FavoriteItemDatabase,
 ) {
     suspend fun invoke(item: ItemDetails, isLiked: Boolean) {
-        val favoriteItem = item.toFavoriteItem().copy(isLiked = isLiked)
+        val favoriteItem = item.toFavoriteItem().copy(isFavorite = isLiked)
         favoriteItemDatabase.favoriteItemDao().insertFavoriteItem(favoriteItem)
     }
 }

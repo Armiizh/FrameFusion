@@ -25,7 +25,7 @@ import com.example.framefusion.itemDetails.data.local.models.Rating
 data class FavoriteItem(
     @PrimaryKey
     val id: Int? = 0,
-    val isLiked: Boolean? = false,
+    val isFavorite: Boolean? = false,
     val type: String? = "",
     val name: String? = "",
     val year: String? = "",

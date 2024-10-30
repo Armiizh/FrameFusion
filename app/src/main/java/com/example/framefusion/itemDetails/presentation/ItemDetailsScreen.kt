@@ -29,12 +29,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.itemDetails.utils.composable.Backdrop
@@ -121,12 +123,10 @@ private fun Content(
                     IconBack(navController)
                     ChangeFavoriteStatusButton(
                         modifier = Modifier,
-                        isLiked = itemDetails.isLiked,
+                        isLiked = itemDetails.isFavorite,
                         onClick = {
-                            val isLiked = !(itemDetails.isLiked ?: false)
-//                            val updatedItemDetails =
-//                                itemDetails.copy(isLiked = !(itemDetails.isLiked ?: false))
-                            changeStatus(itemDetails, isLiked)
+                            val isFavorite = !(itemDetails.isFavorite ?: false)
+                            changeStatus(itemDetails, isFavorite)
                         }
                     )
                 }
@@ -161,7 +161,7 @@ private fun FullCast(onFullCastScreen: () -> Unit) {
         Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Полный актерский состав здесь",
+            text = stringResource(R.string.Full_cast),
             color = MaterialTheme.colorScheme.onBackground,
             textDecoration = TextDecoration.Underline,
             modifier = Modifier.clickable { onFullCastScreen() }
@@ -172,7 +172,7 @@ private fun FullCast(onFullCastScreen: () -> Unit) {
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
 private fun Cast(itemDetails: ItemDetails) {
-    Row(Modifier.fillMaxWidth()) { Text(text = "Актерский состав") }
+    Row(Modifier.fillMaxWidth()) { Text(text = stringResource(id = R.string.Cast)) }
     HorizontalDivider(
         thickness = DividerDefaults.Thickness,
         modifier = Modifier
@@ -294,11 +294,11 @@ private fun ItemType(itemDetails: ItemDetails) {
     if (itemDetails.type != null && itemDetails.type != "null" && itemDetails.backdrop.url != "") {
         when (itemDetails.type) {
             "movie" -> {
-                Text(text = "Фильм")
+                Text(text = stringResource(R.string.movie))
             }
 
             "tv-series" -> {
-                Text(text = "Сериал")
+                Text(text = stringResource(R.string.Tv_series))
             }
 
             else -> Text(text = "${itemDetails.type}")
@@ -310,7 +310,7 @@ private fun ItemType(itemDetails: ItemDetails) {
 fun Description(itemDetails: ItemDetails) {
 
     Row(modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Описание", fontSize = 18.sp)
+        Text(text = stringResource(id = R.string.Description), fontSize = 18.sp)
     }
     HorizontalDivider(
         thickness = DividerDefaults.Thickness,
@@ -325,7 +325,7 @@ fun Description(itemDetails: ItemDetails) {
         } else if (itemDetails.shortDescription != null && itemDetails.shortDescription != "" && itemDetails.shortDescription != "null") {
             "${itemDetails.shortDescription}"
         } else {
-            "Ребята пока не добавили описание к своему фильму.\n\nЗдесь могла бы быть ваша реклама :)"
+            stringResource(R.string.Empty_description)
         }
     var isExpanded by remember { mutableStateOf(false) }
     var actualLineCount by remember { mutableIntStateOf(0) }
@@ -355,9 +355,9 @@ fun Description(itemDetails: ItemDetails) {
             ) {
                 Text(
                     text = if (isExpanded) {
-                        "Свернуть"
+                        stringResource(R.string.Hide)
                     } else {
-                        "Развернуть"
+                        stringResource(R.string.Expand)
                     },
                     modifier = Modifier.padding(8.dp),
                     color = MaterialTheme.colorScheme.onBackground

@@ -5,7 +5,7 @@ import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 fun ItemDetails.toFavoriteItem(): FavoriteItem {
     return FavoriteItem(
         id = this.id,
-        isLiked = this.isLiked,
+        isFavorite = this.isFavorite,
         type = this.type,
         name = this.name,
         year = this.year,
