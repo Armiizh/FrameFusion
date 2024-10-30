@@ -1,16 +1,16 @@
 package com.example.framefusion.home.domain.usecases
 
-import com.example.framefusion.home.data.local.Top10PersonalTvSeriesDatabase
-import com.example.framefusion.home.data.rest.model.toTop10TvSeriesList
+import com.example.framefusion.home.data.local.PersonalTvSeriesDatabase
+import com.example.framefusion.home.data.rest.model.toPersonalTvSeriesList
 import com.example.framefusion.home.data.service.HomeService
 import javax.inject.Inject
 
-class Get10PersonalTvSeriesUseCase @Inject constructor(
+class GetPersonalTvSeriesUseCase @Inject constructor(
     private val homeService: HomeService,
     private val returnGenresUseCase: ReturnGenresUseCase,
-    private val homeDatabase: Top10PersonalTvSeriesDatabase
+    private val database: PersonalTvSeriesDatabase
 ) {
-    suspend fun invoke() {
+    suspend fun invoke(page: Int, callBack: () -> Unit) {
         val genresString = returnGenresUseCase.invoke().split(",")
         val selectedFields = listOf(
             "id",
@@ -20,17 +20,19 @@ class Get10PersonalTvSeriesUseCase @Inject constructor(
             "id",
             "poster.url"
         )
-
-        val response = homeService.get10PersonalTvSeries(
-            page = 1,
-            limit = 10,
+        val response = homeService.getPersonalTvSeries(
+            page = page,
+            limit = 20,
             selectedFields = selectedFields,
             notNullFields = notNullFields,
             type = "tv-series",
             genresName = genresString,
             lists = "popular-series"
         )
-        val tvSeries = response.body()!!.toTop10TvSeriesList()
-        homeDatabase.top10PersonalTvSeriesDao().updateTvSeries(tvSeries)
+        if (response.body() != null) {
+            val tvSeries = response.body()!!.toPersonalTvSeriesList()
+            database.personalTvSeriesDao().updateTvSeries(tvSeries)
+            callBack()
+        }
     }
 }

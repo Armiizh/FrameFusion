@@ -12,11 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.valentinilk.shimmer.shimmer
 
-@Preview
 @Composable
 fun HomeScreenMovieShimmer() {
 
@@ -37,7 +35,7 @@ private fun MovieItemShimmer() {
     Box(
         modifier = Modifier
             .padding(horizontal = 8.dp)
-            .height(200.dp)
+            .height(220.dp)
             .width(150.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(color = Color.LightGray)

@@ -12,19 +12,19 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.framefusion.home.data.local.models.Movie
+import com.example.framefusion.home.data.local.models.Top10PersonalMovie
 
 @Composable
-internal fun MovieItem(movie: Movie, provideId: (Int?) -> Unit) {
+internal fun MovieItem(top10PersonalMovie: Top10PersonalMovie, provideId: (Int?) -> Unit) {
     AsyncImage(
         modifier = Modifier
             .fillMaxWidth()
             .padding(end = 12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable { provideId(movie.id) },
+            .clickable { provideId(top10PersonalMovie.id) },
         model = ImageRequest
             .Builder(LocalContext.current)
-            .data(movie.poster.url)
+            .data(top10PersonalMovie.poster.url)
             .size(Size.ORIGINAL)
             .crossfade(true)
             .build(),

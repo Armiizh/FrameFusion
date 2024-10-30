@@ -12,19 +12,19 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.framefusion.home.data.local.models.TvSeries
+import com.example.framefusion.home.data.local.models.Top10PersonalTvSeries
 
 @Composable
-internal fun TvSeriesItem(tvSeries: TvSeries, provideId: (Int?) -> Unit) {
+internal fun TvSeriesItem(top10PersonalTvSeries: Top10PersonalTvSeries, provideId: (Int?) -> Unit) {
     AsyncImage(
         modifier = Modifier
             .fillMaxWidth()
             .padding(end = 12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable { provideId(tvSeries.id) },
+            .clickable { provideId(top10PersonalTvSeries.id) },
         model = ImageRequest
             .Builder(LocalContext.current)
-            .data(tvSeries.poster.url)
+            .data(top10PersonalTvSeries.poster.url)
             .size(Size.ORIGINAL)
             .crossfade(true)
             .build(),

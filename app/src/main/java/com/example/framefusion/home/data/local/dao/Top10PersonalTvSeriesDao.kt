@@ -5,24 +5,24 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.framefusion.home.data.local.models.TvSeries
+import com.example.framefusion.home.data.local.models.Top10PersonalTvSeries
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface HomeTvSeriesDao {
+interface Top10PersonalTvSeriesDao {
 
     @Query("SELECT * FROM tv_series")
-    fun getTvSeries(): Flow<List<TvSeries>>
+    fun getTvSeries(): Flow<List<Top10PersonalTvSeries>>
 
     @Query("DELETE FROM tv_series")
     suspend fun deleteAllTvSeries()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTvSeries(tvSeries: List<TvSeries>)
+    suspend fun insertTvSeries(top10PersonalTvSeries: List<Top10PersonalTvSeries>)
 
     @Update
-    suspend fun updateTvSeries(tvSeries: List<TvSeries>) {
+    suspend fun updateTvSeries(top10PersonalTvSeries: List<Top10PersonalTvSeries>) {
         deleteAllTvSeries()
-        insertTvSeries(tvSeries)
+        insertTvSeries(top10PersonalTvSeries)
     }
 }

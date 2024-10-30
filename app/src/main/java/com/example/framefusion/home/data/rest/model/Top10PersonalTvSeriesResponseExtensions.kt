@@ -1,12 +1,11 @@
 package com.example.framefusion.home.data.rest.model
 
-import com.example.framefusion.home.data.local.models.Genre
 import com.example.framefusion.home.data.local.models.Poster
-import com.example.framefusion.home.data.local.models.TvSeries
+import com.example.framefusion.home.data.local.models.Top10PersonalTvSeries
 
-fun TvSeriesResponse.toTvSeriesList(): List<TvSeries> {
+fun Top10PersonalTvSeriesResponse.toTop10TvSeriesList(): List<Top10PersonalTvSeries> {
     return docs.map { tvSeries ->
-        TvSeries(
+        Top10PersonalTvSeries(
             id = tvSeries.id,
             poster = Poster(
                 url = tvSeries.poster.url,

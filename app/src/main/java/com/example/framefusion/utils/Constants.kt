@@ -6,7 +6,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.example.framefusion.BottomNavItem
 import com.example.framefusion.NavRoute
 import com.example.framefusion.R
 import com.example.framefusion.greeting.data.model.Genres
@@ -20,6 +19,8 @@ object Constants {
     }
     object Screens {
         const val HOME_SCREEN = "home_screen"
+        const val HOME_SCREEN_MOVIES = "home_screen_movies"
+        const val HOME_SCREEN_TV_SERIES = "home_screen_tv_series"
         const val SEARCH_SCREEN = "search_screen"
         const val PERSON_SCREEN = "person_screen"
         const val PERSON_GENRES_SCREEN = "person_genres_screen"

@@ -1,16 +1,16 @@
 package com.example.framefusion.home.domain.usecases
 
-import com.example.framefusion.home.data.local.Top10PersonalMoviesDatabase
-import com.example.framefusion.home.data.rest.model.toTop10MoviesList
+import com.example.framefusion.home.data.local.PersonalMoviesDatabase
+import com.example.framefusion.home.data.rest.model.toPersonalMoviesList
 import com.example.framefusion.home.data.service.HomeService
 import javax.inject.Inject
 
-class Get10PersonalMovieUseCase @Inject constructor(
+class GetPersonalMoviesUseCase @Inject constructor(
     private val homeService: HomeService,
     private val returnGenresUseCase: ReturnGenresUseCase,
-    private val homeDatabase: Top10PersonalMoviesDatabase
+    private val database: PersonalMoviesDatabase
 ) {
-    suspend fun invoke() {
+    suspend fun invoke(page: Int, callBack: () -> Unit) {
         val genresString = returnGenresUseCase.invoke().split(",")
         val selectedFields = listOf(
             "id",
@@ -20,16 +20,19 @@ class Get10PersonalMovieUseCase @Inject constructor(
             "id",
             "poster.url"
         )
-        val response = homeService.get10PersonalMovie(
-            page = 1,
-            limit = 10,
+        val response = homeService.getPersonalMovies(
+            page = page,
+            limit = 20,
             selectedFields = selectedFields,
             notNullFields = notNullFields,
             type = "movie",
             genresName = genresString,
             lists = "popular-films"
         )
-        val movies = response.body()!!.toTop10MoviesList()
-        homeDatabase.top10PersonalMoviesDao().updateMovies(movies)
+        if (response.body() != null) {
+            val movies = response.body()!!.toPersonalMoviesList()
+            database.personalMoviesDao().updateMovies(movies)
+            callBack()
+        }
     }
 }
