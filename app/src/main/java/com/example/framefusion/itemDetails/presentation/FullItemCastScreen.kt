@@ -1,4 +1,4 @@
-package com.example.framefusion.itemDetails.ui
+package com.example.framefusion.itemDetails.presentation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -24,11 +24,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.framefusion.NavRoute
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.Person
-import com.example.framefusion.itemDetails.utils.composable.ErrorContent
 import com.example.framefusion.itemDetails.utils.composable.IconBack
 import com.example.framefusion.itemDetails.utils.composable.PersonItem
 import com.example.framefusion.utils.ui.Background

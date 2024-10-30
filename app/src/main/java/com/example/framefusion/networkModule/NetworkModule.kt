@@ -1,11 +1,12 @@
-package com.example.framefusion.home.di
+package com.example.framefusion.networkModule
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
-import com.example.framefusion.home.data.rest.RestApi
-import com.example.framefusion.utils.Constants.BASE_URL
+import com.example.framefusion.home.data.service.HomeService
+import com.example.framefusion.itemDetails.data.service.ItemDetailsService
+import com.example.framefusion.search.data.service.SearchService
 import com.example.framefusion.utils.interceptors.AuthorizationInterceptor
 import dagger.Module
 import dagger.Provides
@@ -20,6 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    private const val BASE_URL = "https://api.kinopoisk.dev/v1.4/"
 
     @Provides
     fun provideChuckerCollector(@ApplicationContext context: Context): ChuckerCollector {
@@ -76,7 +79,17 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideApiService(retrofit: Retrofit): RestApi {
-        return retrofit.create(RestApi::class.java)
+    fun provideHomeService(retrofit: Retrofit): HomeService {
+        return retrofit.create(HomeService::class.java)
+    }
+
+    @Provides
+    fun provideSearchService(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
+    }
+
+    @Provides
+    fun provideItemDetailsService(retrofit: Retrofit): ItemDetailsService {
+        return retrofit.create(ItemDetailsService::class.java)
     }
 }

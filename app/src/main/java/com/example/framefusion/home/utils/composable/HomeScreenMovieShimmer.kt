@@ -37,8 +37,8 @@ private fun MovieItemShimmer() {
     Box(
         modifier = Modifier
             .padding(horizontal = 8.dp)
-            .height(210.dp)
-            .width(160.dp)
+            .height(200.dp)
+            .width(150.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(color = Color.LightGray)
     )

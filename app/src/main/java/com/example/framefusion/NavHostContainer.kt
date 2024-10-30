@@ -6,17 +6,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreenViewModel
-import com.example.framefusion.home.ui.HomeScreen
+import com.example.framefusion.home.presentation.HomeScreen
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
-import com.example.framefusion.itemDetails.ui.FullItemCastScreen
-import com.example.framefusion.itemDetails.ui.ItemDetailsScreen
+import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
+import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.person.ui.PersonFavoriteMoviesScreen
-import com.example.framefusion.person.ui.PersonGenresScreen
-import com.example.framefusion.person.ui.PersonScreen
-import com.example.framefusion.person.ui.PersonSettingsScreen
+import com.example.framefusion.person.presentation.PersonFavoriteMoviesScreen
+import com.example.framefusion.person.presentation.PersonGenresScreen
+import com.example.framefusion.person.presentation.PersonScreen
+import com.example.framefusion.person.presentation.PersonSettingsScreen
 import com.example.framefusion.search.SearchItemViewModel
-import com.example.framefusion.search.ui.SearchScreen
+import com.example.framefusion.search.presentation.SearchScreen
 import com.example.framefusion.utils.Constants
 import kotlinx.coroutines.launch
 
@@ -59,7 +59,6 @@ fun NavHostContainer(
                     }
                 )
             }
-
             composable(NavRoute.Person.route) {
                 PersonScreen(navController, personScreenViewModel)
             }
@@ -77,7 +76,19 @@ fun NavHostContainer(
             }
 
             composable(NavRoute.PersonFavorite.route) {
-                PersonFavoriteMoviesScreen()
+                PersonFavoriteMoviesScreen(
+                    personScreenViewModel,
+                    provideId = { id ->
+                        if (id != null) {
+                            detailsScreenViewModel.viewModelScope.launch {
+                                detailsScreenViewModel.initItemDetails(id)
+                            }
+                        }
+                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                    },
+                    onHomeScreen = { navController.navigate(NavRoute.Home.route) },
+                    onSearchScreen = { navController.navigate(NavRoute.Search.route) }
+                )
             }
 
             composable(NavRoute.PersonSettings.route) {
@@ -88,7 +99,16 @@ fun NavHostContainer(
                 ItemDetailsScreen(
                     navController,
                     detailsScreenViewModel,
-                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route) }
+                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route) },
+                    changeStatus = { item, isLiked ->
+                        personScreenViewModel.viewModelScope.launch {
+                            personScreenViewModel.changeFavoriteStatus(item, isLiked)
+                            personScreenViewModel.initData()
+                        }
+                        detailsScreenViewModel.viewModelScope.launch {
+                            detailsScreenViewModel.updateItem(item, isLiked)
+                        }
+                    }
                 )
             }
 
@@ -113,6 +133,4 @@ sealed class NavRoute(val route: String) {
         fun createRoute(itemId: String): String =
             "${Constants.Screens.ITEM_DETAILS_SCREEN}/$itemId"
     }
-
-
 }

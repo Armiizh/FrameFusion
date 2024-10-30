@@ -2,15 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "975436c9ced92393b1b61df6ad7de356",
+    "identityHash": "9d9bf5fe3dbf2a29de0cdb6322a8cb3f",
     "entities": [
       {
         "tableName": "search_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`displayId` INTEGER, `id` INTEGER, `name` TEXT, `poster` TEXT, `description` TEXT, `shortDescription` TEXT, `year` TEXT, `genres` TEXT, `rating` TEXT, `type` TEXT, PRIMARY KEY(`displayId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`displayId` INTEGER, `isLiked` INTEGER, `id` INTEGER, `name` TEXT, `poster` TEXT, `description` TEXT, `shortDescription` TEXT, `year` TEXT, `genres` TEXT, `rating` TEXT, `type` TEXT, PRIMARY KEY(`displayId`))",
         "fields": [
           {
             "fieldPath": "displayId",
             "columnName": "displayId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isLiked",
+            "columnName": "isLiked",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -82,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '975436c9ced92393b1b61df6ad7de356')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d9bf5fe3dbf2a29de0cdb6322a8cb3f')"
     ]
   }
 }

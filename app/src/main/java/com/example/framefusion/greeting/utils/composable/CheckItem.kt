@@ -28,11 +28,11 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CheckItem(
     nameItem: String,
-    place: MutableState<Boolean>,
+    place: MutableState<Boolean>?,
     imageResId: Int
 ) {
     val cardColor = animateColorAsState(
-        targetValue = if (place.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer,
+        targetValue = if (place?.value == true) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer,
         animationSpec = tween(durationMillis = 300), label = ""
     )
 
@@ -40,7 +40,11 @@ fun CheckItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .clickable { place.value = !place.value },
+            .clickable {
+                if (place != null) {
+                    place.value = !place.value
+                }
+            },
         colors = CardDefaults.cardColors(containerColor = cardColor.value),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(4.dp)

@@ -4,15 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.framefusion.greeting.ui.GreetingScreen
-import com.example.framefusion.greeting.ui.OnboardingScreen
+import com.example.framefusion.greeting.presentation.GreetingScreen
+import com.example.framefusion.greeting.presentation.OnboardingScreen
 import com.example.framefusion.utils.Constants
 
 @Composable
 fun GreetingNavHost(
     navController: NavHostController,
     onFinish: () -> Unit,
-    viewModel: PersonInterestViewModel
+    viewModel: GreetingScreenViewModel
 ) {
     NavHost(
         navController = navController,

@@ -18,4 +18,16 @@
     <string name="Null_Description">Ребята пока не добавили описание к своему фильму.\n\nЗдесь могла бы быть ваша реклама :)</string>
     <string name="Cast">Актерский состав</string>
     <string name="Full_Cast">Полный актерский состав здесь</string>
+    <string name="Here_is_empty">Пока что тут пусто</string>
+    <string name="Add_item_can">"Добавить фильмы и сериалы можно на "</string>
+    <string name="Main_screen">главном</string>
+    <string name="Search_screen">поиска</string>
+    <string name="Your_favorite_items">Ваши любимые фильмы и сериалы</string>
+    <string name="Backdrop_error_message">Загрузка фона закончилась ошибкой</string>
+    <string name="Full_cast">Полный актерский состав здесь</string>
+    <string name="Tv_series">Сериал</string>
+    <string name="movie">Фильм</string>
+    <string name="Empty_description">Ребята пока не добавили описание к своему фильму.\n\nЗдесь могла бы быть ваша реклама :)</string>
+    <string name="Hide">Свернуть</string>
+    <string name="Expand">Развернуть</string>
 </resources>

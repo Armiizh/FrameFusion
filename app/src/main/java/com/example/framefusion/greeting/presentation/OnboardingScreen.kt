@@ -1,15 +1,15 @@
-package com.example.framefusion.greeting.ui
+package com.example.framefusion.greeting.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -21,23 +21,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.R
-import com.example.framefusion.greeting.PersonInterestViewModel
-import com.example.framefusion.greeting.data.model.UserGenres
-import com.example.framefusion.greeting.utils.composable.CheckItem
+import com.example.framefusion.greeting.GreetingScreenViewModel
 import com.example.framefusion.greeting.data.model.Genres
-import com.example.framefusion.utils.ui.Background
+import com.example.framefusion.greeting.utils.composable.CheckItem
 import com.example.framefusion.utils.Constants
+import com.example.framefusion.utils.ui.Background
 import kotlinx.coroutines.launch
 
 @Composable
 fun OnboardingScreen(
     onFinish: () -> Unit,
-    viewModel: PersonInterestViewModel
+    viewModel: GreetingScreenViewModel
 ) {
     val genres = Constants.GenresObject.greetingGenres
     val genreStates = genres.associateWith { genre ->
@@ -57,6 +57,54 @@ fun OnboardingScreen(
 }
 
 @Composable
+private fun BottomBarContent(
+    genreStates: Map<Genres, MutableState<Boolean>>,
+    viewModel: GreetingScreenViewModel,
+    onFinish: () -> Unit
+) {
+    BottomAppBar(
+        content = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp)
+                    .padding(horizontal = 4.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                val isEnabled = genreStates.values.any { it.value }
+                val btnColor = if (isEnabled) {
+                    MaterialTheme.colorScheme.secondary
+                } else {
+                    Color.LightGray
+                }
+                ElevatedButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        viewModel.viewModelScope.launch {
+                            viewModel.saveSelectedGenres(genreStates)
+                        }
+                        onFinish()
+                    },
+                    enabled = isEnabled,
+                    elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(
+                        containerColor = btnColor
+                    )
+                ) {
+                    Text(
+                        text = "Начать"
+                    )
+                }
+            }
+        },
+        containerColor = Color.Transparent
+    )
+}
+
+@Composable
 private fun Content(
     paddingValues: PaddingValues,
     genres: List<Genres>,
@@ -66,7 +114,7 @@ private fun Content(
         modifier = Modifier
             .padding(paddingValues)
             .padding(horizontal = 8.dp)
-            .fillMaxSize(),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -79,50 +127,8 @@ private fun Content(
             horizontalAlignment = Alignment.Start
         ) {
             items(genres) { genre ->
-                CheckItem(genre.name, genreStates[genre]!!, genre.imageResId)
+                CheckItem(genre.name, genreStates[genre], genre.imageResId)
             }
-        }
-    }
-}
-
-@Composable
-private fun BottomBarContent(
-    genreStates: Map<Genres, MutableState<Boolean>>,
-    viewModel: PersonInterestViewModel,
-    onFinish: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 4.dp, bottom = 16.dp)
-            .padding(horizontal = 4.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        ElevatedButton(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = {
-                val selectedGenres =
-                    genreStates.filterValues { it.value }
-                        .keys.joinToString(
-                            separator = ","
-                        ) { it.name }
-                val userGenres = UserGenres(genres = selectedGenres)
-                viewModel.viewModelScope.launch {
-                    viewModel.insertGenres(userGenres)
-                }
-                onFinish()
-            },
-            elevation = ButtonDefaults.elevatedButtonElevation(8.dp),
-            shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.elevatedButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-        ) {
-            Text(
-                text = "Начать"
-            )
         }
     }
 }

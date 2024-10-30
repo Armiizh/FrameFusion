@@ -30,8 +30,6 @@ class HomeScreenViewModel @Inject constructor(
     val isMovieLoading: StateFlow<Boolean> = _isMovieLoading
     val isTvSeriesLoading: StateFlow<Boolean> = _isTvSeriesLoading
 
-
-
     suspend fun initData() {
         getPersonalTvAndMovieUseCase.invoke()
         viewModelScope.launch {

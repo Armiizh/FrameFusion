@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6e84dbc2938e0ba5e24eedc330ec3f16",
+    "identityHash": "0c36f96ee468c47766ed109e1e6d3367",
     "entities": [
       {
-        "tableName": "item_details",
+        "tableName": "favorite_item",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `isFavorite` INTEGER, `type` TEXT, `name` TEXT, `year` TEXT, `genres` TEXT NOT NULL, `movieLength` TEXT, `seriesLength` TEXT, `totalSeriesLength` TEXT, `rating` TEXT NOT NULL, `shortDescription` TEXT, `description` TEXT, `persons` TEXT NOT NULL, `poster` TEXT NOT NULL, `backdrop` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -112,7 +112,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6e84dbc2938e0ba5e24eedc330ec3f16')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0c36f96ee468c47766ed109e1e6d3367')"
     ]
   }
 }

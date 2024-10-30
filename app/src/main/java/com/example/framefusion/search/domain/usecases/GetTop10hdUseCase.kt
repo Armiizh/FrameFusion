@@ -1,12 +1,12 @@
 package com.example.framefusion.search.domain.usecases
 
-import com.example.framefusion.home.data.rest.RestApi
 import com.example.framefusion.search.data.local.dao.Top10hdDao
 import com.example.framefusion.search.data.rest.models.toTop10hdItemList
+import com.example.framefusion.search.data.service.SearchService
 import javax.inject.Inject
 
 class GetTop10hdUseCase @Inject constructor(
-    private val restApi: RestApi,
+    private val searchService: SearchService,
     private val top10hdDao: Top10hdDao
 ){
     suspend fun invoke() {
@@ -19,7 +19,7 @@ class GetTop10hdUseCase @Inject constructor(
             "id",
             "poster.url"
         )
-        val response = restApi.getTop10hd(
+        val response = searchService.getTop10hd(
             page = 1,
             limit = 10,
             selectedFields = selectedFields,
