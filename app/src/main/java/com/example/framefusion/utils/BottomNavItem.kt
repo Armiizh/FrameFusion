@@ -1,4 +1,4 @@
-package com.example.framefusion
+package com.example.framefusion.utils
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

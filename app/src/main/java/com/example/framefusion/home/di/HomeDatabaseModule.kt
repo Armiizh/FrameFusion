@@ -2,10 +2,12 @@ package com.example.framefusion.home.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.framefusion.home.data.local.MovieDatabase
-import com.example.framefusion.home.data.local.TvSeriesDatabase
-import com.example.framefusion.home.data.local.dao.HomeMovieDao
-import com.example.framefusion.home.data.local.dao.HomeTvSeriesDao
+import com.example.framefusion.home.data.local.PersonalItemsDatabase
+import com.example.framefusion.home.data.local.Top10PersonalMoviesDatabase
+import com.example.framefusion.home.data.local.Top10PersonalTvSeriesDatabase
+import com.example.framefusion.home.data.local.dao.PersonalItemsDao
+import com.example.framefusion.home.data.local.dao.Top10PersonalMoviesDao
+import com.example.framefusion.home.data.local.dao.Top10PersonalTvSeriesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,25 +18,39 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object HomeDatabaseModule {
 
+    //Top 10 Personal Movies
     @Provides
-    fun provideMovieDatabase(@ApplicationContext appContext: Context): MovieDatabase {
-        return Room.databaseBuilder(appContext, MovieDatabase::class.java, "movie")
+    fun provideTop10PersonalMoviesDatabase(@ApplicationContext appContext: Context): Top10PersonalMoviesDatabase {
+        return Room.databaseBuilder(appContext, Top10PersonalMoviesDatabase::class.java, "movies")
             .build()
     }
-
     @Provides
-    fun provideHomeMovieDao(movieDatabase: MovieDatabase): HomeMovieDao {
-        return movieDatabase.homeDao()
+    fun provideTop10PersonalMoviesDao(top10PersonalMoviesDatabase: Top10PersonalMoviesDatabase): Top10PersonalMoviesDao {
+        return top10PersonalMoviesDatabase.top10PersonalMoviesDao()
     }
 
+    //Top 10 Personal Tv-series
     @Provides
-    fun provideTvSeriesDatabase(@ApplicationContext appContext: Context): TvSeriesDatabase {
-        return Room.databaseBuilder(appContext, TvSeriesDatabase::class.java, "tv_series")
+    fun provideTop10PersonalTvSeriesDatabase(@ApplicationContext appContext: Context): Top10PersonalTvSeriesDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            Top10PersonalTvSeriesDatabase::class.java,
+            "tv_series"
+        ).build()
+    }
+    @Provides
+    fun provideTop10PersonalTvSeriesDao(top10PersonalTvSeriesDatabase: Top10PersonalTvSeriesDatabase): Top10PersonalTvSeriesDao {
+        return top10PersonalTvSeriesDatabase.top10PersonalTvSeriesDao()
+    }
+
+    //All Personal Items
+    @Provides
+    fun providePersonalMoviesDatabase(@ApplicationContext appContext: Context): PersonalItemsDatabase {
+        return Room.databaseBuilder(appContext, PersonalItemsDatabase::class.java, "all_items")
             .build()
     }
-
     @Provides
-    fun provideHomeTvSeriesDao(tvSeriesDatabase: TvSeriesDatabase): HomeTvSeriesDao {
-        return tvSeriesDatabase.tvSeriesDao()
+    fun providePersonalMoviesDao(personalItemsDatabase: PersonalItemsDatabase): PersonalItemsDao {
+        return personalItemsDatabase.personalItemsDao()
     }
 }
