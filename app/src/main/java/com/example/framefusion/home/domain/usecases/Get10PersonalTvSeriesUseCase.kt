@@ -8,7 +8,7 @@ import javax.inject.Inject
 class Get10PersonalTvSeriesUseCase @Inject constructor(
     private val homeService: HomeService,
     private val returnGenresUseCase: ReturnGenresUseCase,
-    private val homeDatabase: Top10PersonalTvSeriesDatabase
+    private val database: Top10PersonalTvSeriesDatabase
 ) {
     suspend fun invoke() {
         val genresString = returnGenresUseCase.invoke().split(",")
@@ -26,11 +26,13 @@ class Get10PersonalTvSeriesUseCase @Inject constructor(
             limit = 10,
             selectedFields = selectedFields,
             notNullFields = notNullFields,
+            sortField = "rating.kp",
+            sortType = "-1",
             type = "tv-series",
             genresName = genresString,
             lists = "popular-series"
         )
         val tvSeries = response.body()!!.toTop10TvSeriesList()
-        homeDatabase.top10PersonalTvSeriesDao().updateTvSeries(tvSeries)
+        database.top10PersonalTvSeriesDao().updateTvSeries(tvSeries)
     }
 }

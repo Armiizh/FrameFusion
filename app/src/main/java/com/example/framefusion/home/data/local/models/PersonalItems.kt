@@ -6,11 +6,11 @@ import androidx.room.TypeConverters
 import com.example.framefusion.home.data.local.converters.PosterConverter
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "all_tv_series")
+@Entity(tableName = "all_items")
 @TypeConverters(
     PosterConverter::class
 )
-data class PersonalTvSeries(
+data class PersonalItems(
     @PrimaryKey
     @SerializedName("id")
     val id: Int? = 0,

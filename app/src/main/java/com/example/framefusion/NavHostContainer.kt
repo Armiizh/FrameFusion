@@ -6,9 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreenViewModel
+import com.example.framefusion.home.presentation.HomeMoreItemsScreen
 import com.example.framefusion.home.presentation.HomeScreen
-import com.example.framefusion.home.presentation.HomeScreenMovies
-import com.example.framefusion.home.presentation.HomeScreenTvSeries
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
 import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
@@ -47,30 +46,17 @@ fun NavHostContainer(
                         }
                         navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
                     },
-                    onHomeScreenMovie = { page ->
+                    onHomePersonalItems = { page, type ->
                         homeScreenViewModel.viewModelScope.launch {
-                            homeScreenViewModel.getHomeMovies(
-                                page,
-                                callBack = {
-                                    navController.navigate(NavRoute.HomeMovies.route)
-                                }
-                            )
+                            homeScreenViewModel.getHomePersonalItems(page, type)
+                            homeScreenViewModel.initHomePersonalItems()
                         }
-                    },
-                    onHomeScreenTvSeries = { page ->
-                        homeScreenViewModel.viewModelScope.launch {
-                            homeScreenViewModel.getHomeTvSeries(
-                                page,
-                                callBack = {
-                                    navController.navigate(NavRoute.HomeTvSeries.route)
-                                }
-                            )
-                        }
+                        navController.navigate(NavRoute.HomeMore.route)
                     }
                 )
             }
-            composable(NavRoute.HomeMovies.route) {
-                HomeScreenMovies(
+            composable(NavRoute.HomeMore.route) {
+                HomeMoreItemsScreen(
                     homeScreenViewModel,
                     provideId = { id ->
                         if (id != null) {
@@ -82,19 +68,7 @@ fun NavHostContainer(
                     }
                 )
             }
-            composable(NavRoute.HomeTvSeries.route) {
-                HomeScreenTvSeries(
-                    homeScreenViewModel,
-                    provideId = { id ->
-                        if (id != null) {
-                            detailsScreenViewModel.viewModelScope.launch {
-                                detailsScreenViewModel.initItemDetails(id)
-                            }
-                        }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
-                    }
-                )
-            }
+
 
             //Search
             composable(NavRoute.Search.route) {
@@ -173,8 +147,7 @@ sealed class NavRoute(val route: String) {
 
     //Home
     data object Home : NavRoute(Constants.Screens.HOME_SCREEN)
-    data object HomeMovies : NavRoute(Constants.Screens.HOME_SCREEN_MOVIES)
-    data object HomeTvSeries : NavRoute(Constants.Screens.HOME_SCREEN_TV_SERIES)
+    data object HomeMore : NavRoute(Constants.Screens.HOME_SCREEN_MORE)
 
     //Search
     data object Search : NavRoute(Constants.Screens.SEARCH_SCREEN)

@@ -25,6 +25,8 @@ class Get10PersonalMovieUseCase @Inject constructor(
             limit = 10,
             selectedFields = selectedFields,
             notNullFields = notNullFields,
+            sortField = "rating.kp",
+            sortType = "-1",
             type = "movie",
             genresName = genresString,
             lists = "popular-films"

@@ -62,7 +62,7 @@ internal fun Top10hdItem(
 }
 
 @Composable
-private fun placeholderPainter(): Painter {
+fun placeholderPainter(): Painter {
     val bitmap = Bitmap.createBitmap(150, 200, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
     val paint = Paint()

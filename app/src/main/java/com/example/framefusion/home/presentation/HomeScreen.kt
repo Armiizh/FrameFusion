@@ -32,13 +32,12 @@ import com.example.framefusion.utils.ui.Background
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel,
     provideId: (Int?) -> Unit,
-    onHomeScreenMovie: (Int) -> Unit,
-    onHomeScreenTvSeries: (Int) -> Unit
+    onHomePersonalItems: (Int, String) -> Unit
 ) {
-    val movies by homeScreenViewModel.movies.collectAsState()
+    val movies by homeScreenViewModel.top10PersonalMovies.collectAsState()
     val tvSeries by homeScreenViewModel.top10PersonalTvSeries.collectAsState()
-    val isMovieLoading by homeScreenViewModel.isMovieLoading.collectAsState()
-    val isTvSeriesLoading by homeScreenViewModel.isTvSeriesLoading.collectAsState()
+    val isMovieLoading by homeScreenViewModel.top10PersonalMoviesLoading.collectAsState()
+    val isTvSeriesLoading by homeScreenViewModel.top10PersonalTvSeriesLoading.collectAsState()
 
     Scaffold(
         content = { paddingValues ->
@@ -63,7 +62,7 @@ fun HomeScreen(
                         }
                         item {
                             IconButton(
-                                onClick = { onHomeScreenMovie(1) }
+                                onClick = { onHomePersonalItems(1, "movie") }
                             ) {
                                 Icon(
                                     modifier = Modifier.size(100.dp),
@@ -89,7 +88,7 @@ fun HomeScreen(
                         }
                         item {
                             IconButton(
-                                onClick = { onHomeScreenTvSeries(1) }
+                                onClick = { onHomePersonalItems(1, "tv-series") }
                             ) {
                                 Icon(
                                     modifier = Modifier.size(100.dp),

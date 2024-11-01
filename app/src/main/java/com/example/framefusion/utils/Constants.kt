@@ -19,8 +19,7 @@ object Constants {
     }
     object Screens {
         const val HOME_SCREEN = "home_screen"
-        const val HOME_SCREEN_MOVIES = "home_screen_movies"
-        const val HOME_SCREEN_TV_SERIES = "home_screen_tv_series"
+        const val HOME_SCREEN_MORE = "home_screen_more"
         const val SEARCH_SCREEN = "search_screen"
         const val PERSON_SCREEN = "person_screen"
         const val PERSON_GENRES_SCREEN = "person_genres_screen"
