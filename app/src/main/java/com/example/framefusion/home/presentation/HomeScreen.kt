@@ -12,22 +12,28 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.framefusion.home.HomeScreenViewModel
-import com.example.framefusion.home.utils.composable.HomeScreenMovieShimmer
+import com.example.framefusion.home.utils.composable.HomeTop10ItemsShimmer
 import com.example.framefusion.home.utils.composable.MovieItem
 import com.example.framefusion.home.utils.composable.TextList
 import com.example.framefusion.home.utils.composable.TvSeriesItem
+import com.example.framefusion.person.presentation.NameOfScreen
 import com.example.framefusion.utils.ui.Background
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel,
@@ -40,6 +46,14 @@ fun HomeScreen(
     val isTvSeriesLoading by homeScreenViewModel.top10PersonalTvSeriesLoading.collectAsState()
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { NameOfScreen("Главная") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent
+                )
+            )
+        },
         content = { paddingValues ->
             Background()
             Column(
@@ -51,7 +65,7 @@ fun HomeScreen(
                 TextList("Фильмы на основе ваших интересов:")
                 Spacer(modifier = Modifier.height(12.dp))
                 if (isMovieLoading) {
-                    HomeScreenMovieShimmer()
+                    HomeTop10ItemsShimmer()
                 } else {
                     LazyRow(
                         modifier = Modifier.padding(start = 8.dp),
@@ -77,7 +91,7 @@ fun HomeScreen(
                 TextList("Сериалы на основе ваших интересов:")
                 Spacer(modifier = Modifier.height(12.dp))
                 if (isTvSeriesLoading) {
-                    HomeScreenMovieShimmer()
+                    HomeTop10ItemsShimmer()
                 } else {
                     LazyRow(
                         modifier = Modifier.padding(start = 8.dp),

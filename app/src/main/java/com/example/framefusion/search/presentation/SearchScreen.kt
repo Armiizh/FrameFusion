@@ -14,12 +14,15 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,27 +37,32 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.itemDetails.utils.composable.ProgressContent
+import com.example.framefusion.person.presentation.NameOfScreen
 import com.example.framefusion.search.SearchItemViewModel
-import com.example.framefusion.search.data.local.models.SearchItem
-import com.example.framefusion.search.data.local.models.Top10hd
 import com.example.framefusion.search.utils.composable.SearchItems
 import com.example.framefusion.search.utils.composable.SearchScreenTitle
 import com.example.framefusion.search.utils.composable.Top10hdItem
 import com.example.framefusion.utils.ui.Background
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
     viewModel: SearchItemViewModel,
     provideId: (Int?) -> Unit
 ) {
-    val searchItem by viewModel.itemSearch.collectAsState()
-    val top10hd by viewModel.top10hd.collectAsState()
     val isItemSearchLoading by viewModel.itemSearchLoading.collectAsState()
     val top10hdLoading by viewModel.top10hdLoading.collectAsState()
     var search by remember { mutableStateOf("") }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { NameOfScreen("Поиск") }, colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent
+                )
+            )
+        },
         content = { paddingValues ->
             Background()
             Column(
@@ -116,12 +124,12 @@ fun SearchScreen(
                     if (top10hdLoading) {
                         ProgressContent()
                     } else {
-                        Top10hdContent(top10hd, provideId)
+                        Top10hdContent(viewModel, provideId)
                     }
                 } else if (isItemSearchLoading) {
                     ProgressContent()
                 } else {
-                    SearchContent(searchItem, provideId)
+                    SearchContent(viewModel, provideId)
                 }
             }
         }
@@ -130,9 +138,10 @@ fun SearchScreen(
 
 @Composable
 private fun SearchContent(
-    searchItem: List<SearchItem>,
+    viewModel: SearchItemViewModel,
     provideId: (Int?) -> Unit
 ) {
+    val searchItem by viewModel.itemSearch.collectAsState()
     LazyColumn {
         items(searchItem) { searchItem ->
             SearchItems(searchItem, provideId)
@@ -142,9 +151,10 @@ private fun SearchContent(
 
 @Composable
 private fun Top10hdContent(
-    top10hd: List<Top10hd>,
+    viewModel: SearchItemViewModel,
     provideId: (Int?) -> Unit
 ) {
+    val top10hd by viewModel.top10hd.collectAsState()
     SearchScreenTitle("Топ-10 за месяц:")
     Spacer(modifier = Modifier.height(12.dp))
     LazyRow(

@@ -4,13 +4,14 @@ import com.example.framefusion.home.data.local.models.PersonalItems
 import com.example.framefusion.home.data.local.models.Poster
 
 fun PersonalItemsResponse.toPersonalItemsList(): List<PersonalItems> {
-    return docs.map { movie ->
+    return docs.map { item ->
         PersonalItems(
-            id = movie.id,
+            id = item.id,
             poster = Poster(
-                url = movie.poster.url,
-                previewUrl = movie.poster.previewUrl
-            )
+                url = item.poster.url,
+                previewUrl = item.poster.previewUrl
+            ),
+            type = item.type
         )
     }
 }

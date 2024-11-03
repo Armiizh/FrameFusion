@@ -14,7 +14,8 @@ class GetPersonalItemsUseCase @Inject constructor(
         val genresString = returnGenresUseCase.invoke().split(",")
         val selectedFields = listOf(
             "id",
-            "poster"
+            "poster",
+            "type"
         )
         val notNullFields = listOf(
             "id",

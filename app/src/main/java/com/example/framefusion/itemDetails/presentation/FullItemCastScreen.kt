@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -19,16 +17,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.utils.composable.IconBack
 import com.example.framefusion.itemDetails.utils.composable.PersonItem
+import com.example.framefusion.person.presentation.NameOfScreen
 import com.example.framefusion.utils.ui.Background
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,28 +33,17 @@ fun FullItemCastScreen(
     navController: NavHostController,
     detailsScreenViewModel: DetailsScreenViewModel
 ) {
-    
+
     val itemDetails by detailsScreenViewModel.itemDetails.collectAsState()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.Full_item_cast),
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        textAlign = TextAlign.Center
-                    )
-                },
-                navigationIcon = {
-                    IconBack(navController)
-                },
-               colors = TopAppBarDefaults.topAppBarColors(
-                   containerColor = Color.Transparent
-               ),
-                expandedHeight = 48.dp
+                title = { NameOfScreen(stringResource(id = R.string.Full_item_cast)) },
+                navigationIcon = { IconBack(navController) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent
+                )
             )
         },
         content = { paddingValues ->

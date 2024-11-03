@@ -21,7 +21,7 @@ import com.valentinilk.shimmer.shimmer
 
 @Preview
 @Composable
-internal fun HomePersonalScreenLoadingContent() {
+internal fun HomePersonalItemsShimmer() {
 
     Column(
         modifier = Modifier
@@ -39,15 +39,15 @@ internal fun HomePersonalScreenLoadingContent() {
                 ) {
                     Box(
                         modifier = Modifier
-                            .height(240.dp)
-                            .fillMaxWidth(.4f)
+                            .height(220.dp)
+                            .fillMaxWidth(.35f)
                             .clip(RoundedCornerShape(8.dp))
                             .background(color = Color.LightGray)
                     )
                     Box(
                         modifier = Modifier
-                            .height(240.dp)
-                            .fillMaxWidth(.4f)
+                            .height(220.dp)
+                            .fillMaxWidth(.35f)
                             .clip(RoundedCornerShape(8.dp))
                             .background(color = Color.LightGray)
                     )

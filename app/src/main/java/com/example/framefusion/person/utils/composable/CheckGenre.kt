@@ -28,7 +28,9 @@ fun CheckGenre(
     place: MutableState<Boolean>
 ) {
     val cardColor = animateColorAsState(
-        targetValue = if (place.value) MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+        targetValue = if (place.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer.copy(
+            alpha = .5f
+        ),
         animationSpec = tween(durationMillis = 300), label = ""
     )
 
@@ -37,7 +39,10 @@ fun CheckGenre(
             .padding(vertical = 8.dp)
             .clickable { place.value = !place.value }
             .padding(horizontal = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = cardColor.value),
+        colors = CardDefaults.cardColors(
+            containerColor = cardColor.value,
+            disabledContainerColor = cardColor.value
+        ),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.elevatedCardElevation(4.dp)
     ) {

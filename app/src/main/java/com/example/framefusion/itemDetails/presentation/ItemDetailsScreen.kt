@@ -133,11 +133,6 @@ private fun Content(
             }
             ItemName(itemDetails)
             Spacer(modifier = Modifier.height(12.dp))
-            ItemType(itemDetails)
-            ItemGenresDetailsScreen(itemDetails)
-            Spacer(modifier = Modifier.height(2.dp))
-            YearLengthRating(itemDetails)
-            Spacer(modifier = Modifier.height(12.dp))
         }
         Column(
             modifier = Modifier
@@ -146,6 +141,10 @@ private fun Content(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            ItemType(itemDetails)
+            ItemGenresDetailsScreen(itemDetails)
+            YearLengthRating(itemDetails)
+            Spacer(modifier = Modifier.height(12.dp))
             Description(itemDetails)
             Spacer(modifier = Modifier.height(12.dp))
             Cast(itemDetails)

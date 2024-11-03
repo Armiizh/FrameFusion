@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreenViewModel
-import com.example.framefusion.home.presentation.HomeMoreItemsScreen
+import com.example.framefusion.home.presentation.HomePersonalItemsScreen
 import com.example.framefusion.home.presentation.HomeScreen
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
@@ -33,7 +33,6 @@ fun NavHostContainer(
         navController = navController,
         startDestination = NavRoute.Home.route,
         builder = {
-
             //Home
             composable(NavRoute.Home.route) {
                 HomeScreen(
@@ -44,7 +43,7 @@ fun NavHostContainer(
                                 detailsScreenViewModel.initItemDetails(id)
                             }
                         }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                        navController.navigate(NavRoute.ItemDetails.route)
                     },
                     onHomePersonalItems = { page, type ->
                         homeScreenViewModel.viewModelScope.launch {
@@ -56,19 +55,19 @@ fun NavHostContainer(
                 )
             }
             composable(NavRoute.HomeMore.route) {
-                HomeMoreItemsScreen(
+                HomePersonalItemsScreen(
                     homeScreenViewModel,
+                    navController,
                     provideId = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)
                             }
                         }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                        navController.navigate(NavRoute.ItemDetails.route)
                     }
                 )
             }
-
 
             //Search
             composable(NavRoute.Search.route) {
@@ -80,7 +79,7 @@ fun NavHostContainer(
                                 detailsScreenViewModel.initItemDetails(id)
                             }
                         }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                        navController.navigate(NavRoute.ItemDetails.route)
                     }
                 )
             }
@@ -103,20 +102,21 @@ fun NavHostContainer(
             composable(NavRoute.PersonFavorite.route) {
                 PersonFavoriteMoviesScreen(
                     personScreenViewModel,
+                    navController,
                     provideId = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)
                             }
                         }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                        navController.navigate(NavRoute.ItemDetails.route)
                     },
                     onHomeScreen = { navController.navigate(NavRoute.Home.route) },
                     onSearchScreen = { navController.navigate(NavRoute.Search.route) }
                 )
             }
             composable(NavRoute.PersonSettings.route) {
-                PersonSettingsScreen()
+                PersonSettingsScreen(navController)
             }
 
             //ItemDetails
@@ -160,9 +160,5 @@ sealed class NavRoute(val route: String) {
 
     //ItemDetails
     data object FullItemCast : NavRoute(Constants.Screens.FULL_ITEM_CAST_SCREEN)
-    data object ItemDetails :
-        NavRoute("${Constants.Screens.ITEM_DETAILS_SCREEN}/{itemId}") {
-        fun createRoute(itemId: String): String =
-            "${Constants.Screens.ITEM_DETAILS_SCREEN}/$itemId"
-    }
+    data object ItemDetails : NavRoute(Constants.Screens.ITEM_DETAILS_SCREEN)
 }
