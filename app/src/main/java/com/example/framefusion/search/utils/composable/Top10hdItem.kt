@@ -58,14 +58,22 @@ internal fun Top10hdItem(
             }
         )
         if (isLoading) {
-            ItemShimmer()
+            Box(contentAlignment = Alignment.BottomStart) {
+                ItemShimmer()
+                DisplayIdText(top10hd)
+            }
         } else {
-            Text(
-                text = "${top10hd.displayId}",
-                fontSize = 100.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
+            DisplayIdText(top10hd)
         }
     }
+}
+
+@Composable
+private fun DisplayIdText(top10hd: Top10hd) {
+    Text(
+        text = "${top10hd.displayId}",
+        fontSize = 100.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White
+    )
 }

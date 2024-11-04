@@ -1,13 +1,13 @@
 package com.example.framefusion.itemDetails.utils.composable
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +23,6 @@ fun IconBack(navController: NavHostController) {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .padding(16.dp)
-            .clickable { navController.popBackStack() }
     ) {
         Canvas(
             modifier = Modifier.size(40.dp)
@@ -33,11 +32,15 @@ fun IconBack(navController: NavHostController) {
                 radius = size.minDimension / 2
             )
         }
-        Icon(
-            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onBackground
-        )
+        IconButton(
+            onClick = { navController.popBackStack() },
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onBackground,
+            )
+        }
     }
 }
 

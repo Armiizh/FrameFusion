@@ -11,17 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun ItemShimmer() {
     Box(
         modifier = Modifier
-            .padding(horizontal = 8.dp)
+            .padding(end = 8.dp)
             .height(230.dp)
             .width(150.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(color = Color.LightGray)
-            .shimmer()
     )
 }

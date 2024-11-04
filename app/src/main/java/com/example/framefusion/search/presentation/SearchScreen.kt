@@ -1,14 +1,16 @@
 package com.example.framefusion.search.presentation
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -16,7 +18,6 @@ import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -45,7 +46,7 @@ import com.example.framefusion.search.utils.composable.Top10hdItem
 import com.example.framefusion.utils.ui.Background
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun SearchScreen(
     viewModel: SearchItemViewModel,
@@ -57,11 +58,7 @@ fun SearchScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { NameOfScreen("Поиск") }, colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
-                )
-            )
+            SearchScreenTopAppBar()
         },
         content = { paddingValues ->
             Background()
@@ -76,7 +73,7 @@ fun SearchScreen(
                 TextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 24.dp)
+                        .padding(vertical = 12.dp)
                         .clip(RoundedCornerShape(12.dp)),
                     value = search,
                     onValueChange = {
@@ -107,12 +104,8 @@ fun SearchScreen(
                     },
                     placeholder = { Text(text = "Поиск") },
                     colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer.copy(
-                            alpha = 0.5f
-                        ),
-                        focusedContainerColor = MaterialTheme.colorScheme.primaryContainer.copy(
-                            alpha = 0.5f
-                        ),
+                        unfocusedContainerColor = Color.Transparent.copy(alpha = 0.2f),
+                        focusedContainerColor = Color.Transparent.copy(alpha = 0.4f),
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent
                     ),
@@ -137,6 +130,16 @@ fun SearchScreen(
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun SearchScreenTopAppBar() {
+    TopAppBar(
+        title = { NameOfScreen("Поиск") }, colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent
+        )
+    )
+}
+
+@Composable
 private fun SearchContent(
     viewModel: SearchItemViewModel,
     provideId: (Int?) -> Unit
@@ -157,12 +160,14 @@ private fun Top10hdContent(
     val top10hd by viewModel.top10hd.collectAsState()
     SearchScreenTitle("Топ-10 за месяц:")
     Spacer(modifier = Modifier.height(12.dp))
-    LazyRow(
-        modifier = Modifier.padding(start = 8.dp),
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 8.dp)
+            .horizontalScroll(rememberScrollState()),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        items(top10hd) { top10hd ->
-            Top10hdItem(top10hd, provideId)
+        top10hd.forEach { top10hdItem ->
+            Top10hdItem(top10hdItem, provideId)
         }
     }
 }

@@ -79,22 +79,20 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-    implementation (libs.gson)
-    implementation (libs.androidx.sqlite)
+    implementation(libs.gson)
+    implementation(libs.androidx.sqlite)
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
-    debugImplementation (libs.library)
-    releaseImplementation (libs.library.no.op)
-    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.1")
+    debugImplementation(libs.library)
+    releaseImplementation(libs.library.no.op)
+    implementation(libs.compose.shimmer)
 
-//    implementation ("com.github.bumptech.glide:glide:4.11.0")
     implementation(libs.coil.compose)
-//    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
-
-
+//    implementation(libs.glide)
+//    annotationProcessor(libs.compiler)
 }
 kapt {
     correctErrorTypes = true

@@ -1,13 +1,13 @@
 package com.example.framefusion.home.presentation
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -24,7 +24,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.framefusion.R
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.utils.composable.HomeTop10ItemsShimmer
 import com.example.framefusion.home.utils.composable.MovieItem
@@ -33,32 +35,26 @@ import com.example.framefusion.home.utils.composable.TvSeriesItem
 import com.example.framefusion.person.presentation.NameOfScreen
 import com.example.framefusion.utils.ui.Background
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel,
     provideId: (Int?) -> Unit,
-    onHomePersonalItems: (Int, String) -> Unit
+    onHomePersonalItems: (String) -> Unit
 ) {
-    val movies by homeScreenViewModel.top10PersonalMovies.collectAsState()
-    val tvSeries by homeScreenViewModel.top10PersonalTvSeries.collectAsState()
     val isMovieLoading by homeScreenViewModel.top10PersonalMoviesLoading.collectAsState()
     val isTvSeriesLoading by homeScreenViewModel.top10PersonalTvSeriesLoading.collectAsState()
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { NameOfScreen("Главная") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
-                )
-            )
+            HomeScreenTopAppBar()
         },
         content = { paddingValues ->
             Background()
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
+                    .padding(horizontal = 8.dp)
+                    .padding(bottom = 80.dp)
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState()),
             ) {
@@ -67,24 +63,17 @@ fun HomeScreen(
                 if (isMovieLoading) {
                     HomeTop10ItemsShimmer()
                 } else {
-                    LazyRow(
-                        modifier = Modifier.padding(start = 8.dp),
+                    Row(
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .horizontalScroll(rememberScrollState()),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        items(movies) { movie ->
-                            MovieItem(movie, provideId)
+                        val movies by homeScreenViewModel.top10PersonalMovies.collectAsState()
+                        movies.forEach { movieItem ->
+                            MovieItem(movieItem, provideId)
                         }
-                        item {
-                            IconButton(
-                                onClick = { onHomePersonalItems(1, "movie") }
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(100.dp),
-                                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                                    contentDescription = null
-                                )
-                            }
-                        }
+                        OnHomePersonalItemsScreenButton { onHomePersonalItems("movie") }
                     }
                 }
                 Spacer(modifier = Modifier.height(12.dp))
@@ -93,27 +82,44 @@ fun HomeScreen(
                 if (isTvSeriesLoading) {
                     HomeTop10ItemsShimmer()
                 } else {
-                    LazyRow(
-                        modifier = Modifier.padding(start = 8.dp),
+                    Row(
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .horizontalScroll(rememberScrollState()),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        items(tvSeries) { tvSeries ->
-                            TvSeriesItem(tvSeries, provideId)
+                        val tvSeries by homeScreenViewModel.top10PersonalTvSeries.collectAsState()
+                        tvSeries.forEach { tvSeriesItem ->
+                            TvSeriesItem(tvSeriesItem, provideId)
                         }
-                        item {
-                            IconButton(
-                                onClick = { onHomePersonalItems(1, "tv-series") }
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(100.dp),
-                                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                                    contentDescription = null
-                                )
-                            }
-                        }
+                        OnHomePersonalItemsScreenButton { onHomePersonalItems("tv-series") }
                     }
                 }
             }
         }
+    )
+}
+
+@Composable
+private fun OnHomePersonalItemsScreenButton(onHomePersonalItems: (String) -> Unit) {
+    IconButton(
+        onClick = { onHomePersonalItems("movie") }
+    ) {
+        Icon(
+            modifier = Modifier.size(100.dp),
+            imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+            contentDescription = null
+        )
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun HomeScreenTopAppBar() {
+    TopAppBar(
+        title = { NameOfScreen(stringResource(R.string.Home)) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent
+        )
     )
 }

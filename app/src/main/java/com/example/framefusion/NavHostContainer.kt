@@ -45,9 +45,9 @@ fun NavHostContainer(
                         }
                         navController.navigate(NavRoute.ItemDetails.route)
                     },
-                    onHomePersonalItems = { page, type ->
+                    onHomePersonalItems = { type ->
                         homeScreenViewModel.viewModelScope.launch {
-                            homeScreenViewModel.getHomePersonalItems(page, type)
+                            homeScreenViewModel.getHomePersonalItems(type)
                             homeScreenViewModel.initHomePersonalItems()
                         }
                         navController.navigate(NavRoute.HomeMore.route)

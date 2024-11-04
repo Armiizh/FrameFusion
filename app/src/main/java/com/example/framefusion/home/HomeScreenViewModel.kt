@@ -56,8 +56,8 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    suspend fun getHomePersonalItems(page: Int, type: String) {
-        getPersonalItemsUseCase.invoke(page, type)
+    suspend fun getHomePersonalItems(type: String) {
+        getPersonalItemsUseCase.invoke(type)
     }
 
     suspend fun initHomePersonalItems() {

@@ -16,15 +16,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.utils.composable.IconBack
 import com.example.framefusion.itemDetails.utils.composable.PersonItem
-import com.example.framefusion.person.presentation.NameOfScreen
 import com.example.framefusion.utils.ui.Background
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +36,7 @@ fun FullItemCastScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { NameOfScreen(stringResource(id = R.string.Full_item_cast)) },
+                title = {},
                 navigationIcon = { IconBack(navController) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent

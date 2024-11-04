@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,7 +52,7 @@ fun PersonFavoriteMoviesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { NameOfScreen("Избранное") },
+                title = {},
                 navigationIcon = { IconBack(navController) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent
@@ -84,18 +83,12 @@ fun PersonFavoriteMoviesScreen(
 
 @Composable
 fun NameOfScreen(name: String) {
-    Row(
-        Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.secondary.copy(alpha = 1f),
-            text = name
-        )
-    }
+    Text(
+        fontSize = 32.sp,
+        fontWeight = FontWeight.ExtraBold,
+        color = MaterialTheme.colorScheme.onBackground,
+        text = name
+    )
 }
 
 @Composable

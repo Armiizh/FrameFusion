@@ -21,7 +21,7 @@ fun PersonSettingsScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { NameOfScreen("Настройки") },
+                title = {},
                 navigationIcon = { IconBack(navController) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent

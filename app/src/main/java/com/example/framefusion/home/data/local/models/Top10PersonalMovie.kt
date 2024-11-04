@@ -15,5 +15,7 @@ data class Top10PersonalMovie(
     @SerializedName("id")
     val id: Int? = 0,
     @SerializedName("poster")
-    val poster: Poster
+    val poster: Poster,
+    @SerializedName("localPath")
+    val localPath: String? = null
 )
