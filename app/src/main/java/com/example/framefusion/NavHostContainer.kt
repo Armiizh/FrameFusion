@@ -37,7 +37,7 @@ fun NavHostContainer(
             composable(NavRoute.Home.route) {
                 HomeScreen(
                     homeScreenViewModel,
-                    provideId = { id ->
+                    onItemDetailsScreen = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)
@@ -45,7 +45,7 @@ fun NavHostContainer(
                         }
                         navController.navigate(NavRoute.ItemDetails.route)
                     },
-                    onHomePersonalItems = { type ->
+                    onHomePersonalItemsScreen = { type ->
                         homeScreenViewModel.viewModelScope.launch {
                             homeScreenViewModel.getHomePersonalItems(type)
                             homeScreenViewModel.initHomePersonalItems()
@@ -58,7 +58,7 @@ fun NavHostContainer(
                 HomePersonalItemsScreen(
                     homeScreenViewModel,
                     navController,
-                    provideId = { id ->
+                    onItemDetailsScreen = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)
@@ -73,7 +73,7 @@ fun NavHostContainer(
             composable(NavRoute.Search.route) {
                 SearchScreen(
                     searchItemViewModel,
-                    provideId = { id ->
+                    onItemDetailsScreen = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)

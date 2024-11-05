@@ -9,8 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.person.utils.composable.PersonGenresContent
-import com.example.framefusion.person.utils.composable.PersonGenresTopAppBar
+import com.example.framefusion.person.utils.PersonGenresContent
+import com.example.framefusion.person.utils.PersonGenresTopAppBar
 import com.example.framefusion.utils.Constants
 import com.example.framefusion.utils.ui.Background
 

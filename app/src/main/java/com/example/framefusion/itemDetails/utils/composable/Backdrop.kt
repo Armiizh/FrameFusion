@@ -24,7 +24,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
-import com.example.framefusion.person.utils.composable.ChangeFavoriteStatusButton
+import com.example.framefusion.person.utils.ChangeFavoriteStatusButton
 
 @Composable
 fun Backdrop(

@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import com.example.framefusion.NavRoute
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.person.utils.composable.MenuItem
+import com.example.framefusion.person.utils.MenuItem
 import com.example.framefusion.utils.ui.Background
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -48,7 +48,7 @@ import com.example.framefusion.itemDetails.utils.composable.PersonItem
 import com.example.framefusion.itemDetails.utils.converters.genreFormatted
 import com.example.framefusion.itemDetails.utils.converters.minutesToHoursAndMinutes
 import com.example.framefusion.itemDetails.utils.converters.ratingColor
-import com.example.framefusion.person.utils.composable.ChangeFavoriteStatusButton
+import com.example.framefusion.person.utils.ChangeFavoriteStatusButton
 import com.example.framefusion.utils.ui.Background
 
 @Composable

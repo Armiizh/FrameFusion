@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.framefusion.R
-import com.example.framefusion.home.utils.composable.TextList
 import com.example.framefusion.itemDetails.utils.composable.IconBack
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.data.model.FavoriteItem
-import com.example.framefusion.person.utils.composable.FavoriteItems
+import com.example.framefusion.person.utils.FavoriteItems
+import com.example.framefusion.utils.composable.TextList
 import com.example.framefusion.utils.ui.Background
 
 
@@ -64,6 +64,7 @@ fun PersonFavoriteMoviesScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(bottom = 80.dp)
                     .padding(paddingValues)
             ) {
                 TextList(title = stringResource(R.string.Your_favorite_items))

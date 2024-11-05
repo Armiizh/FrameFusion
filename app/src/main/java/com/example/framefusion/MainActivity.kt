@@ -22,8 +22,8 @@ import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.search.SearchItemViewModel
-import com.example.framefusion.utils.BottomNavigationBar
 import com.example.framefusion.utils.Constants.REQUEST_PERMISSION_CODE
+import com.example.framefusion.utils.composable.BottomNavigationBar
 import com.example.framefusion.utils.ui.theme.FrameFusionTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
