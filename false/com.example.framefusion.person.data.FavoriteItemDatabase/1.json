@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0c36f96ee468c47766ed109e1e6d3367",
+    "identityHash": "c550bf2d99a9fe8c322f10e86245d515",
     "entities": [
       {
         "tableName": "favorite_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `isFavorite` INTEGER, `type` TEXT, `name` TEXT, `year` TEXT, `genres` TEXT NOT NULL, `movieLength` TEXT, `seriesLength` TEXT, `totalSeriesLength` TEXT, `rating` TEXT NOT NULL, `shortDescription` TEXT, `description` TEXT, `persons` TEXT NOT NULL, `poster` TEXT NOT NULL, `backdrop` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `isFavorite` INTEGER, `type` TEXT, `name` TEXT, `year` TEXT, `genres` TEXT NOT NULL, `movieLength` TEXT, `seriesLength` TEXT, `totalSeriesLength` TEXT, `rating` TEXT, `shortDescription` TEXT, `description` TEXT, `poster` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -66,7 +66,7 @@
             "fieldPath": "rating",
             "columnName": "rating",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "shortDescription",
@@ -81,22 +81,10 @@
             "notNull": false
           },
           {
-            "fieldPath": "persons",
-            "columnName": "persons",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "poster",
             "columnName": "poster",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "backdrop",
-            "columnName": "backdrop",
-            "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -112,7 +100,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0c36f96ee468c47766ed109e1e6d3367')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c550bf2d99a9fe8c322f10e86245d515')"
     ]
   }
 }

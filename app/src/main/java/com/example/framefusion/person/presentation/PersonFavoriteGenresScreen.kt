@@ -9,14 +9,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.person.utils.PersonGenresContent
-import com.example.framefusion.person.utils.PersonGenresTopAppBar
+import com.example.framefusion.person.utils.personFavoriteGenres.PersonGenresScreenContent
+import com.example.framefusion.person.utils.personFavoriteGenres.PersonGenresTopAppBar
 import com.example.framefusion.utils.Constants
-import com.example.framefusion.utils.ui.Background
 
 @Composable
-fun PersonGenresScreen(
-    personScreenViewModel: PersonScreenViewModel,
+fun PersonFavoriteGenresScreen(
+    viewModel: PersonScreenViewModel,
     navController: NavHostController,
     updateGenres: () -> Unit
 ) {
@@ -26,7 +25,7 @@ fun PersonGenresScreen(
         val state = remember { mutableStateOf(genre.isSelected) }
         state
     }
-    val genres by personScreenViewModel.genres.collectAsState(initial = emptyList())
+    val genres by viewModel.genres.collectAsState(initial = emptyList())
     LaunchedEffect(Unit) {
         val selectedGenres = genres.map { it.trim() }
         allGenres.forEach { genre ->
@@ -38,18 +37,13 @@ fun PersonGenresScreen(
             PersonGenresTopAppBar(
                 allGenres,
                 allGenreStates,
-                personScreenViewModel,
+                viewModel,
                 updateGenres,
                 navController
             )
         },
         content = { paddingValues ->
-            Background()
-            PersonGenresContent(
-                paddingValues,
-                allGenres,
-                allGenreStates
-            )
+            PersonGenresScreenContent(paddingValues, allGenres, allGenreStates)
         }
     )
 }

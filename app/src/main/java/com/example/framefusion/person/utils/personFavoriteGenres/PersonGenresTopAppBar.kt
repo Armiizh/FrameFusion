@@ -1,4 +1,4 @@
-package com.example.framefusion.person.utils
+package com.example.framefusion.person.utils.personFavoriteGenres
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -20,8 +20,8 @@ import androidx.navigation.NavHostController
 import com.example.framefusion.NavRoute
 import com.example.framefusion.greeting.data.model.Genres
 import com.example.framefusion.greeting.data.model.UserGenres
-import com.example.framefusion.itemDetails.utils.composable.IconBack
 import com.example.framefusion.person.PersonScreenViewModel
+import com.example.framefusion.utils.composable.IconBack
 import kotlinx.coroutines.launch
 
 @Composable

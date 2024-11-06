@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TextList(title: String, fontSize: TextUnit = 30.sp) {
+fun Title(title: String, fontSize: TextUnit = 30.sp) {
     Text(
         text = title,
         fontSize = fontSize,

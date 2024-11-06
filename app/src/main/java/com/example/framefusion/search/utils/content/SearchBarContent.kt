@@ -18,14 +18,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.example.framefusion.utils.composable.TextList
+import com.example.framefusion.utils.composable.Title
 
 @Composable
 fun SearchBarContent(
     search: String,
     onSearchChange: (String) -> Unit
 ) {
-    TextList("Давай найдем что-нибудь")
+    Title("Давай найдем что-нибудь")
     TextField(
         modifier = Modifier
             .fillMaxWidth()

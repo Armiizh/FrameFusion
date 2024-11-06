@@ -5,15 +5,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import com.example.framefusion.R
-import com.example.framefusion.person.presentation.NameOfScreen
+import com.example.framefusion.utils.composable.NameOfScreen
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun HomeScreenTopAppBarContent() {
+fun TopAppBarContent(nameOfScreen: String) {
     TopAppBar(
-        title = { NameOfScreen(stringResource(R.string.Home)) },
+        title = { NameOfScreen(nameOfScreen) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent
         )

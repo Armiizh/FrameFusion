@@ -16,7 +16,7 @@ import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.utils.homeScreen.HomeTop10ItemsShimmer
 import com.example.framefusion.home.utils.homeScreen.OnHomePersonalItemsScreenButton
 import com.example.framefusion.home.utils.homeScreen.TvSeriesItem
-import com.example.framefusion.utils.composable.TextList
+import com.example.framefusion.utils.composable.Title
 
 @Composable
 fun Top10PersonalTvSeriesContent(
@@ -25,7 +25,7 @@ fun Top10PersonalTvSeriesContent(
     onHomePersonalItems: (String) -> Unit
 ) {
     val isTvSeriesLoading by homeScreenViewModel.top10PersonalTvSeriesLoading.collectAsState()
-    TextList("Сериалы на основе ваших интересов:")
+    Title("Сериалы на основе ваших интересов:")
     Spacer(modifier = Modifier.height(8.dp))
     if (isTvSeriesLoading) {
         HomeTop10ItemsShimmer()

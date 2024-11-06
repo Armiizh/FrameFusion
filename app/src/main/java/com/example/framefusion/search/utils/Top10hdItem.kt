@@ -36,19 +36,18 @@ internal fun Top10hdItem(
     val density = LocalDensity.current
     val widthPx = with(density) { 165.dp.toPx() }
     val heightPx = with(density) { 225.5.dp.toPx() }
-
     var isLoading by remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .width(215.dp)
-            .height(275.5.dp)
-            .clickable { onItemDetailsScreen(top10hd.id) },
+            .height(275.5.dp),
         contentAlignment = Alignment.BottomStart
     ) {
         AsyncImage(
             modifier = Modifier
                 .padding(start = 36.dp, end = 24.dp, bottom = 36.dp)
-                .clip(RoundedCornerShape(12.dp)),
+                .clip(RoundedCornerShape(12.dp))
+                .clickable { onItemDetailsScreen(top10hd.id) },
             model = ImageRequest
                 .Builder(LocalContext.current)
                 .data(top10hd.poster.url)

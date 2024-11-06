@@ -1,4 +1,4 @@
-package com.example.framefusion.itemDetails.utils.composable
+package com.example.framefusion.itemDetails.utils
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +24,7 @@ import com.example.framefusion.itemDetails.data.local.models.Person
 
 @Composable
 fun PersonItem(person: Person) {
+
     val name = if (person.name != null && person.name != "null") {
         person.name
     } else if (person.enName != null && person.enName != "null") {
@@ -32,10 +33,11 @@ fun PersonItem(person: Person) {
         "Чел без имени"
     }
     val fio = name.split(" ")
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .fillMaxWidth(0.5f)
+            .fillMaxWidth(.5f)
             .padding(vertical = 8.dp)
     ) {
         val width = with(LocalDensity.current) { 80.dp.toPx().toInt() }

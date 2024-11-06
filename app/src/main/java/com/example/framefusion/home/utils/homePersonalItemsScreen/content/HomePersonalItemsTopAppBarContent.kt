@@ -6,8 +6,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
-import com.example.framefusion.itemDetails.utils.composable.IconBack
-import com.example.framefusion.person.presentation.NameOfScreen
+import com.example.framefusion.utils.composable.IconBack
+import com.example.framefusion.utils.composable.NameOfScreen
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

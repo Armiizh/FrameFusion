@@ -1,8 +1,9 @@
-package com.example.framefusion.person.utils
+package com.example.framefusion.itemDetails.utils.itemDetailsScreen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -23,10 +24,12 @@ fun ChangeFavoriteStatusButton(
     val isLike = isLiked ?: false
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.clickable { onClick() }
+        modifier = modifier.padding(16.dp)
     ) {
         Canvas(
-            modifier = Modifier.size(40.dp)
+            modifier = Modifier
+                .size(40.dp)
+                .clickable { onClick() }
         ) {
             drawCircle(
                 color = if (isLike) Color.Red else Color.Gray,

@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.framefusion.search.SearchItemViewModel
-import com.example.framefusion.search.utils.SearchItems
+import com.example.framefusion.utils.composable.Item
 
 @Composable
 fun SearchContent(
@@ -16,7 +16,20 @@ fun SearchContent(
     val searchItem by viewModel.itemSearch.collectAsState()
     LazyColumn {
         items(searchItem) { searchItem ->
-            SearchItems(searchItem, onItemDetailsScreen)
+            Item(
+                id = searchItem.id,
+                posterUrl = searchItem.poster?.url,
+                name = searchItem.name,
+                genres = searchItem.genres,
+                year = searchItem.year,
+                movieLength = searchItem.movieLength,
+                totalSeriesLength = searchItem.totalSeriesLength,
+                seriesLength = searchItem.seriesLength,
+                type = searchItem.type,
+                rating = searchItem.rating?.kp,
+                description = searchItem.description,
+                shortDescription = searchItem.shortDescription
+            ) { onItemDetailsScreen(searchItem.id) }
         }
     }
 }

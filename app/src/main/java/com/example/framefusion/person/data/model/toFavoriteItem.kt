@@ -16,8 +16,6 @@ fun ItemDetails.toFavoriteItem(): FavoriteItem {
         rating = this.rating,
         shortDescription = this.shortDescription,
         description = this.description,
-        persons = this.persons,
         poster = this.poster,
-        backdrop = this.backdrop
     )
 }

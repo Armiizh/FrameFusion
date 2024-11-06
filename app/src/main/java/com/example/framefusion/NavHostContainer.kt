@@ -12,8 +12,9 @@ import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
 import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
+import com.example.framefusion.person.presentation.PersonFavoriteActorsScreen
+import com.example.framefusion.person.presentation.PersonFavoriteGenresScreen
 import com.example.framefusion.person.presentation.PersonFavoriteMoviesScreen
-import com.example.framefusion.person.presentation.PersonGenresScreen
 import com.example.framefusion.person.presentation.PersonScreen
 import com.example.framefusion.person.presentation.PersonSettingsScreen
 import com.example.framefusion.search.SearchItemViewModel
@@ -88,8 +89,8 @@ fun NavHostContainer(
             composable(NavRoute.Person.route) {
                 PersonScreen(navController, personScreenViewModel)
             }
-            composable(NavRoute.PersonGenres.route) {
-                PersonGenresScreen(
+            composable(NavRoute.PersonFavoriteGenres.route) {
+                PersonFavoriteGenresScreen(
                     personScreenViewModel,
                     navController,
                     updateGenres = {
@@ -99,7 +100,7 @@ fun NavHostContainer(
                     }
                 )
             }
-            composable(NavRoute.PersonFavorite.route) {
+            composable(NavRoute.PersonFavoriteMovies.route) {
                 PersonFavoriteMoviesScreen(
                     personScreenViewModel,
                     navController,
@@ -114,6 +115,9 @@ fun NavHostContainer(
                     onHomeScreen = { navController.navigate(NavRoute.Home.route) },
                     onSearchScreen = { navController.navigate(NavRoute.Search.route) }
                 )
+            }
+            composable(NavRoute.PersonFavoriteActors.route) {
+                PersonFavoriteActorsScreen(navController)
             }
             composable(NavRoute.PersonSettings.route) {
                 PersonSettingsScreen(navController)
@@ -146,19 +150,26 @@ fun NavHostContainer(
 sealed class NavRoute(val route: String) {
 
     //Home
-    data object Home : NavRoute(Constants.Screens.HOME_SCREEN)
-    data object HomeMore : NavRoute(Constants.Screens.HOME_SCREEN_MORE)
+    data object Home : NavRoute(Constants.Screens.MainScreens.HOME_SCREEN)
+    data object HomeMore : NavRoute(Constants.Screens.HomeScreens.HOME_SCREEN_MORE)
 
     //Search
-    data object Search : NavRoute(Constants.Screens.SEARCH_SCREEN)
+    data object Search : NavRoute(Constants.Screens.MainScreens.SEARCH_SCREEN)
 
     //Person
-    data object Person : NavRoute(Constants.Screens.PERSON_SCREEN)
-    data object PersonGenres : NavRoute(Constants.Screens.PERSON_GENRES_SCREEN)
-    data object PersonFavorite : NavRoute(Constants.Screens.PERSON_FAVORITE_MOVIES_SCREEN)
-    data object PersonSettings : NavRoute(Constants.Screens.PERSON_SETTINGS_SCREEN)
+    data object Person : NavRoute(Constants.Screens.MainScreens.PERSON_SCREEN)
+    data object PersonFavoriteGenres :
+        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_GENRES_SCREEN)
+
+    data object PersonFavoriteMovies :
+        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_MOVIES_SCREEN)
+
+    data object PersonFavoriteActors :
+        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_ACTORS_SCREEN)
+
+    data object PersonSettings : NavRoute(Constants.Screens.PersonScreens.PERSON_SETTINGS_SCREEN)
 
     //ItemDetails
-    data object FullItemCast : NavRoute(Constants.Screens.FULL_ITEM_CAST_SCREEN)
-    data object ItemDetails : NavRoute(Constants.Screens.ITEM_DETAILS_SCREEN)
+    data object ItemDetails : NavRoute(Constants.Screens.ItemDetailsScreens.ITEM_DETAILS_SCREEN)
+    data object FullItemCast : NavRoute(Constants.Screens.ItemDetailsScreens.FULL_ITEM_CAST_SCREEN)
 }

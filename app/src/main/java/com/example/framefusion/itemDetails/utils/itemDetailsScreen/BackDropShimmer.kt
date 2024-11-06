@@ -1,8 +1,7 @@
-package com.example.framefusion.itemDetails.utils.composable
+package com.example.framefusion.itemDetails.utils.itemDetailsScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,7 +16,7 @@ import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun BackDropShimmer() {
-    Column(
+    Box(
         Modifier
             .fillMaxWidth()
             .shimmer()

@@ -1,4 +1,4 @@
-package com.example.framefusion.itemDetails.utils.composable
+package com.example.framefusion.itemDetails.utils.itemDetailsScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -22,49 +22,61 @@ import coil.request.ImageRequest
 import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun Poster(url: String) {
-    Box(
-        modifier = Modifier
-            .width(165.dp)
-            .height(225.5.dp)
-            .padding(end = 8.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        val density = LocalDensity.current
-        val widthPx = with(density) { 165.dp.toPx() }
-        val heightPx = with(density) { 225.5.dp.toPx() }
-        var isLoading by remember { mutableStateOf(false) }
-        AsyncImage(
+fun Poster(url: String?) {
+    if (url != null && url != "null" && url != "") {
+        Box(
             modifier = Modifier
-                .padding(end = 12.dp)
-                .clip(RoundedCornerShape(12.dp)),
-            model = ImageRequest
-                .Builder(LocalContext.current)
-                .data(url)
-                .size(widthPx.toInt(), heightPx.toInt())
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            onLoading = {
-                isLoading = true
-            },
-            onError = {
-                isLoading = false
-            },
-            onSuccess = {
-                isLoading = false
-            }
-        )
-        if (isLoading) {
-            Box(
+                .width(165.dp)
+                .height(225.5.dp)
+                .padding(end = 8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            val density = LocalDensity.current
+            val widthPx = with(density) { 165.dp.toPx() }
+            val heightPx = with(density) { 225.5.dp.toPx() }
+            var isLoading by remember { mutableStateOf(false) }
+            AsyncImage(
                 modifier = Modifier
-                    .width(165.dp)
-                    .height(225.5.dp)
-                    .shimmer()
-            ) {
-                ItemShimmer()
+                    .padding(end = 12.dp)
+                    .clip(RoundedCornerShape(12.dp)),
+                model = ImageRequest
+                    .Builder(LocalContext.current)
+                    .data(url)
+                    .size(widthPx.toInt(), heightPx.toInt())
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                onLoading = {
+                    isLoading = true
+                },
+                onError = {
+                    isLoading = false
+                },
+                onSuccess = {
+                    isLoading = false
+                }
+            )
+            if (isLoading) {
+                Box(
+                    modifier = Modifier
+                        .width(165.dp)
+                        .height(225.5.dp)
+                        .shimmer()
+                ) {
+                    ItemShimmer()
+                }
             }
+        }
+    } else {
+        Box(
+            modifier = Modifier
+                .width(165.dp)
+                .height(225.5.dp)
+                .padding(end = 8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            NoImage()
         }
     }
 }

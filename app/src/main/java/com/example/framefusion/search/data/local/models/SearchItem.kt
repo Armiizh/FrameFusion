@@ -19,14 +19,17 @@ import com.example.framefusion.itemDetails.data.local.models.Rating
 data class SearchItem(
     @PrimaryKey(autoGenerate = false)
     val displayId: Int ?= 0,
-    val isLiked: Boolean? = false,
     val id: Int? = 0,
+    val isFavorite: Boolean? = false,
+    val type: String? = "",
     val name: String? = "",
-    val poster: Poster?,
-    val description: String ?= "",
-    val shortDescription: String ?= "",
     val year: String ?= "",
     val genres: List<Genre>?,
+    val movieLength: String? = "",
+    val seriesLength: String? = "",
+    val totalSeriesLength: String? = "",
     val rating: Rating?,
-    val type: String ?= ""
+    val shortDescription: String? = "",
+    val description: String? = "",
+    val poster: Poster?
 )

@@ -9,19 +9,17 @@ fun SearchResponse.toSearchItemList(): List<SearchItem> {
     return docs.map { searchItem ->
         SearchItem(
             id = searchItem.id,
-            poster = Poster(
-                url = searchItem.poster?.url,
-                previewUrl = searchItem.poster?.previewUrl
-            ),
+            type = searchItem.type,
             name = searchItem.name,
-            description = searchItem.description,
-            shortDescription = searchItem.shortDescription,
             year = searchItem.year,
             genres = searchItem.genres?.map { genres ->
                 Genre(
                     name = genres.name
                 )
             },
+            movieLength = searchItem.movieLength,
+            seriesLength = searchItem.seriesLength,
+            totalSeriesLength = searchItem.totalSeriesLength,
             rating = Rating(
                 kp = searchItem.rating?.kp,
                 imdb = searchItem.rating?.imdb,
@@ -29,7 +27,12 @@ fun SearchResponse.toSearchItemList(): List<SearchItem> {
                 russianFilmCritics = searchItem.rating?.russianFilmCritics,
                 await = searchItem.rating?.await
             ),
-            type = searchItem.type
+            shortDescription = searchItem.shortDescription,
+            description = searchItem.description,
+            poster = Poster(
+                url = searchItem.poster?.url,
+                previewUrl = searchItem.poster?.previewUrl
+            )
         )
     }
 }
