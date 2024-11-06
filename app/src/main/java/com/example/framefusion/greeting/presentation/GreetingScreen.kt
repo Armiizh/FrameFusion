@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.framefusion.R
 import com.example.framefusion.utils.Constants.Colors.horizontalGradientBrush
-import com.example.framefusion.utils.drawNeonStroke
+import com.example.framefusion.utils.composable.drawNeonStroke
 import com.example.framefusion.utils.ui.Background
 
 @Composable

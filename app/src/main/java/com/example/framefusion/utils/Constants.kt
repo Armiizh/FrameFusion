@@ -13,21 +13,36 @@ import com.example.framefusion.greeting.data.model.Genres
 object Constants {
 
     const val REQUEST_PERMISSION_CODE = 123
-    object GreetingScreens {
-        const val GREETING_SCREEN = "greeting_screen"
-        const val ONBOARDING_SCREEN = "onboarding_screen"
-    }
+
     object Screens {
-        const val HOME_SCREEN = "home_screen"
-        const val HOME_SCREEN_MORE = "home_screen_more"
-        const val SEARCH_SCREEN = "search_screen"
-        const val PERSON_SCREEN = "person_screen"
-        const val PERSON_GENRES_SCREEN = "person_genres_screen"
-        const val PERSON_FAVORITE_MOVIES_SCREEN = "person_favorite_movies_screen"
-        const val PERSON_SETTINGS_SCREEN = "person_settings_screen"
-        const val ITEM_DETAILS_SCREEN = "item_details_screen"
-        const val FULL_ITEM_CAST_SCREEN = "full_item_cast_screen"
+        object GreetingScreens {
+            const val GREETING_SCREEN = "greeting_screen"
+            const val ONBOARDING_SCREEN = "onboarding_screen"
+        }
+
+        object MainScreens {
+            const val HOME_SCREEN = "home_screen"
+            const val SEARCH_SCREEN = "search_screen"
+            const val PERSON_SCREEN = "person_screen"
+        }
+
+        object HomeScreens {
+            const val HOME_SCREEN_MORE = "home_screen_more"
+        }
+
+        object PersonScreens {
+            const val PERSON_FAVORITE_GENRES_SCREEN = "person_favorite_genres_screen"
+            const val PERSON_FAVORITE_MOVIES_SCREEN = "person_favorite_movies_screen"
+            const val PERSON_FAVORITE_ACTORS_SCREEN = "person_favorite_actors_screen"
+            const val PERSON_SETTINGS_SCREEN = "person_settings_screen"
+        }
+
+        object ItemDetailsScreens {
+            const val ITEM_DETAILS_SCREEN = "item_details_screen"
+            const val FULL_ITEM_CAST_SCREEN = "full_item_cast_screen"
+        }
     }
+
     object GenresObject {
         val greetingGenres = listOf(
             Genres("Комедия", false, R.drawable.comedies),

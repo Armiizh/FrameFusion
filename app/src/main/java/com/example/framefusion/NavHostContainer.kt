@@ -6,14 +6,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.framefusion.home.HomeScreenViewModel
-import com.example.framefusion.home.presentation.HomeMoreItemsScreen
+import com.example.framefusion.home.presentation.HomePersonalItemsScreen
 import com.example.framefusion.home.presentation.HomeScreen
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
 import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
+import com.example.framefusion.person.presentation.PersonFavoriteActorsScreen
+import com.example.framefusion.person.presentation.PersonFavoriteGenresScreen
 import com.example.framefusion.person.presentation.PersonFavoriteMoviesScreen
-import com.example.framefusion.person.presentation.PersonGenresScreen
 import com.example.framefusion.person.presentation.PersonScreen
 import com.example.framefusion.person.presentation.PersonSettingsScreen
 import com.example.framefusion.search.SearchItemViewModel
@@ -33,22 +34,21 @@ fun NavHostContainer(
         navController = navController,
         startDestination = NavRoute.Home.route,
         builder = {
-
             //Home
             composable(NavRoute.Home.route) {
                 HomeScreen(
                     homeScreenViewModel,
-                    provideId = { id ->
+                    onItemDetailsScreen = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)
                             }
                         }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                        navController.navigate(NavRoute.ItemDetails.route)
                     },
-                    onHomePersonalItems = { page, type ->
+                    onHomePersonalItemsScreen = { type ->
                         homeScreenViewModel.viewModelScope.launch {
-                            homeScreenViewModel.getHomePersonalItems(page, type)
+                            homeScreenViewModel.getHomePersonalItems(type)
                             homeScreenViewModel.initHomePersonalItems()
                         }
                         navController.navigate(NavRoute.HomeMore.route)
@@ -56,31 +56,31 @@ fun NavHostContainer(
                 )
             }
             composable(NavRoute.HomeMore.route) {
-                HomeMoreItemsScreen(
+                HomePersonalItemsScreen(
                     homeScreenViewModel,
-                    provideId = { id ->
+                    navController,
+                    onItemDetailsScreen = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)
                             }
                         }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                        navController.navigate(NavRoute.ItemDetails.route)
                     }
                 )
             }
-
 
             //Search
             composable(NavRoute.Search.route) {
                 SearchScreen(
                     searchItemViewModel,
-                    provideId = { id ->
+                    onItemDetailsScreen = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)
                             }
                         }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                        navController.navigate(NavRoute.ItemDetails.route)
                     }
                 )
             }
@@ -89,8 +89,8 @@ fun NavHostContainer(
             composable(NavRoute.Person.route) {
                 PersonScreen(navController, personScreenViewModel)
             }
-            composable(NavRoute.PersonGenres.route) {
-                PersonGenresScreen(
+            composable(NavRoute.PersonFavoriteGenres.route) {
+                PersonFavoriteGenresScreen(
                     personScreenViewModel,
                     navController,
                     updateGenres = {
@@ -100,23 +100,27 @@ fun NavHostContainer(
                     }
                 )
             }
-            composable(NavRoute.PersonFavorite.route) {
+            composable(NavRoute.PersonFavoriteMovies.route) {
                 PersonFavoriteMoviesScreen(
                     personScreenViewModel,
+                    navController,
                     provideId = { id ->
                         if (id != null) {
                             detailsScreenViewModel.viewModelScope.launch {
                                 detailsScreenViewModel.initItemDetails(id)
                             }
                         }
-                        navController.navigate(NavRoute.ItemDetails.createRoute(id.toString()))
+                        navController.navigate(NavRoute.ItemDetails.route)
                     },
                     onHomeScreen = { navController.navigate(NavRoute.Home.route) },
                     onSearchScreen = { navController.navigate(NavRoute.Search.route) }
                 )
             }
+            composable(NavRoute.PersonFavoriteActors.route) {
+                PersonFavoriteActorsScreen(navController)
+            }
             composable(NavRoute.PersonSettings.route) {
-                PersonSettingsScreen()
+                PersonSettingsScreen(navController)
             }
 
             //ItemDetails
@@ -146,23 +150,26 @@ fun NavHostContainer(
 sealed class NavRoute(val route: String) {
 
     //Home
-    data object Home : NavRoute(Constants.Screens.HOME_SCREEN)
-    data object HomeMore : NavRoute(Constants.Screens.HOME_SCREEN_MORE)
+    data object Home : NavRoute(Constants.Screens.MainScreens.HOME_SCREEN)
+    data object HomeMore : NavRoute(Constants.Screens.HomeScreens.HOME_SCREEN_MORE)
 
     //Search
-    data object Search : NavRoute(Constants.Screens.SEARCH_SCREEN)
+    data object Search : NavRoute(Constants.Screens.MainScreens.SEARCH_SCREEN)
 
     //Person
-    data object Person : NavRoute(Constants.Screens.PERSON_SCREEN)
-    data object PersonGenres : NavRoute(Constants.Screens.PERSON_GENRES_SCREEN)
-    data object PersonFavorite : NavRoute(Constants.Screens.PERSON_FAVORITE_MOVIES_SCREEN)
-    data object PersonSettings : NavRoute(Constants.Screens.PERSON_SETTINGS_SCREEN)
+    data object Person : NavRoute(Constants.Screens.MainScreens.PERSON_SCREEN)
+    data object PersonFavoriteGenres :
+        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_GENRES_SCREEN)
+
+    data object PersonFavoriteMovies :
+        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_MOVIES_SCREEN)
+
+    data object PersonFavoriteActors :
+        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_ACTORS_SCREEN)
+
+    data object PersonSettings : NavRoute(Constants.Screens.PersonScreens.PERSON_SETTINGS_SCREEN)
 
     //ItemDetails
-    data object FullItemCast : NavRoute(Constants.Screens.FULL_ITEM_CAST_SCREEN)
-    data object ItemDetails :
-        NavRoute("${Constants.Screens.ITEM_DETAILS_SCREEN}/{itemId}") {
-        fun createRoute(itemId: String): String =
-            "${Constants.Screens.ITEM_DETAILS_SCREEN}/$itemId"
-    }
+    data object ItemDetails : NavRoute(Constants.Screens.ItemDetailsScreens.ITEM_DETAILS_SCREEN)
+    data object FullItemCast : NavRoute(Constants.Screens.ItemDetailsScreens.FULL_ITEM_CAST_SCREEN)
 }

@@ -15,5 +15,6 @@ data class PersonalItems(
     @SerializedName("id")
     val id: Int? = 0,
     @SerializedName("poster")
-    val poster: Poster
+    val poster: Poster,
+    val type: String? = ""
 )

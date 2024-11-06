@@ -16,7 +16,7 @@ fun GreetingNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Constants.GreetingScreens.GREETING_SCREEN,
+        startDestination = Constants.Screens.GreetingScreens.GREETING_SCREEN,
         builder = {
 
             composable(GreetingNavRoute.Greeting.route) {
@@ -30,6 +30,6 @@ fun GreetingNavHost(
     )
 }
 sealed class GreetingNavRoute(val route: String) {
-    data object Greeting : GreetingNavRoute(Constants.GreetingScreens.GREETING_SCREEN)
-    data object Onboarding : GreetingNavRoute(Constants.GreetingScreens.ONBOARDING_SCREEN)
+    data object Greeting : GreetingNavRoute(Constants.Screens.GreetingScreens.GREETING_SCREEN)
+    data object Onboarding : GreetingNavRoute(Constants.Screens.GreetingScreens.ONBOARDING_SCREEN)
 }

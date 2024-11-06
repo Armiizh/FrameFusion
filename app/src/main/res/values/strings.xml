@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">FrameFusion</string>
-    <string name="Сomedies">Комедии</string>
+
+    Главные экраны
+    <string name="HomeScreen">Главная</string>
+    <string name="FindScreen">Поиск</string>
+    <string name="PersonScreen">Профиль</string>
+
+    //Жанры
+    <string name="сomedies">Комедии</string>
     <string name="melodramas">Мелодрамы</string>
     <string name="adventures">Приключения</string>
     <string name="western">Вестерны</string>
@@ -12,6 +19,7 @@
     <string name="fantastic">Фантастика</string>
     <string name="fantasy">Фэнтензи</string>
     <string name="musical">Мюзиклы</string>
+
     <string name="Choose_yout_favorite_genres">Выберите несколько ваших любимых жанров кино и сериалов</string>
     <string name="Full_item_cast">Полный актерский состав</string>
     <string name="Description">Описание</string>
@@ -30,4 +38,10 @@
     <string name="Empty_description">Ребята пока не добавили описание к своему фильму.\n\nЗдесь могла бы быть ваша реклама :)</string>
     <string name="Hide">Свернуть</string>
     <string name="Expand">Развернуть</string>
+    <string name="PersonMenuItem1">Ваши жанры</string>
+    <string name="PersonMenuItem2">Любимые фильмы и сериалы</string>
+    <string name="PersonMenuItem3">Любимые актеры</string>
+    <string name="PersonMenuItem4">Настройки</string>
+
+
 </resources>

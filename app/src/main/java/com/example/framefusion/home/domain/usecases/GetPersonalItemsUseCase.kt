@@ -10,11 +10,12 @@ class GetPersonalItemsUseCase @Inject constructor(
     private val returnGenresUseCase: ReturnGenresUseCase,
     private val database: PersonalItemsDatabase
 ) {
-    suspend fun invoke(page: Int, type: String) {
+    suspend fun invoke(type: String) {
         val genresString = returnGenresUseCase.invoke().split(",")
         val selectedFields = listOf(
             "id",
-            "poster"
+            "poster",
+            "type"
         )
         val notNullFields = listOf(
             "id",
@@ -34,7 +35,7 @@ class GetPersonalItemsUseCase @Inject constructor(
             }
         }
         val response = homeService.getPersonalItems(
-            page = page,
+            page = 1,
             limit = 200,
             selectedFields = selectedFields,
             notNullFields = notNullFields,

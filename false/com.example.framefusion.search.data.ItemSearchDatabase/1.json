@@ -2,21 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9d9bf5fe3dbf2a29de0cdb6322a8cb3f",
+    "identityHash": "83a7cfc8536ad9bac74f5478f43458ba",
     "entities": [
       {
         "tableName": "search_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`displayId` INTEGER, `isLiked` INTEGER, `id` INTEGER, `name` TEXT, `poster` TEXT, `description` TEXT, `shortDescription` TEXT, `year` TEXT, `genres` TEXT, `rating` TEXT, `type` TEXT, PRIMARY KEY(`displayId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`displayId` INTEGER, `id` INTEGER, `isFavorite` INTEGER, `type` TEXT, `name` TEXT, `year` TEXT, `genres` TEXT, `movieLength` TEXT, `seriesLength` TEXT, `totalSeriesLength` TEXT, `rating` TEXT, `shortDescription` TEXT, `description` TEXT, `poster` TEXT, PRIMARY KEY(`displayId`))",
         "fields": [
           {
             "fieldPath": "displayId",
             "columnName": "displayId",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "isLiked",
-            "columnName": "isLiked",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -27,26 +21,20 @@
             "notNull": false
           },
           {
+            "fieldPath": "isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "poster",
-            "columnName": "poster",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "description",
-            "columnName": "description",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "shortDescription",
-            "columnName": "shortDescription",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -63,14 +51,44 @@
             "notNull": false
           },
           {
+            "fieldPath": "movieLength",
+            "columnName": "movieLength",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "seriesLength",
+            "columnName": "seriesLength",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalSeriesLength",
+            "columnName": "totalSeriesLength",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "rating",
             "columnName": "rating",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "type",
-            "columnName": "type",
+            "fieldPath": "shortDescription",
+            "columnName": "shortDescription",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "poster",
+            "columnName": "poster",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -88,7 +106,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d9bf5fe3dbf2a29de0cdb6322a8cb3f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '83a7cfc8536ad9bac74f5478f43458ba')"
     ]
   }
 }
