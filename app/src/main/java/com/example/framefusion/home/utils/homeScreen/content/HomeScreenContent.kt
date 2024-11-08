@@ -1,19 +1,21 @@
 package com.example.framefusion.home.utils.homeScreen.content
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.example.framefusion.home.HomeScreenViewModel
+import com.example.framefusion.home.utils.homeScreen.HomeTop10PersonalContent
+import com.example.framefusion.utils.Constants.MOVIES
+import com.example.framefusion.utils.Constants.TV_SERIES
+import com.example.framefusion.utils.composable.Poster
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
 
 @Composable
 fun HomeScreenContent(
     paddingValues: PaddingValues,
-    homeScreenViewModel: HomeScreenViewModel,
+    viewModel: HomeScreenViewModel,
     onItemDetailsScreen: (Int?) -> Unit,
     onHomePersonalItemsScreen: (String) -> Unit
 ) {
@@ -21,20 +23,30 @@ fun HomeScreenContent(
 
     FrameFusionColumn(paddingValues) {
 
-        Top10PersonalMovieContent(
-            homeScreenViewModel,
-            onItemDetailsScreen,
-            onHomePersonalItemsScreen
-        )
+        //Фильмы
+        val isMovieLoading by viewModel.top10PersonalMoviesLoading.collectAsState()
+        val movies by viewModel.top10PersonalMovies.collectAsState()
 
-        Spacer(modifier = Modifier.height(12.dp))
+        HomeTop10PersonalContent(
+            type = MOVIES,
+            isLoading = isMovieLoading,
+            items = movies,
+            onHomePersonalItemsScreen = { onHomePersonalItemsScreen("movie") }
+        ) { movieItem ->
+            Poster(movieItem.poster.url) { onItemDetailsScreen(movieItem.id) }
+        }
 
-        Top10PersonalTvSeriesContent(
-            homeScreenViewModel,
-            onItemDetailsScreen,
-            onHomePersonalItemsScreen
-        )
+        //Сериалы
+        val isTvSeriesLoading by viewModel.top10PersonalTvSeriesLoading.collectAsState()
+        val tvSeries by viewModel.top10PersonalTvSeries.collectAsState()
 
-        Spacer(modifier = Modifier.height(12.dp))
+        HomeTop10PersonalContent(
+            type = TV_SERIES,
+            isLoading = isTvSeriesLoading,
+            items = tvSeries,
+            onHomePersonalItemsScreen = { onHomePersonalItemsScreen("tv-series") }
+        ) { tvSeriesItem ->
+            Poster(tvSeriesItem.poster.url) { onItemDetailsScreen(tvSeriesItem.id) }
+        }
     }
 }

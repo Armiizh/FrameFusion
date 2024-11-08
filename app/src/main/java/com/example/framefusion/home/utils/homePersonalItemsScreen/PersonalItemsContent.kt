@@ -1,6 +1,10 @@
 package com.example.framefusion.home.utils.homePersonalItemsScreen
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -11,7 +15,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.framefusion.home.HomeScreenViewModel
+import com.example.framefusion.utils.composable.Poster
 
 @Composable
 fun PersonalItemsContent(
@@ -23,12 +29,12 @@ fun PersonalItemsContent(
     if (isItemLoading) {
         HomePersonalItemsShimmer()
     } else {
-
         val items by viewModel.personalItems.collectAsState()
         var previousType by remember { mutableStateOf("") }
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
         ) {
             items(items) { item ->
                 if (item.poster.url != null && item.poster.url != "null" && item.poster.url != "") {
@@ -38,7 +44,13 @@ fun PersonalItemsContent(
                         onTypeChange(currentType)
                         previousType = currentType
                     }
-                    PersonalHomeItem(url) { onItemDetailsScreen(item.id) }
+                    Box(
+                        modifier = Modifier
+                            .size(165.dp, 225.5.dp)
+                            .padding(end = 12.dp, bottom = 12.dp)
+                    ) {
+                        Poster(url) { onItemDetailsScreen(item.id) }
+                    }
                 }
             }
         }

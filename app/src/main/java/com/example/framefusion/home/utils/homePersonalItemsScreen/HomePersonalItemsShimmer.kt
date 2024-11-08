@@ -35,22 +35,23 @@ internal fun HomePersonalItemsShimmer() {
             Row(
                 Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Absolute.SpaceEvenly
             ) {
                 Box(
                     modifier = Modifier
                         .width(165.dp)
                         .height(225.5.dp)
-                        .clip(RoundedCornerShape(4.dp))
-                        .padding(8.dp)
+                        .padding(12.dp)
+                        .clip(RoundedCornerShape(8.dp))
                         .background(color = Color.LightGray)
+
                 )
                 Box(
                     modifier = Modifier
                         .width(165.dp)
                         .height(225.5.dp)
+                        .padding(12.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .padding(8.dp)
                         .background(color = Color.LightGray)
                 )
             }

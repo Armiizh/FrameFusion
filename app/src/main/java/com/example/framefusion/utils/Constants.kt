@@ -12,6 +12,9 @@ import com.example.framefusion.greeting.data.model.Genres
 
 object Constants {
 
+    const val MOVIES = "Фильмы"
+    const val TV_SERIES = "Сериалы"
+
     const val REQUEST_PERMISSION_CODE = 123
 
     object Screens {

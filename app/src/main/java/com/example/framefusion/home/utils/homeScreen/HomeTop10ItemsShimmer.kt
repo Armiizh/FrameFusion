@@ -22,4 +22,3 @@ fun HomeTop10ItemsShimmer() {
         }
     }
 }
-

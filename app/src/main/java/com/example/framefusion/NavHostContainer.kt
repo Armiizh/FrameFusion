@@ -1,5 +1,6 @@
 package com.example.framefusion
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -48,6 +49,7 @@ fun NavHostContainer(
                     },
                     onHomePersonalItemsScreen = { type ->
                         homeScreenViewModel.viewModelScope.launch {
+                            Log.d("CHECK", "type - $type")
                             homeScreenViewModel.getHomePersonalItems(type)
                             homeScreenViewModel.initHomePersonalItems()
                         }
