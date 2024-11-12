@@ -24,6 +24,7 @@ import com.example.framefusion.utils.composable.YearLengthRating
 fun ItemDetailsContent(
     viewModel: DetailsScreenViewModel,
     onFullCastScreen: () -> Unit,
+    onActorDetailsScreen: (Int?) -> Unit
 ) {
     val itemDetails by viewModel.itemDetails.collectAsState()
 
@@ -56,6 +57,6 @@ fun ItemDetailsContent(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Cast(itemDetails?.persons, onFullCastScreen)
+        Cast(itemDetails?.persons, onFullCastScreen, onActorDetailsScreen)
     }
 }

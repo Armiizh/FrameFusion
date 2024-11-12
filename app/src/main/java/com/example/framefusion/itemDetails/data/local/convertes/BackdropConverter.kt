@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.example.framefusion.itemDetails.data.local.models.Backdrop
 
 class BackdropConverter {
+
     @TypeConverter
     fun fromBackdrop(backdrop: Backdrop): String {
         return "${backdrop.url},${backdrop.previewUrl}"

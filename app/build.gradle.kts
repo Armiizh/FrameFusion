@@ -80,6 +80,7 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.gson)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
     implementation(libs.androidx.sqlite)
 
     implementation(libs.retrofit)
@@ -89,10 +90,7 @@ dependencies {
     debugImplementation(libs.library)
     releaseImplementation(libs.library.no.op)
     implementation(libs.compose.shimmer)
-
     implementation(libs.coil.compose)
-//    implementation(libs.glide)
-//    annotationProcessor(libs.compiler)
 }
 kapt {
     correctErrorTypes = true

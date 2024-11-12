@@ -5,7 +5,6 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.colorResource
@@ -41,12 +40,6 @@ fun BottomNavigationBar(
                         imageVector = navItem.icon,
                         contentDescription = navItem.label,
                         tint = color
-                    )
-                },
-                label = {
-                    Text(
-                        text = navItem.label,
-                        color = color
                     )
                 },
                 alwaysShowLabel = false

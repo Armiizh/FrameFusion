@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun OnHomePersonalItemsScreenButton(onHomePersonalItems: (String) -> Unit) {
+fun OnHomePersonalItemsScreenButton(onHomePersonalItems: () -> Unit) {
     IconButton(
-        onClick = { onHomePersonalItems("movie") }
+        onClick = { onHomePersonalItems() }
     ) {
         Icon(
             modifier = Modifier.size(100.dp),

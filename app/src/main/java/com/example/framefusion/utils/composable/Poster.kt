@@ -1,9 +1,12 @@
 package com.example.framefusion.utils.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,13 +25,13 @@ import coil.request.ImageRequest
 import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun Poster(url: String?) {
+fun Poster(url: String?, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     if (url != null && url != "null" && url != "") {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .width(165.dp)
                 .height(225.5.dp)
-                .padding(end = 8.dp),
+                .padding(end = 12.dp, bottom = 12.dp),
             contentAlignment = Alignment.Center
         ) {
             val density = LocalDensity.current
@@ -37,8 +40,9 @@ fun Poster(url: String?) {
             var isLoading by remember { mutableStateOf(false) }
             AsyncImage(
                 modifier = Modifier
-                    .padding(end = 12.dp)
-                    .clip(RoundedCornerShape(12.dp)),
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(12.dp))
+                    .clickable { onClick() },
                 model = ImageRequest
                     .Builder(LocalContext.current)
                     .data(url)
@@ -60,9 +64,9 @@ fun Poster(url: String?) {
             if (isLoading) {
                 Box(
                     modifier = Modifier
-                        .width(165.dp)
-                        .height(225.5.dp)
-                        .shimmer()
+                        .wrapContentSize()
+                        .shimmer(),
+                    contentAlignment = Alignment.Center
                 ) {
                     ItemShimmer()
                 }
@@ -73,7 +77,7 @@ fun Poster(url: String?) {
             modifier = Modifier
                 .width(165.dp)
                 .height(225.5.dp)
-                .padding(end = 8.dp),
+                .padding(end = 12.dp, bottom = 12.dp),
             contentAlignment = Alignment.Center
         ) {
             NoImage()

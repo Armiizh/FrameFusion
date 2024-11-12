@@ -23,6 +23,6 @@ fun NoImage() {
             .height(225.5.dp),
         painter = painterResource(id = R.drawable.enoughtposter),
         contentDescription = null,
-        contentScale = ContentScale.FillBounds,
+        contentScale = ContentScale.Crop,
     )
 }
