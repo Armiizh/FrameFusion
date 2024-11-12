@@ -1,18 +1,15 @@
 package com.example.framefusion.itemDetails.utils.itemDetailsScreen.content
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.itemDetails.utils.itemDetailsScreen.DetailsScreenShimmer
 import com.example.framefusion.itemDetails.utils.itemDetailsScreen.ItemDetailsBackdrop
 import com.example.framefusion.utils.ui.Background
+import com.example.framefusion.utils.ui.FrameFusionColumn
 
 @Composable
 fun ItemDetailsScreenContent(
@@ -21,20 +18,21 @@ fun ItemDetailsScreenContent(
     viewModel: DetailsScreenViewModel,
     navController: NavHostController,
     onFullCastScreen: () -> Unit,
-    changeStatus: (ItemDetails, Boolean) -> Unit
+    changeStatus: (ItemDetails, Boolean) -> Unit,
+    onActorDetailsScreen: (Int?) -> Unit
 ) {
     Background()
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(paddingValues)
-            .padding(bottom = 80.dp)
-    ) {
+
+    FrameFusionColumn(paddingValues) {
         if (isItemLoading) {
             DetailsScreenShimmer()
         } else {
-            ItemDetailsBackdrop(viewModel, changeStatus, navController)
-            ItemDetailsContent(viewModel, onFullCastScreen)
+            LazyColumn {
+                item {
+                    ItemDetailsBackdrop(viewModel, changeStatus, navController)
+                }
+            }
+            ItemDetailsContent(viewModel, onFullCastScreen, onActorDetailsScreen)
         }
     }
 }

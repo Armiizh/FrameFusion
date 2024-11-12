@@ -43,6 +43,7 @@ object Constants {
         object ItemDetailsScreens {
             const val ITEM_DETAILS_SCREEN = "item_details_screen"
             const val FULL_ITEM_CAST_SCREEN = "full_item_cast_screen"
+            const val ACTOR_DETAILS_SCREEN = "actor_details_screen"
         }
     }
 

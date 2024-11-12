@@ -14,7 +14,8 @@ fun ItemDetailsScreen(
     navController: NavHostController,
     viewModel: DetailsScreenViewModel,
     onFullCastScreen: () -> Unit,
-    changeStatus: (ItemDetails, Boolean) -> Unit
+    changeStatus: (ItemDetails, Boolean) -> Unit,
+    onActorDetailsScreen: (Int?) -> Unit
 ) {
     val isItemLoading by viewModel.isItemLoading.collectAsState()
     Scaffold(
@@ -25,7 +26,8 @@ fun ItemDetailsScreen(
                 viewModel,
                 navController,
                 onFullCastScreen,
-                changeStatus
+                changeStatus,
+                onActorDetailsScreen
             )
         }
     )

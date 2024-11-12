@@ -1,6 +1,5 @@
 package com.example.framefusion
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -10,6 +9,7 @@ import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.presentation.HomePersonalItemsScreen
 import com.example.framefusion.home.presentation.HomeScreen
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
+import com.example.framefusion.itemDetails.presentation.ActorsDetailsScreen
 import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
 import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
 import com.example.framefusion.person.PersonScreenViewModel
@@ -49,7 +49,6 @@ fun NavHostContainer(
                     },
                     onHomePersonalItemsScreen = { type ->
                         homeScreenViewModel.viewModelScope.launch {
-                            Log.d("CHECK", "type - $type")
                             homeScreenViewModel.getHomePersonalItems(type)
                             homeScreenViewModel.initHomePersonalItems()
                         }
@@ -126,9 +125,6 @@ fun NavHostContainer(
             }
 
             //ItemDetails
-            composable(NavRoute.FullItemCast.route) {
-                FullItemCastScreen(navController, detailsScreenViewModel)
-            }
             composable(NavRoute.ItemDetails.route) {
                 ItemDetailsScreen(
                     navController,
@@ -142,8 +138,30 @@ fun NavHostContainer(
                         detailsScreenViewModel.viewModelScope.launch {
                             detailsScreenViewModel.updateItem(item, isLiked)
                         }
+                    },
+                    onActorDetailsScreen = { id ->
+                        if (id != null) {
+                            detailsScreenViewModel.viewModelScope.launch {
+                                detailsScreenViewModel.actorDetails(id)
+                            }
+                        }
                     }
                 )
+            }
+            composable(NavRoute.FullItemCast.route) {
+                FullItemCastScreen(
+                    navController,
+                    detailsScreenViewModel,
+                    onActorDetailsScreen = { id ->
+                        if (id != null) {
+                            detailsScreenViewModel.viewModelScope.launch {
+                                detailsScreenViewModel.actorDetails(id)
+                            }
+                        }
+                    })
+            }
+            composable(NavRoute.ActorDetails.route) {
+                ActorsDetailsScreen(navController, detailsScreenViewModel)
             }
         }
     )
@@ -174,4 +192,5 @@ sealed class NavRoute(val route: String) {
     //ItemDetails
     data object ItemDetails : NavRoute(Constants.Screens.ItemDetailsScreens.ITEM_DETAILS_SCREEN)
     data object FullItemCast : NavRoute(Constants.Screens.ItemDetailsScreens.FULL_ITEM_CAST_SCREEN)
+    data object ActorDetails : NavRoute(Constants.Screens.ItemDetailsScreens.ACTOR_DETAILS_SCREEN)
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,10 +25,10 @@ import coil.request.ImageRequest
 import com.valentinilk.shimmer.shimmer
 
 @Composable
-fun Poster(url: String?, onClick: () -> Unit = {}) {
+fun Poster(url: String?, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     if (url != null && url != "null" && url != "") {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .width(165.dp)
                 .height(225.5.dp)
                 .padding(end = 12.dp, bottom = 12.dp),
@@ -63,8 +64,7 @@ fun Poster(url: String?, onClick: () -> Unit = {}) {
             if (isLoading) {
                 Box(
                     modifier = Modifier
-                        .width(165.dp)
-                        .height(225.5.dp)
+                        .wrapContentSize()
                         .shimmer(),
                     contentAlignment = Alignment.Center
                 ) {

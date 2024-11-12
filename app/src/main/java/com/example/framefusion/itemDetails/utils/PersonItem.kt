@@ -1,5 +1,6 @@
 package com.example.framefusion.itemDetails.utils
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +24,7 @@ import coil.request.ImageRequest
 import com.example.framefusion.itemDetails.data.local.models.Person
 
 @Composable
-fun PersonItem(person: Person) {
+fun PersonItem(person: Person, onActorDetailsScreen: (Int?) -> Unit) {
 
     val name = if (person.name != null && person.name != "null") {
         person.name
@@ -39,6 +40,7 @@ fun PersonItem(person: Person) {
         modifier = Modifier
             .fillMaxWidth(.5f)
             .padding(vertical = 8.dp)
+            .clickable { onActorDetailsScreen(person.id) }
     ) {
         val width = with(LocalDensity.current) { 80.dp.toPx().toInt() }
         val height = with(LocalDensity.current) { 80.dp.toPx().toInt() }

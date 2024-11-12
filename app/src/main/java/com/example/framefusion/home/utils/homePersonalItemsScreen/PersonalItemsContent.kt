@@ -3,8 +3,7 @@ package com.example.framefusion.home.utils.homePersonalItemsScreen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -14,8 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.utils.composable.Poster
 
@@ -45,9 +44,8 @@ fun PersonalItemsContent(
                         previousType = currentType
                     }
                     Box(
-                        modifier = Modifier
-                            .size(165.dp, 225.5.dp)
-                            .padding(end = 12.dp, bottom = 12.dp)
+                        modifier = Modifier.wrapContentSize(),
+                        contentAlignment = Alignment.Center
                     ) {
                         Poster(url) { onItemDetailsScreen(item.id) }
                     }

@@ -17,7 +17,11 @@ import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.utils.PersonItem
 
 @Composable
-fun Cast(persons: List<Person>?, onFullCastScreen: () -> Unit) {
+fun Cast(
+    persons: List<Person>?,
+    onFullCastScreen: () -> Unit,
+    onActorDetailsScreen: (Int?) -> Unit
+) {
     Text(text = stringResource(id = R.string.Cast))
 
     HorizontalDivider(
@@ -33,7 +37,7 @@ fun Cast(persons: List<Person>?, onFullCastScreen: () -> Unit) {
             .height(200.dp)
     ) {
         items(persons?.take(4) ?: emptyList()) { person ->
-            PersonItem(person)
+            PersonItem(person, onActorDetailsScreen)
         }
     }
     OnFullCastScreen(onFullCastScreen)

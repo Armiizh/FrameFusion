@@ -19,7 +19,8 @@ import com.example.framefusion.utils.ui.FrameFusionColumn
 @Composable
 fun ItemDetailsFullCastScreenContent(
     paddingValues: PaddingValues,
-    viewModel: DetailsScreenViewModel
+    viewModel: DetailsScreenViewModel,
+    onActorDetailsScreen: (Int?) -> Unit
 ) {
     val itemDetails by viewModel.itemDetails.collectAsState()
 
@@ -34,7 +35,7 @@ fun ItemDetailsFullCastScreenContent(
                 .height(200.dp)
         ) {
             items(itemDetails?.persons ?: emptyList()) { person ->
-                PersonItem(person)
+                PersonItem(person, onActorDetailsScreen)
             }
         }
     }

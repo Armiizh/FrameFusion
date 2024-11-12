@@ -10,14 +10,15 @@ import com.example.framefusion.utils.composable.SimpleTopAppBar
 @Composable
 fun FullItemCastScreen(
     navController: NavHostController,
-    viewModel: DetailsScreenViewModel
+    viewModel: DetailsScreenViewModel,
+    onActorDetailsScreen: (Int?) -> Unit
 ) {
     Scaffold(
         topBar = {
             SimpleTopAppBar(navController)
         },
         content = { paddingValues ->
-            ItemDetailsFullCastScreenContent(paddingValues, viewModel)
+            ItemDetailsFullCastScreenContent(paddingValues, viewModel, onActorDetailsScreen)
         }
     )
 }

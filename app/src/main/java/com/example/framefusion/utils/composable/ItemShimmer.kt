@@ -3,7 +3,6 @@ package com.example.framefusion.utils.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -18,7 +17,6 @@ fun ItemShimmer() {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .padding(end = 12.dp, bottom = 12.dp)
             .width(165.dp)
             .height(225.5.dp)
             .clip(RoundedCornerShape(12.dp))
