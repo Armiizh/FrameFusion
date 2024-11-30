@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.R
 import com.example.framefusion.greeting.GreetingScreenViewModel
@@ -36,8 +37,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun OnboardingScreen(
-    onFinish: () -> Unit,
-    viewModel: GreetingScreenViewModel
+    onFinish: () -> Unit
 ) {
     val genres = Constants.GenresObject.greetingGenres
     val genreStates = genres.associateWith { genre ->
@@ -51,7 +51,7 @@ fun OnboardingScreen(
             Content(paddingValues, genres, genreStates)
         },
         bottomBar = {
-            BottomBarContent(genreStates, viewModel, onFinish)
+            BottomBarContent(genreStates, onFinish)
         }
     )
 }
@@ -59,8 +59,8 @@ fun OnboardingScreen(
 @Composable
 private fun BottomBarContent(
     genreStates: Map<Genres, MutableState<Boolean>>,
-    viewModel: GreetingScreenViewModel,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
+    viewModel: GreetingScreenViewModel = hiltViewModel()
 ) {
     BottomAppBar(
         content = {

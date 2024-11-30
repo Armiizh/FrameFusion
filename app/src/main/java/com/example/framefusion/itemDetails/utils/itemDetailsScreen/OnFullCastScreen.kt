@@ -10,9 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import com.example.framefusion.R
+import com.example.framefusion.utils.Navigator
 
 @Composable
-fun OnFullCastScreen(onFullCastScreen: () -> Unit) {
+fun OnFullCastScreen(navigator: Navigator) {
     Row(
         Modifier.fillMaxWidth()
     ) {
@@ -20,7 +21,7 @@ fun OnFullCastScreen(onFullCastScreen: () -> Unit) {
             text = stringResource(R.string.Full_cast),
             color = MaterialTheme.colorScheme.onBackground,
             textDecoration = TextDecoration.Underline,
-            modifier = Modifier.clickable { onFullCastScreen() }
+            modifier = Modifier.clickable { navigator.navigateToFullItemCast() }
         )
     }
 }

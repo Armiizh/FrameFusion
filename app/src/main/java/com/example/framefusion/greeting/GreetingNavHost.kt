@@ -11,8 +11,7 @@ import com.example.framefusion.utils.Constants
 @Composable
 fun GreetingNavHost(
     navController: NavHostController,
-    onFinish: () -> Unit,
-    viewModel: GreetingScreenViewModel
+    onFinish: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -24,7 +23,7 @@ fun GreetingNavHost(
             }
 
             composable(GreetingNavRoute.Onboarding.route) {
-                OnboardingScreen(onFinish, viewModel)
+                OnboardingScreen(onFinish)
             }
         }
     )

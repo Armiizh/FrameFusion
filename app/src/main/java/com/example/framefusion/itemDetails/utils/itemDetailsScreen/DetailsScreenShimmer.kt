@@ -25,7 +25,6 @@ fun DetailsScreenShimmer() {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .shimmer()
     ) {
         Box(
@@ -212,7 +211,7 @@ fun DetailsScreenShimmer() {
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(top = 12.dp, bottom = 80.dp),
+                .padding(top = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(

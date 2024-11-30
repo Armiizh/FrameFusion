@@ -7,17 +7,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.navigation.NavHostController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.utils.personFavoriteGenres.PersonGenresScreenContent
 import com.example.framefusion.person.utils.personFavoriteGenres.PersonGenresTopAppBar
 import com.example.framefusion.utils.Constants
+import com.example.framefusion.utils.Navigator
 
 @Composable
 fun PersonFavoriteGenresScreen(
-    viewModel: PersonScreenViewModel,
-    navController: NavHostController,
-    updateGenres: () -> Unit
+    navigator: Navigator,
+    viewModel: PersonScreenViewModel = hiltViewModel()
 ) {
 
     val allGenres = Constants.AllGenresObject.allGenres
@@ -32,14 +32,14 @@ fun PersonFavoriteGenresScreen(
             allGenreStates[genre]?.value = selectedGenres.contains(genre.name)
         }
     }
+
     Scaffold(
         topBar = {
             PersonGenresTopAppBar(
                 allGenres,
                 allGenreStates,
                 viewModel,
-                updateGenres,
-                navController
+                navigator
             )
         },
         content = { paddingValues ->

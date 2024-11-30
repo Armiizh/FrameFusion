@@ -5,14 +5,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavHostController
+import com.example.framefusion.utils.Navigator
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun SimpleTopAppBar(navController: NavHostController) {
+fun SimpleTopAppBar(navigator: Navigator) {
     TopAppBar(
         title = {},
-        navigationIcon = { IconBack(navController) },
+        navigationIcon = { IconBack(navigator) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent
         )

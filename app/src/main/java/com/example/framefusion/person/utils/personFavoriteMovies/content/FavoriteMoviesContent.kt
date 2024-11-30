@@ -6,12 +6,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.framefusion.person.data.model.FavoriteItem
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.Item
 
 @Composable
 fun FavoriteMoviesContent(
     favoriteItems: List<FavoriteItem>,
-    onItemDetailsScreen: (Int?) -> Unit
+    navigator: Navigator
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
@@ -30,7 +31,7 @@ fun FavoriteMoviesContent(
                 rating = favoriteItem.rating?.kp,
                 description = favoriteItem.description,
                 shortDescription = favoriteItem.shortDescription
-            ) { onItemDetailsScreen(favoriteItem.id) }
+            ) { navigator.navigateToItemDetails(favoriteItem.id) }
         }
     }
 }

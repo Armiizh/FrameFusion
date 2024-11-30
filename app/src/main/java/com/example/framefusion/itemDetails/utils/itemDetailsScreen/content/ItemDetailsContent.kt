@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.utils.itemDetailsScreen.Cast
 import com.example.framefusion.itemDetails.utils.itemDetailsScreen.ItemDetailsDescription
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.ItemGenres
 import com.example.framefusion.utils.composable.ItemName
 import com.example.framefusion.utils.composable.ItemType
@@ -23,8 +24,7 @@ import com.example.framefusion.utils.composable.YearLengthRating
 @Composable
 fun ItemDetailsContent(
     viewModel: DetailsScreenViewModel,
-    onFullCastScreen: () -> Unit,
-    onActorDetailsScreen: (Int?) -> Unit
+    navigator: Navigator
 ) {
     val itemDetails by viewModel.itemDetails.collectAsState()
 
@@ -57,6 +57,6 @@ fun ItemDetailsContent(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Cast(itemDetails?.persons, onFullCastScreen, onActorDetailsScreen)
+        Cast(itemDetails?.persons, navigator)
     }
 }

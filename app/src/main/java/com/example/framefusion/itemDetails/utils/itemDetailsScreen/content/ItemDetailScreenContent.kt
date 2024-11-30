@@ -2,37 +2,44 @@ package com.example.framefusion.itemDetails.utils.itemDetailsScreen.content
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
-import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.itemDetails.utils.itemDetailsScreen.DetailsScreenShimmer
 import com.example.framefusion.itemDetails.utils.itemDetailsScreen.ItemDetailsBackdrop
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
 
 @Composable
 fun ItemDetailsScreenContent(
     paddingValues: PaddingValues,
-    isItemLoading: Boolean,
-    viewModel: DetailsScreenViewModel,
-    navController: NavHostController,
-    onFullCastScreen: () -> Unit,
-    changeStatus: (ItemDetails, Boolean) -> Unit,
-    onActorDetailsScreen: (Int?) -> Unit
+    navigator: Navigator,
+    viewModel: DetailsScreenViewModel = hiltViewModel()
 ) {
+    val isItemLoading by viewModel.isItemLoading.collectAsStateWithLifecycle()
+
     Background()
 
     FrameFusionColumn(paddingValues) {
-        if (isItemLoading) {
-            DetailsScreenShimmer()
+
+        if (asdas) {
+            Text(text = "rere")
         } else {
-            LazyColumn {
-                item {
-                    ItemDetailsBackdrop(viewModel, changeStatus, navController)
+            if (isItemLoading) {
+                DetailsScreenShimmer()
+            } else {
+                LazyColumn {
+                    item {
+                        ItemDetailsBackdrop(viewModel, navigator)
+                    }
                 }
+                ItemDetailsContent(viewModel, navigator)
             }
-            ItemDetailsContent(viewModel, onFullCastScreen, onActorDetailsScreen)
         }
     }
 }

@@ -16,11 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
-import com.example.framefusion.NavRoute
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.framefusion.greeting.data.model.Genres
 import com.example.framefusion.greeting.data.model.UserGenres
+import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.person.PersonScreenViewModel
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.IconBack
 import kotlinx.coroutines.launch
 
@@ -30,8 +31,8 @@ fun PersonGenresTopAppBar(
     allGenres: List<Genres>,
     allGenreStates: Map<Genres, MutableState<Boolean>>,
     personScreenViewModel: PersonScreenViewModel,
-    updateGenres: () -> Unit,
-    navController: NavHostController
+    navigator: Navigator,
+    homeScreenViewModel: HomeScreenViewModel = viewModel()
 ) {
     TopAppBar(
         title = {
@@ -48,9 +49,9 @@ fun PersonGenresTopAppBar(
                         val userGenres = UserGenres(genres = selectedGenres)
                         personScreenViewModel.viewModelScope.launch {
                             personScreenViewModel.insertGenres(userGenres)
-                            updateGenres()
+                            homeScreenViewModel.initData()
                         }
-                        navController.navigate(NavRoute.Person.route)
+                        navigator.navigateToPerson()
                     }
                 ) {
                     Text(
@@ -61,7 +62,7 @@ fun PersonGenresTopAppBar(
                 }
             }
         },
-        navigationIcon = { IconBack(navController) },
+        navigationIcon = { IconBack(navigator) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent
         )

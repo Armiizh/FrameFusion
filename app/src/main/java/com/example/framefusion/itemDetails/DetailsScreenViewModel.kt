@@ -1,5 +1,6 @@
 package com.example.framefusion.itemDetails
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.itemDetails.data.local.ActorDetailsDatabase
@@ -12,6 +13,8 @@ import com.example.framefusion.itemDetails.domain.usecases.UpdateDetailsItemUseC
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,33 +36,23 @@ class DetailsScreenViewModel @Inject constructor(
     private val _isItemLoading = MutableStateFlow(true)
     val isItemLoading: StateFlow<Boolean> = _isItemLoading
 
+
     suspend fun initItemDetails(itemId: Int) {
-        getItemDetailsUseCase.invoke(
-            itemId,
-            onInserted = {
-                viewModelScope.launch {
-                    initData()
-                }
-            }
-        )
+        getItemDetailsUseCase.invoke(itemId)
+        initData()
     }
 
     suspend fun updateItem(item: ItemDetails, isLiked: Boolean) {
-        updateDetailsItemUseCase.invoke(
-            item.id,
-            isLiked,
-            callback = {
-                viewModelScope.launch {
-                    initData()
-                }
-            }
-        )
+        updateDetailsItemUseCase.invoke(item.id, isLiked)
+        initData()
     }
 
     private suspend fun initData() {
-        itemDetailsDatabase.itemDetailsDao().getItemDetails().collect { itemDetails ->
+        itemDetailsDatabase.itemDetailsDao().getItemDetails().first().let { itemDetails ->
             _itemDetails.value = itemDetails
+            Log.d("CHECK", "initData, itemDetails - $itemDetails")
             _isItemLoading.value = false
+            Log.d("CHECK", "initData, sasa - ${_isItemLoading.value}")
         }
     }
 

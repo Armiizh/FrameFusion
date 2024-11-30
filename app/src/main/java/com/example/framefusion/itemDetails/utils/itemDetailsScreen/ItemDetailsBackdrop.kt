@@ -20,21 +20,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
+import com.example.framefusion.person.PersonScreenViewModel
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.IconBack
+import kotlinx.coroutines.launch
 
 @Composable
 fun ItemDetailsBackdrop(
-    viewModel: DetailsScreenViewModel,
-    changeStatus: (ItemDetails, Boolean) -> Unit,
-    navController: NavHostController
+    detailsScreenViewModel: DetailsScreenViewModel,
+    navigator: Navigator,
+    personScreenViewModel: PersonScreenViewModel = viewModel()
 ) {
-    val itemDetails by viewModel.itemDetails.collectAsState()
+    val itemDetails by detailsScreenViewModel.itemDetails.collectAsState()
     Box(modifier = Modifier.fillMaxWidth()) {
 
         var isBackDropNullOrError by remember { mutableStateOf(false) }
@@ -80,7 +85,7 @@ fun ItemDetailsBackdrop(
                         },
                     )
 
-                    IconBack(navController)
+                    IconBack(navigator)
                     if (isSuccess) {
                         ChangeFavoriteStatusButton(
                             modifier = Modifier
@@ -89,7 +94,15 @@ fun ItemDetailsBackdrop(
                             isLiked = itemDetails?.isFavorite ?: false,
                             onClick = {
                                 val isFavorite = !(itemDetails?.isFavorite ?: false)
-                                itemDetails?.let { changeStatus(it, isFavorite) }
+                                itemDetails?.let {
+                                    personScreenViewModel.viewModelScope.launch {
+                                        personScreenViewModel.changeFavoriteStatus(it, isFavorite)
+                                        personScreenViewModel.initData()
+                                    }
+                                    detailsScreenViewModel.viewModelScope.launch {
+                                        detailsScreenViewModel.updateItem(it, isFavorite)
+                                    }
+                                }
                             }
                         )
                     }
@@ -111,13 +124,21 @@ fun ItemDetailsBackdrop(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconBack(navController)
+                IconBack(navigator)
                 ChangeFavoriteStatusButton(
                     modifier = Modifier,
                     isLiked = itemDetails?.isFavorite ?: false,
                     onClick = {
                         val isFavorite = !(itemDetails?.isFavorite ?: false)
-                        itemDetails?.let { changeStatus(it, isFavorite) }
+                        itemDetails?.let {
+                            personScreenViewModel.viewModelScope.launch {
+                                personScreenViewModel.changeFavoriteStatus(it, isFavorite)
+                                personScreenViewModel.initData()
+                            }
+                            detailsScreenViewModel.viewModelScope.launch {
+                                detailsScreenViewModel.updateItem(it, isFavorite)
+                            }
+                        }
                     }
                 )
             }

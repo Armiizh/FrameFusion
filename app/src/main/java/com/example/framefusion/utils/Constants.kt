@@ -6,7 +6,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.example.framefusion.NavRoute
 import com.example.framefusion.R
 import com.example.framefusion.greeting.data.model.Genres
 

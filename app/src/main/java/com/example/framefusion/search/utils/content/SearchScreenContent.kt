@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.search.SearchItemViewModel
 import com.example.framefusion.utils.ui.Background
@@ -15,8 +16,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun SearchScreenContent(
     paddingValues: PaddingValues,
-    viewModel: SearchItemViewModel,
-    onItemDetailsScreen: (Int?) -> Unit
+    onItemDetailsScreen: (Int?) -> Unit,
+    viewModel: SearchItemViewModel = hiltViewModel()
 ) {
     Background()
 

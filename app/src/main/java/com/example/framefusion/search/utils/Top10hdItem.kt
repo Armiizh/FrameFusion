@@ -9,7 +9,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.framefusion.search.data.local.models.Top10hd
@@ -39,7 +38,6 @@ private fun DisplayIdText(top10hd: Top10hd, modifier: Modifier = Modifier) {
         text = "${top10hd.displayId}",
         fontSize = 100.sp,
         fontWeight = FontWeight.Bold,
-        color = Color.White,
-        textDecoration = TextDecoration.LineThrough
+        color = Color.White
     )
 }

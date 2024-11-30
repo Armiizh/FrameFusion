@@ -15,14 +15,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.home.HomeScreenViewModel
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.Poster
 
 @Composable
 fun PersonalItemsContent(
-    viewModel: HomeScreenViewModel,
     onTypeChange: (String) -> Unit,
-    onItemDetailsScreen: (Int?) -> Unit
+    navigator: Navigator,
+    viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
     val isItemLoading by viewModel.personalItemsLoading.collectAsState()
     if (isItemLoading) {
@@ -47,7 +49,9 @@ fun PersonalItemsContent(
                         modifier = Modifier.wrapContentSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Poster(url) { onItemDetailsScreen(item.id) }
+                        Poster(url) {
+                            navigator.navigateToItemDetails(item.id)
+                        }
                     }
                 }
             }

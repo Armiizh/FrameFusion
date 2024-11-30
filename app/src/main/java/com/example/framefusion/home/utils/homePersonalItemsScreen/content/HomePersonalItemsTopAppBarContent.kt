@@ -6,6 +6,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.IconBack
 import com.example.framefusion.utils.composable.NameOfScreen
 
@@ -13,7 +14,7 @@ import com.example.framefusion.utils.composable.NameOfScreen
 @OptIn(ExperimentalMaterial3Api::class)
 fun HomePersonalItemsTopAppBarContent(
     currentType: String,
-    navController: NavHostController
+    navigator: Navigator
 ) {
     TopAppBar(
         title = {
@@ -31,7 +32,7 @@ fun HomePersonalItemsTopAppBarContent(
                 }
             )
         },
-        navigationIcon = { IconBack(navController) },
+        navigationIcon = { IconBack(navigator) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent
         )

@@ -19,7 +19,7 @@ fun <T> HomeTop10PersonalContent(
     onHomePersonalItemsScreen: (String) -> Unit,
     itemContent: @Composable (T) -> Unit
 ) {
-    Title("${type}ы на основе ваших интересов")
+    Title("$type на основе ваших интересов")
     Spacer(modifier = Modifier.height(8.dp))
     if (isLoading) {
         HomeTop10ItemsShimmer()

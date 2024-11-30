@@ -1,7 +1,7 @@
 package com.example.framefusion
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewModelScope
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,185 +12,67 @@ import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.presentation.ActorsDetailsScreen
 import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
 import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
-import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.presentation.PersonFavoriteActorsScreen
 import com.example.framefusion.person.presentation.PersonFavoriteGenresScreen
 import com.example.framefusion.person.presentation.PersonFavoriteMoviesScreen
 import com.example.framefusion.person.presentation.PersonScreen
 import com.example.framefusion.person.presentation.PersonSettingsScreen
-import com.example.framefusion.search.SearchItemViewModel
 import com.example.framefusion.search.presentation.SearchScreen
-import com.example.framefusion.utils.Constants
-import kotlinx.coroutines.launch
+import com.example.framefusion.utils.NavRoute
+import com.example.framefusion.utils.Navigator
 
 @Composable
 fun NavHostContainer(
     navController: NavHostController,
-    homeScreenViewModel: HomeScreenViewModel,
-    personScreenViewModel: PersonScreenViewModel,
-    detailsScreenViewModel: DetailsScreenViewModel,
-    searchItemViewModel: SearchItemViewModel
+    homeScreenViewModel: HomeScreenViewModel = hiltViewModel(),
+    detailsScreenViewModel: DetailsScreenViewModel = hiltViewModel(),
 ) {
+    val navigator = Navigator(navController, homeScreenViewModel, detailsScreenViewModel)
+
     NavHost(
         navController = navController,
         startDestination = NavRoute.Home.route,
         builder = {
             //Home
             composable(NavRoute.Home.route) {
-                HomeScreen(
-                    homeScreenViewModel,
-                    onItemDetailsScreen = { id ->
-                        if (id != null) {
-                            detailsScreenViewModel.viewModelScope.launch {
-                                detailsScreenViewModel.initItemDetails(id)
-                            }
-                        }
-                        navController.navigate(NavRoute.ItemDetails.route)
-                    },
-                    onHomePersonalItemsScreen = { type ->
-                        homeScreenViewModel.viewModelScope.launch {
-                            homeScreenViewModel.getHomePersonalItems(type)
-                            homeScreenViewModel.initHomePersonalItems()
-                        }
-                        navController.navigate(NavRoute.HomeMore.route)
-                    }
-                )
+                HomeScreen(navigator)
             }
             composable(NavRoute.HomeMore.route) {
-                HomePersonalItemsScreen(
-                    homeScreenViewModel,
-                    navController,
-                    onItemDetailsScreen = { id ->
-                        if (id != null) {
-                            detailsScreenViewModel.viewModelScope.launch {
-                                detailsScreenViewModel.initItemDetails(id)
-                            }
-                        }
-                        navController.navigate(NavRoute.ItemDetails.route)
-                    }
-                )
+                HomePersonalItemsScreen(navigator)
             }
 
             //Search
             composable(NavRoute.Search.route) {
-                SearchScreen(
-                    searchItemViewModel,
-                    onItemDetailsScreen = { id ->
-                        if (id != null) {
-                            detailsScreenViewModel.viewModelScope.launch {
-                                detailsScreenViewModel.initItemDetails(id)
-                            }
-                        }
-                        navController.navigate(NavRoute.ItemDetails.route)
-                    }
-                )
+                SearchScreen(navigator)
             }
 
             //Person
             composable(NavRoute.Person.route) {
-                PersonScreen(navController, personScreenViewModel)
+                PersonScreen(navigator)
             }
             composable(NavRoute.PersonFavoriteGenres.route) {
-                PersonFavoriteGenresScreen(
-                    personScreenViewModel,
-                    navController,
-                    updateGenres = {
-                        homeScreenViewModel.viewModelScope.launch {
-                            homeScreenViewModel.initData()
-                        }
-                    }
-                )
+                PersonFavoriteGenresScreen(navigator)
             }
             composable(NavRoute.PersonFavoriteMovies.route) {
-                PersonFavoriteMoviesScreen(
-                    personScreenViewModel,
-                    navController,
-                    provideId = { id ->
-                        if (id != null) {
-                            detailsScreenViewModel.viewModelScope.launch {
-                                detailsScreenViewModel.initItemDetails(id)
-                            }
-                        }
-                        navController.navigate(NavRoute.ItemDetails.route)
-                    },
-                    onHomeScreen = { navController.navigate(NavRoute.Home.route) },
-                    onSearchScreen = { navController.navigate(NavRoute.Search.route) }
-                )
+                PersonFavoriteMoviesScreen(navigator)
             }
             composable(NavRoute.PersonFavoriteActors.route) {
-                PersonFavoriteActorsScreen(navController)
+                PersonFavoriteActorsScreen(navigator)
             }
             composable(NavRoute.PersonSettings.route) {
-                PersonSettingsScreen(navController)
+                PersonSettingsScreen(navigator)
             }
 
             //ItemDetails
             composable(NavRoute.ItemDetails.route) {
-                ItemDetailsScreen(
-                    navController,
-                    detailsScreenViewModel,
-                    onFullCastScreen = { navController.navigate(NavRoute.FullItemCast.route) },
-                    changeStatus = { item, isLiked ->
-                        personScreenViewModel.viewModelScope.launch {
-                            personScreenViewModel.changeFavoriteStatus(item, isLiked)
-                            personScreenViewModel.initData()
-                        }
-                        detailsScreenViewModel.viewModelScope.launch {
-                            detailsScreenViewModel.updateItem(item, isLiked)
-                        }
-                    },
-                    onActorDetailsScreen = { id ->
-                        if (id != null) {
-                            detailsScreenViewModel.viewModelScope.launch {
-                                detailsScreenViewModel.actorDetails(id)
-                            }
-                        }
-                    }
-                )
+                ItemDetailsScreen(navigator)
             }
             composable(NavRoute.FullItemCast.route) {
-                FullItemCastScreen(
-                    navController,
-                    detailsScreenViewModel,
-                    onActorDetailsScreen = { id ->
-                        if (id != null) {
-                            detailsScreenViewModel.viewModelScope.launch {
-                                detailsScreenViewModel.actorDetails(id)
-                            }
-                        }
-                    })
+                FullItemCastScreen(navigator)
             }
             composable(NavRoute.ActorDetails.route) {
-                ActorsDetailsScreen(navController, detailsScreenViewModel)
+                ActorsDetailsScreen(navigator)
             }
         }
     )
-}
-
-sealed class NavRoute(val route: String) {
-
-    //Home
-    data object Home : NavRoute(Constants.Screens.MainScreens.HOME_SCREEN)
-    data object HomeMore : NavRoute(Constants.Screens.HomeScreens.HOME_SCREEN_MORE)
-
-    //Search
-    data object Search : NavRoute(Constants.Screens.MainScreens.SEARCH_SCREEN)
-
-    //Person
-    data object Person : NavRoute(Constants.Screens.MainScreens.PERSON_SCREEN)
-    data object PersonFavoriteGenres :
-        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_GENRES_SCREEN)
-
-    data object PersonFavoriteMovies :
-        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_MOVIES_SCREEN)
-
-    data object PersonFavoriteActors :
-        NavRoute(Constants.Screens.PersonScreens.PERSON_FAVORITE_ACTORS_SCREEN)
-
-    data object PersonSettings : NavRoute(Constants.Screens.PersonScreens.PERSON_SETTINGS_SCREEN)
-
-    //ItemDetails
-    data object ItemDetails : NavRoute(Constants.Screens.ItemDetailsScreens.ITEM_DETAILS_SCREEN)
-    data object FullItemCast : NavRoute(Constants.Screens.ItemDetailsScreens.FULL_ITEM_CAST_SCREEN)
-    data object ActorDetails : NavRoute(Constants.Screens.ItemDetailsScreens.ACTOR_DETAILS_SCREEN)
 }

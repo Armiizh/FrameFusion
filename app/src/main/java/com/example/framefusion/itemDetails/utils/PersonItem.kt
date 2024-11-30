@@ -22,9 +22,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.framefusion.itemDetails.data.local.models.Person
+import com.example.framefusion.utils.Navigator
 
 @Composable
-fun PersonItem(person: Person, onActorDetailsScreen: (Int?) -> Unit) {
+fun PersonItem(person: Person, navigator: Navigator) {
 
     val name = if (person.name != null && person.name != "null") {
         person.name
@@ -40,7 +41,7 @@ fun PersonItem(person: Person, onActorDetailsScreen: (Int?) -> Unit) {
         modifier = Modifier
             .fillMaxWidth(.5f)
             .padding(vertical = 8.dp)
-            .clickable { onActorDetailsScreen(person.id) }
+            .clickable { navigator.navigateToActorDetails(person.id) }
     ) {
         val width = with(LocalDensity.current) { 80.dp.toPx().toInt() }
         val height = with(LocalDensity.current) { 80.dp.toPx().toInt() }

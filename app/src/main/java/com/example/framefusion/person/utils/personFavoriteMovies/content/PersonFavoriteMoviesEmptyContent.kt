@@ -15,12 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import com.example.framefusion.R
+import com.example.framefusion.utils.Navigator
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PersonFavoriteMoviesEmptyContent(
-    onHomeScreen: () -> Unit,
-    onSearchScreen: () -> Unit
+    navigator: Navigator
 ) {
     Column(
         Modifier.fillMaxSize(),
@@ -34,14 +34,14 @@ fun PersonFavoriteMoviesEmptyContent(
         ) {
             Text(text = stringResource(R.string.Add_item_can))
             Text(
-                modifier = Modifier.clickable { onHomeScreen() },
+                modifier = Modifier.clickable { navigator.navigateToHome() },
                 textDecoration = TextDecoration.Underline,
                 color = Color.Blue,
                 text = stringResource(R.string.Main_screen)
             )
             Text(text = " экране или экране ")
             Text(
-                modifier = Modifier.clickable { onSearchScreen() },
+                modifier = Modifier.clickable { navigator.navigateToSearch() },
                 textDecoration = TextDecoration.Underline,
                 color = Color.Blue,
                 text = stringResource(R.string.Search_screen)

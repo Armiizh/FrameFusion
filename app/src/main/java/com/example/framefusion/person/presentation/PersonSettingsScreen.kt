@@ -11,18 +11,18 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavHostController
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.IconBack
 import com.example.framefusion.utils.ui.Background
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonSettingsScreen(navController: NavHostController) {
+fun PersonSettingsScreen(navigator: Navigator) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {},
-                navigationIcon = { IconBack(navController) },
+                navigationIcon = { IconBack(navigator) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent
                 )

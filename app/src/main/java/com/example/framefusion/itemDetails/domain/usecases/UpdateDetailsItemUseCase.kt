@@ -6,10 +6,9 @@ import javax.inject.Inject
 class UpdateDetailsItemUseCase @Inject constructor(
     private val detailsDatabase: ItemDetailsDatabase
 ) {
-    suspend fun invoke(itemId: Int?, isLiked: Boolean, callback: () -> Unit) {
+    suspend fun invoke(itemId: Int?, isLiked: Boolean) {
         if (itemId != null) {
             detailsDatabase.itemDetailsDao().updateItemLikedStatus(itemId, isLiked)
-            callback()
         }
     }
 }

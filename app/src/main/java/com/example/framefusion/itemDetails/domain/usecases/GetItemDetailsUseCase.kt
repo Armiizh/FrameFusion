@@ -16,58 +16,60 @@ class GetItemDetailsUseCase @Inject constructor(
     private val itemDetailsDatabase: ItemDetailsDatabase,
     private val favoriteItemDatabase: FavoriteItemDatabase
 ) {
-    suspend fun invoke(id: Int, onInserted: () -> Unit) {
+    suspend fun invoke(id: Int) {
         val response = itemDetailsService.getItemDetails(id)
         if (response.body() != null) {
-            val itemDetails = ItemDetails(
-                id = response.body()?.id,
-                type = response.body()?.type,
-                name = response.body()?.name,
-                year = response.body()?.year,
-                poster = Poster(
-                    url = response.body()?.poster?.url,
-                    previewUrl = response.body()?.poster?.previewUrl
-                ),
-                backdrop = Backdrop(
-                    url = response.body()?.backdrop?.url,
-                    previewUrl = response.body()?.backdrop?.previewUrl
-                ),
-                genres = response.body()?.genres!!.map { genre ->
-                    Genre(
-                        name = genre.name
-                    )
-                },
-                movieLength = response.body()?.movieLength,
-                seriesLength = response.body()?.seriesLength,
-                totalSeriesLength = response.body()?.totalSeriesLength,
-                rating = Rating(
-                    kp = response.body()?.rating?.kp,
-                    imdb = response.body()?.rating?.imdb,
-                    filmCritics = response.body()?.rating?.filmCritics,
-                    russianFilmCritics = response.body()?.rating?.russianFilmCritics,
-                    await = response.body()?.rating?.await
-                ),
-                shortDescription = response.body()?.shortDescription,
-                description = response.body()?.description,
-                persons = response.body()?.persons!!.distinctBy { person -> person.id }.map { person ->
-                    Person(
-                        id = person.id,
-                        photo = person.photo,
-                        name = person.name,
-                        enName = person.enName,
-                        description = person.description,
-                        profession = person.profession,
-                        enProfession = person.enProfession
-                    )
-                },
-            )
+            val itemDetails = response.body()?.persons?.distinctBy { person -> person.id }?.let {
+                ItemDetails(
+                    id = response.body()?.id,
+                    type = response.body()?.type,
+                    name = response.body()?.name,
+                    year = response.body()?.year,
+                    poster = Poster(
+                        url = response.body()?.poster?.url,
+                        previewUrl = response.body()?.poster?.previewUrl
+                    ),
+                    backdrop = Backdrop(
+                        url = response.body()?.backdrop?.url,
+                        previewUrl = response.body()?.backdrop?.previewUrl
+                    ),
+                    genres = response.body()?.genres!!.map { genre ->
+                        Genre(
+                            name = genre.name
+                        )
+                    },
+                    movieLength = response.body()?.movieLength,
+                    seriesLength = response.body()?.seriesLength,
+                    totalSeriesLength = response.body()?.totalSeriesLength,
+                    rating = Rating(
+                        kp = response.body()?.rating?.kp,
+                        imdb = response.body()?.rating?.imdb,
+                        filmCritics = response.body()?.rating?.filmCritics,
+                        russianFilmCritics = response.body()?.rating?.russianFilmCritics,
+                        await = response.body()?.rating?.await
+                    ),
+                    shortDescription = response.body()?.shortDescription,
+                    description = response.body()?.description,
+                    persons = it.map { person ->
+                        Person(
+                            id = person.id,
+                            photo = person.photo,
+                            name = person.name,
+                            enName = person.enName,
+                            description = person.description,
+                            profession = person.profession,
+                            enProfession = person.enProfession
+                        )
+                    },
+                )
+            }
             val isLiked = favoriteItemDatabase.favoriteItemDao().isItemFavorite(id)
             val updatedItemDetails = if (isLiked) {
-                itemDetails.copy(isFavorite = true)
+                itemDetails?.copy(isFavorite = true)
             } else {
-                itemDetails.copy(isFavorite = false)
+                itemDetails?.copy(isFavorite = false)
             }
-            itemDetailsDatabase.itemDetailsDao().updateItemDetails(updatedItemDetails, onInserted)
+            itemDetailsDatabase.itemDetailsDao().updateItemDetails(updatedItemDetails)
         }
     }
 }

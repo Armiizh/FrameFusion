@@ -15,12 +15,12 @@ import androidx.compose.ui.unit.dp
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.utils.PersonItem
+import com.example.framefusion.utils.Navigator
 
 @Composable
 fun Cast(
     persons: List<Person>?,
-    onFullCastScreen: () -> Unit,
-    onActorDetailsScreen: (Int?) -> Unit
+    navigator: Navigator
 ) {
     Text(text = stringResource(id = R.string.Cast))
 
@@ -37,8 +37,8 @@ fun Cast(
             .height(200.dp)
     ) {
         items(persons?.take(4) ?: emptyList()) { person ->
-            PersonItem(person, onActorDetailsScreen)
+            PersonItem(person, navigator)
         }
     }
-    OnFullCastScreen(onFullCastScreen)
+    OnFullCastScreen(navigator)
 }

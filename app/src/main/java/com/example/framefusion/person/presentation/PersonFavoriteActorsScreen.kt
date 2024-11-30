@@ -1,8 +1,8 @@
 package com.example.framefusion.person.presentation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import com.example.framefusion.utils.Navigator
 
 @Composable
-fun PersonFavoriteActorsScreen(navHostController: NavHostController) {
+fun PersonFavoriteActorsScreen(navigator: Navigator) {
 }

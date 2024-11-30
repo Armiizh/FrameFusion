@@ -21,12 +21,11 @@ interface ItemDetailsDao {
     suspend fun insertItemDetails(itemDetails: ItemDetails)
 
     @Update
-    suspend fun updateItemDetails(itemDetails: ItemDetails, callback:() -> Unit) {
+    suspend fun updateItemDetails(itemDetails: ItemDetails?) {
         deleteItemDetails()
         if (itemDetails != null) {
             insertItemDetails(itemDetails)
         }
-        callback()
     }
 
     @Query("UPDATE item_details SET isFavorite = :isFavorite WHERE id = :itemId")

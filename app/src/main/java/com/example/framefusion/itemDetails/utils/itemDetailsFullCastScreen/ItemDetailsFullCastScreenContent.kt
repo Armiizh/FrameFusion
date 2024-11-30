@@ -11,16 +11,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.utils.PersonItem
+import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
 
 @Composable
 fun ItemDetailsFullCastScreenContent(
     paddingValues: PaddingValues,
-    viewModel: DetailsScreenViewModel,
-    onActorDetailsScreen: (Int?) -> Unit
+    navigator: Navigator,
+    viewModel: DetailsScreenViewModel = hiltViewModel()
 ) {
     val itemDetails by viewModel.itemDetails.collectAsState()
 
@@ -35,7 +37,7 @@ fun ItemDetailsFullCastScreenContent(
                 .height(200.dp)
         ) {
             items(itemDetails?.persons ?: emptyList()) { person ->
-                PersonItem(person, onActorDetailsScreen)
+                PersonItem(person, navigator)
             }
         }
     }

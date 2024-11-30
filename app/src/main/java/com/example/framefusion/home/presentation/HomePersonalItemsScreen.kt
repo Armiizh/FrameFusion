@@ -10,23 +10,22 @@ import androidx.navigation.NavHostController
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.utils.homePersonalItemsScreen.content.HomePersonalItemsContent
 import com.example.framefusion.home.utils.homePersonalItemsScreen.content.HomePersonalItemsTopAppBarContent
+import com.example.framefusion.utils.Navigator
 
 @Composable
 fun HomePersonalItemsScreen(
-    viewModel: HomeScreenViewModel,
-    navController: NavHostController,
-    onItemDetailsScreen: (Int?) -> Unit
+    navigator: Navigator
 ) {
     var currentType by remember { mutableStateOf("") }
+
     Scaffold(
         topBar = {
-            HomePersonalItemsTopAppBarContent(currentType, navController)
+            HomePersonalItemsTopAppBarContent(currentType, navigator)
         },
         content = { paddingValues ->
             HomePersonalItemsContent(
                 paddingValues,
-                viewModel,
-                onItemDetailsScreen
+                navigator
             ) { type ->
                 currentType = type
             }
