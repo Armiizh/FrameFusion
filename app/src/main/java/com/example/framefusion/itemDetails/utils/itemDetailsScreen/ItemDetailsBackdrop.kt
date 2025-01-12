@@ -3,12 +3,12 @@ package com.example.framefusion.itemDetails.utils.itemDetailsScreen
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,27 +20,31 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.IconBack
+import com.example.framefusion.utils.navigation.Navigator
 import kotlinx.coroutines.launch
 
 @Composable
 fun ItemDetailsBackdrop(
+    itemDetails: ItemDetails?,
     detailsScreenViewModel: DetailsScreenViewModel,
     navigator: Navigator,
-    personScreenViewModel: PersonScreenViewModel = viewModel()
+    paddingValues: PaddingValues,
+    personScreenViewModel: PersonScreenViewModel = hiltViewModel()
 ) {
-    val itemDetails by detailsScreenViewModel.itemDetails.collectAsState()
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .padding(top = paddingValues.calculateTopPadding())
+    ) {
 
         var isBackDropNullOrError by remember { mutableStateOf(false) }
         var isLoading by remember { mutableStateOf(false) }
@@ -94,14 +98,21 @@ fun ItemDetailsBackdrop(
                             isLiked = itemDetails?.isFavorite ?: false,
                             onClick = {
                                 val isFavorite = !(itemDetails?.isFavorite ?: false)
-                                itemDetails?.let {
+                                itemDetails.let {
                                     personScreenViewModel.viewModelScope.launch {
-                                        personScreenViewModel.changeFavoriteStatus(it, isFavorite)
+                                        if (it != null) {
+                                            personScreenViewModel.changeFavoriteStatus(
+                                                it,
+                                                isFavorite
+                                            )
+                                        }
                                         personScreenViewModel.initData()
                                     }
-                                    detailsScreenViewModel.viewModelScope.launch {
-                                        detailsScreenViewModel.updateItem(it, isFavorite)
-                                    }
+//                                    detailsScreenViewModel.viewModelScope.launch {
+//                                        if (it != null) {
+//                                            detailsScreenViewModel.updateItem(it, isFavorite)
+//                                        }
+//                                    }
                                 }
                             }
                         )
@@ -130,13 +141,17 @@ fun ItemDetailsBackdrop(
                     isLiked = itemDetails?.isFavorite ?: false,
                     onClick = {
                         val isFavorite = !(itemDetails?.isFavorite ?: false)
-                        itemDetails?.let {
+                        itemDetails.let {
                             personScreenViewModel.viewModelScope.launch {
-                                personScreenViewModel.changeFavoriteStatus(it, isFavorite)
+                                if (it != null) {
+                                    personScreenViewModel.changeFavoriteStatus(it, isFavorite)
+                                }
                                 personScreenViewModel.initData()
                             }
                             detailsScreenViewModel.viewModelScope.launch {
-                                detailsScreenViewModel.updateItem(it, isFavorite)
+                                if (it != null) {
+//                                    detailsScreenViewModel.updateItem(it, isFavorite)
+                                }
                             }
                         }
                     }
@@ -145,4 +160,3 @@ fun ItemDetailsBackdrop(
         }
     }
 }
-

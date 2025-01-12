@@ -17,8 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.home.HomeScreenViewModel
-import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.Poster
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun PersonalItemsContent(

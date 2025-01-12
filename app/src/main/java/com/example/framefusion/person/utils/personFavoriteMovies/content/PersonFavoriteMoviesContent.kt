@@ -12,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.R
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.Title
+import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
 

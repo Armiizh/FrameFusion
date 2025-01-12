@@ -11,8 +11,8 @@ import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.utils.homeScreen.HomeTop10PersonalContent
 import com.example.framefusion.utils.Constants.MOVIES
 import com.example.framefusion.utils.Constants.TV_SERIES
-import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.Poster
+import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
 import kotlinx.coroutines.launch

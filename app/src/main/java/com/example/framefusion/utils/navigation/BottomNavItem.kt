@@ -1,4 +1,4 @@
-package com.example.framefusion.utils
+package com.example.framefusion.utils.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

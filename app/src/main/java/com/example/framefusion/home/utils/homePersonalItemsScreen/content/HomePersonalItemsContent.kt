@@ -3,7 +3,7 @@ package com.example.framefusion.home.utils.homePersonalItemsScreen.content
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import com.example.framefusion.home.utils.homePersonalItemsScreen.PersonalItemsContent
-import com.example.framefusion.utils.Navigator
+import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
 

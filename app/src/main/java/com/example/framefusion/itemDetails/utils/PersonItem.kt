@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.framefusion.itemDetails.data.local.models.Person
-import com.example.framefusion.utils.Navigator
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun PersonItem(person: Person, navigator: Navigator) {

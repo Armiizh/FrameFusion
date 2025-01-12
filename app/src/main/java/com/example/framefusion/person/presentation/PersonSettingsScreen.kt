@@ -11,8 +11,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.IconBack
+import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.ui.Background
 
 @OptIn(ExperimentalMaterial3Api::class)

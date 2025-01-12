@@ -8,6 +8,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.example.framefusion.R
 import com.example.framefusion.greeting.data.model.Genres
+import com.example.framefusion.utils.navigation.BottomNavItem
+import com.example.framefusion.utils.navigation.NavRoute
 
 object Constants {
 

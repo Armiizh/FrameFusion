@@ -6,11 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.navigation.NavHostController
-import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.utils.homePersonalItemsScreen.content.HomePersonalItemsContent
 import com.example.framefusion.home.utils.homePersonalItemsScreen.content.HomePersonalItemsTopAppBarContent
-import com.example.framefusion.utils.Navigator
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun HomePersonalItemsScreen(

@@ -12,7 +12,7 @@ import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.utils.personFavoriteGenres.PersonGenresScreenContent
 import com.example.framefusion.person.utils.personFavoriteGenres.PersonGenresTopAppBar
 import com.example.framefusion.utils.Constants
-import com.example.framefusion.utils.Navigator
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun PersonFavoriteGenresScreen(

@@ -18,10 +18,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.framefusion.utils.ui.Background
 import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun DetailsScreenShimmer() {
+    Background()
     Column(
         Modifier
             .fillMaxWidth()

@@ -14,8 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.framefusion.utils.Navigator
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun IconBack(navigator: Navigator) {

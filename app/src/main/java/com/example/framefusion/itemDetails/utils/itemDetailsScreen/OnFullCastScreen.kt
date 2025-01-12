@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import com.example.framefusion.R
-import com.example.framefusion.utils.Navigator
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun OnFullCastScreen(navigator: Navigator) {

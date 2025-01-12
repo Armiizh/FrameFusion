@@ -6,7 +6,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.framefusion.R
 import com.example.framefusion.home.utils.homeScreen.content.TopAppBarContent
 import com.example.framefusion.search.utils.content.SearchScreenContent
-import com.example.framefusion.utils.Navigator
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun SearchScreen(

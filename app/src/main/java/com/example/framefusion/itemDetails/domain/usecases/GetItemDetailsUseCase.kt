@@ -9,6 +9,10 @@ import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.data.local.models.Rating
 import com.example.framefusion.itemDetails.data.service.ItemDetailsService
 import com.example.framefusion.person.data.FavoriteItemDatabase
+import com.example.framefusion.utils.state.AppError
+import com.example.framefusion.utils.state.Result
+import kotlinx.coroutines.flow.firstOrNull
+import java.io.IOException
 import javax.inject.Inject
 
 class GetItemDetailsUseCase @Inject constructor(
@@ -16,60 +20,109 @@ class GetItemDetailsUseCase @Inject constructor(
     private val itemDetailsDatabase: ItemDetailsDatabase,
     private val favoriteItemDatabase: FavoriteItemDatabase
 ) {
-    suspend fun invoke(id: Int) {
-        val response = itemDetailsService.getItemDetails(id)
-        if (response.body() != null) {
-            val itemDetails = response.body()?.persons?.distinctBy { person -> person.id }?.let {
-                ItemDetails(
-                    id = response.body()?.id,
-                    type = response.body()?.type,
-                    name = response.body()?.name,
-                    year = response.body()?.year,
-                    poster = Poster(
-                        url = response.body()?.poster?.url,
-                        previewUrl = response.body()?.poster?.previewUrl
-                    ),
-                    backdrop = Backdrop(
-                        url = response.body()?.backdrop?.url,
-                        previewUrl = response.body()?.backdrop?.previewUrl
-                    ),
-                    genres = response.body()?.genres!!.map { genre ->
-                        Genre(
-                            name = genre.name
-                        )
-                    },
-                    movieLength = response.body()?.movieLength,
-                    seriesLength = response.body()?.seriesLength,
-                    totalSeriesLength = response.body()?.totalSeriesLength,
-                    rating = Rating(
-                        kp = response.body()?.rating?.kp,
-                        imdb = response.body()?.rating?.imdb,
-                        filmCritics = response.body()?.rating?.filmCritics,
-                        russianFilmCritics = response.body()?.rating?.russianFilmCritics,
-                        await = response.body()?.rating?.await
-                    ),
-                    shortDescription = response.body()?.shortDescription,
-                    description = response.body()?.description,
-                    persons = it.map { person ->
-                        Person(
-                            id = person.id,
-                            photo = person.photo,
-                            name = person.name,
-                            enName = person.enName,
-                            description = person.description,
-                            profession = person.profession,
-                            enProfession = person.enProfession
-                        )
-                    },
+    suspend fun invoke(id: Int): Result<ItemDetails> {
+        // Первым делом показываем состояние загрузки
+        return try {
+            // Проверяем локальную базу данных
+            val existingItem =
+                itemDetailsDatabase.itemDetailsDao().getItemDetailsById(id).firstOrNull()
+
+            // Если элемент уже есть в базе - возвращаем его
+            existingItem?.let {
+                return Result.Success(it)
+            }
+
+            // Если в базе нет - делаем запрос к сети
+            val response = itemDetailsService.getItemDetails(id)
+
+            // Проверяем успешность ответа
+            if (response.isSuccessful) {
+                response.body()?.let { responseBody ->
+                    // Преобразуем ответ в модель ItemDetails
+                    val itemDetails = ItemDetails(
+                        id = responseBody.id,
+                        type = responseBody.type,
+                        name = responseBody.name,
+                        year = responseBody.year,
+                        poster = Poster(
+                            url = responseBody.poster.url,
+                            previewUrl = responseBody.poster.previewUrl
+                        ),
+                        backdrop = Backdrop(
+                            url = responseBody.backdrop.url,
+                            previewUrl = responseBody.backdrop.previewUrl
+                        ),
+                        genres = responseBody.genres.map { genre ->
+                            Genre(name = genre.name)
+                        },
+                        movieLength = responseBody.movieLength,
+                        seriesLength = responseBody.seriesLength,
+                        totalSeriesLength = responseBody.totalSeriesLength,
+                        rating = Rating(
+                            kp = responseBody.rating.kp,
+                            imdb = responseBody.rating.imdb,
+                            filmCritics = responseBody.rating.filmCritics,
+                            russianFilmCritics = responseBody.rating.russianFilmCritics,
+                            await = responseBody.rating.await
+                        ),
+                        shortDescription = responseBody.shortDescription,
+                        description = responseBody.description,
+                        persons = responseBody.persons.map { person ->
+                            Person(
+                                id = person.id,
+                                photo = person.photo,
+                                name = person.name,
+                                enName = person.enName,
+                                description = person.description,
+                                profession = person.profession,
+                                enProfession = person.enProfession
+                            )
+                        },
+                        isFavorite = false
+                    )
+
+                    // Проверяем, является ли элемент избранным
+                    val isLiked = favoriteItemDatabase.favoriteItemDao().isItemFavorite(id)
+                    val updatedItemDetails = itemDetails.copy(isFavorite = isLiked)
+
+                    // Сохраняем в локальную базу данных
+                    itemDetailsDatabase.itemDetailsDao().updateItemDetails(updatedItemDetails)
+
+                    // Возвращаем успешный результат
+                    Result.Success(updatedItemDetails)
+                } ?: Result.Error(
+                    AppError.NetworkError(
+                        message = "Пустой ответ от сервера",
+                        code = response.code()
+                    )
+                )
+            } else {
+                // Обработка ошибок от сервера
+                val errorBody = response.errorBody()?.string()
+                Result.Error(
+                    AppError.ServerError(
+                        message = "Ошибка сервера",
+                        serverMessage = errorBody
+                    )
                 )
             }
-            val isLiked = favoriteItemDatabase.favoriteItemDao().isItemFavorite(id)
-            val updatedItemDetails = if (isLiked) {
-                itemDetails?.copy(isFavorite = true)
-            } else {
-                itemDetails?.copy(isFavorite = false)
-            }
-            itemDetailsDatabase.itemDetailsDao().updateItemDetails(updatedItemDetails)
+        } catch (e: IOException) {
+            // Сетевые ошибки
+            Result.Error(
+                AppError.NetworkError(
+                    message = "Проблема с подключением к интернету",
+                    code = null
+                )
+            )
+        } catch (e: Exception) {
+            // Прочие неизвестные ошибки
+            Result.Error(
+                AppError.UnknownError(
+                    message = e.localizedMessage ?: "Неизвестная ошибка"
+                )
+            )
         }
     }
 }
+
+

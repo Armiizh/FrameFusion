@@ -21,8 +21,8 @@ import com.example.framefusion.greeting.data.model.Genres
 import com.example.framefusion.greeting.data.model.UserGenres
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.IconBack
+import com.example.framefusion.utils.navigation.Navigator
 import kotlinx.coroutines.launch
 
 @Composable

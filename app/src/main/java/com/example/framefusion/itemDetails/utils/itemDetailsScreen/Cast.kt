@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.framefusion.R
 import com.example.framefusion.itemDetails.data.local.models.Person
 import com.example.framefusion.itemDetails.utils.PersonItem
-import com.example.framefusion.utils.Navigator
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun Cast(

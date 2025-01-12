@@ -6,8 +6,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.framefusion.person.data.model.FavoriteItem
-import com.example.framefusion.utils.Navigator
 import com.example.framefusion.utils.composable.Item
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun FavoriteMoviesContent(
