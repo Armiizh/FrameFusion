@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.R
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.utils.composable.Title
@@ -21,7 +20,7 @@ import com.example.framefusion.utils.ui.FrameFusionColumn
 fun PersonFavoriteMoviesContent(
     paddingValues: PaddingValues,
     navigator: Navigator,
-    personScreenViewModel: PersonScreenViewModel = hiltViewModel()
+    personScreenViewModel: PersonScreenViewModel
 ) {
     val favoritesItem by personScreenViewModel.favorites.collectAsState()
 

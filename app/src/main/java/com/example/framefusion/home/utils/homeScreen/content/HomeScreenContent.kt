@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.utils.homeScreen.HomeTop10PersonalContent
@@ -21,25 +20,24 @@ import kotlinx.coroutines.launch
 fun HomeScreenContent(
     paddingValues: PaddingValues,
     navigator: Navigator,
-    homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
+    viewModel: HomeScreenViewModel
 ) {
-    Background()
 
     LaunchedEffect(Unit) {
-        homeScreenViewModel.viewModelScope.launch {
-            homeScreenViewModel.initData()
+        viewModel.viewModelScope.launch {
+            viewModel.initHomeTop10Personal()
         }
     }
+
+    Background()
     FrameFusionColumn(paddingValues) {
 
         //Фильмы
-        val isMovieLoading by homeScreenViewModel.top10PersonalMoviesLoading.collectAsState()
-        val movies by homeScreenViewModel.top10PersonalMovies.collectAsState()
+        val movies by viewModel.top10PersonalMovies.collectAsState()
 
         HomeTop10PersonalContent(
             type = MOVIES,
-            isLoading = isMovieLoading,
-            items = movies,
+            result = movies,
             onHomePersonalItemsScreen = {
                 navigator.navigateToHomeMore("movie")
             },
@@ -47,23 +45,31 @@ fun HomeScreenContent(
                 Poster(movieItem.poster.url) {
                     navigator.navigateToItemDetails(movieItem.id)
                 }
+            },
+            onRetry = {
+                viewModel.viewModelScope.launch {
+                    viewModel.initHomeTop10Personal()
+                }
             }
         )
 
         //Сериалы
-        val isTvSeriesLoading by homeScreenViewModel.top10PersonalTvSeriesLoading.collectAsState()
-        val tvSeries by homeScreenViewModel.top10PersonalTvSeries.collectAsState()
+        val tvSeries by viewModel.top10PersonalTvSeries.collectAsState()
 
         HomeTop10PersonalContent(
             type = TV_SERIES,
-            isLoading = isTvSeriesLoading,
-            items = tvSeries,
+            result = tvSeries,
             onHomePersonalItemsScreen = {
                 navigator.navigateToHomeMore("tv-series")
             },
             itemContent = { tvSeriesItem ->
                 Poster(tvSeriesItem.poster.url) {
                     navigator.navigateToItemDetails(tvSeriesItem.id)
+                }
+            },
+            onRetry = {
+                viewModel.viewModelScope.launch {
+                    viewModel.initHomeTop10Personal()
                 }
             }
         )

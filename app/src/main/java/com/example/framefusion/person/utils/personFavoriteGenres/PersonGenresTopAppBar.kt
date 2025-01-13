@@ -49,7 +49,7 @@ fun PersonGenresTopAppBar(
                         val userGenres = UserGenres(genres = selectedGenres)
                         personScreenViewModel.viewModelScope.launch {
                             personScreenViewModel.insertGenres(userGenres)
-                            homeScreenViewModel.initData()
+                            homeScreenViewModel.initHomeTop10Personal()
                         }
                         navigator.navigateToPerson()
                     }

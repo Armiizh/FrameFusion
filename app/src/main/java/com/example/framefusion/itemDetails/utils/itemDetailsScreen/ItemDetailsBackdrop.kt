@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -38,7 +37,7 @@ fun ItemDetailsBackdrop(
     detailsScreenViewModel: DetailsScreenViewModel,
     navigator: Navigator,
     paddingValues: PaddingValues,
-    personScreenViewModel: PersonScreenViewModel = hiltViewModel()
+    personScreenViewModel: PersonScreenViewModel
 ) {
     Box(
         Modifier
@@ -108,11 +107,11 @@ fun ItemDetailsBackdrop(
                                         }
                                         personScreenViewModel.initData()
                                     }
-//                                    detailsScreenViewModel.viewModelScope.launch {
-//                                        if (it != null) {
-//                                            detailsScreenViewModel.updateItem(it, isFavorite)
-//                                        }
-//                                    }
+                                    detailsScreenViewModel.viewModelScope.launch {
+                                        if (it != null) {
+                                            detailsScreenViewModel.updateItem(it, isFavorite)
+                                        }
+                                    }
                                 }
                             }
                         )
@@ -150,7 +149,7 @@ fun ItemDetailsBackdrop(
                             }
                             detailsScreenViewModel.viewModelScope.launch {
                                 if (it != null) {
-//                                    detailsScreenViewModel.updateItem(it, isFavorite)
+                                    detailsScreenViewModel.updateItem(it, isFavorite)
                                 }
                             }
                         }

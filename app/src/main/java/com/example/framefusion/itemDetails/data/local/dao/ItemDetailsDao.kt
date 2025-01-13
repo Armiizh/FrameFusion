@@ -11,9 +11,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ItemDetailsDao {
 
-    @Query("SELECT * FROM item_details")
-    fun getItemDetails(): Flow<ItemDetails>
-
     @Query("SELECT * FROM item_details WHERE id = :id")
     fun getItemDetailsById(id: Int): Flow<ItemDetails>
 

@@ -13,6 +13,7 @@ import com.example.framefusion.home.presentation.HomeScreen
 import com.example.framefusion.itemDetails.presentation.ActorsDetailsScreen
 import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
 import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
+import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.presentation.PersonFavoriteActorsScreen
 import com.example.framefusion.person.presentation.PersonFavoriteGenresScreen
 import com.example.framefusion.person.presentation.PersonFavoriteMoviesScreen
@@ -25,9 +26,10 @@ import com.example.framefusion.utils.navigation.Navigator
 @Composable
 fun NavHostContainer(
     navController: NavHostController,
-    homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
+    homeScreenViewModel: HomeScreenViewModel = hiltViewModel(),
+    personScreenViewModel: PersonScreenViewModel = hiltViewModel()
 ) {
-    val navigator = Navigator(navController, homeScreenViewModel)
+    val navigator = Navigator(navController)
 
     NavHost(
         navController = navController,
@@ -35,10 +37,14 @@ fun NavHostContainer(
         builder = {
             //Home
             composable(NavRoute.Home.route) {
-                HomeScreen(navigator)
+                HomeScreen(navigator, homeScreenViewModel)
             }
-            composable(NavRoute.HomeMore.route) {
-                HomePersonalItemsScreen(navigator)
+            composable(
+                route = NavRoute.HomeMore.route,
+                arguments = listOf(navArgument("type") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val type = backStackEntry.arguments?.getString("type")
+                HomePersonalItemsScreen(navigator, type, homeScreenViewModel)
             }
 
             //Search
@@ -48,13 +54,13 @@ fun NavHostContainer(
 
             //Person
             composable(NavRoute.Person.route) {
-                PersonScreen(navigator)
+                PersonScreen(navigator, personScreenViewModel)
             }
             composable(NavRoute.PersonFavoriteGenres.route) {
-                PersonFavoriteGenresScreen(navigator)
+                PersonFavoriteGenresScreen(navigator, personScreenViewModel)
             }
             composable(NavRoute.PersonFavoriteMovies.route) {
-                PersonFavoriteMoviesScreen(navigator)
+                PersonFavoriteMoviesScreen(navigator, personScreenViewModel)
             }
             composable(NavRoute.PersonFavoriteActors.route) {
                 PersonFavoriteActorsScreen(navigator)
@@ -69,7 +75,7 @@ fun NavHostContainer(
                 arguments = listOf(navArgument("itemId") { type = NavType.IntType })
             ) { backStackEntry ->
                 val itemId = backStackEntry.arguments?.getInt("itemId")
-                ItemDetailsScreen(navigator, itemId ?: -1)
+                ItemDetailsScreen(navigator, itemId ?: -1, personScreenViewModel)
             }
             composable(NavRoute.FullItemCast.route) {
                 FullItemCastScreen(navigator)

@@ -30,7 +30,7 @@ object Constants {
             const val PERSON_SCREEN = "person_screen"
         }
 
-        object HomeScreens {
+        object HomeScreensMore {
             const val HOME_SCREEN_MORE = "home_screen_more"
         }
 
@@ -94,6 +94,24 @@ object Constants {
             Genres("Игра", false, R.drawable.comedies),
         )
     }
+
+    object ErrorMessages {
+        const val EMPTY_RESPONSE = "Пустой ответ от сервера"
+        const val BAD_REQUEST = "Неверный запрос. Проверьте введенные данные."
+        const val NOT_FOUND = "Запрашиваемый ресурс не найден."
+        const val INTERNAL_SERVER_ERROR = "Внутренняя ошибка сервера. Попробуйте позже."
+        const val UNKNOWN_ERROR = "Неизвестная ошибка"
+        const val INVALID_TYPE = "Неверно передан тип фильма или сериала"
+        const val NETWORK_ERROR = "Проблема с подключением к интернету"
+
+        // Статическая карта кодов ошибок и соответствующих сообщений
+        val errorMessagesMap: Map<Int, String> = mapOf(
+            400 to BAD_REQUEST,
+            404 to NOT_FOUND,
+            500 to INTERNAL_SERVER_ERROR
+        )
+    }
+
     object Colors {
         val horizontalGradientBrush = Brush.horizontalGradient(
             colors = listOf(

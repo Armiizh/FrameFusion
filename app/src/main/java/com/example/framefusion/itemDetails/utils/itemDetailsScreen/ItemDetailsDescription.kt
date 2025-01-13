@@ -61,10 +61,11 @@ fun ItemDetailsDescription(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.Start
     ) {
         Text(
             textAlign = TextAlign.Justify,
+            softWrap = true,
             modifier = Modifier.fillMaxWidth(),
             text = textDescription,
             maxLines = if (isExpanded) Int.MAX_VALUE else maxLines,
@@ -97,7 +98,6 @@ fun ItemDetailsDescription(
                     )
                 }
                 Icon(
-//                    modifier = Modifier.size(24.dp),
                     imageVector = if (isExpanded) {
                         Icons.Default.KeyboardArrowUp
                     } else {

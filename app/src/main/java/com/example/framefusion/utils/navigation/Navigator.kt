@@ -1,14 +1,10 @@
 package com.example.framefusion.utils.navigation
 
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.utils.Constants
-import kotlinx.coroutines.launch
 
 class Navigator(
-    private val navController: NavHostController,
-    private val homeScreenViewModel: HomeScreenViewModel
+    private val navController: NavHostController
 ) {
 
     fun navigateBack() {
@@ -20,11 +16,7 @@ class Navigator(
     }
 
     fun navigateToHomeMore(type: String) {
-        homeScreenViewModel.viewModelScope.launch {
-            homeScreenViewModel.getHomePersonalItems(type)
-            homeScreenViewModel.initHomePersonalItems()
-        }
-        navController.navigate(NavRoute.HomeMore.route)
+        navController.navigate("${Constants.Screens.HomeScreensMore.HOME_SCREEN_MORE}/$type")
     }
 
     fun navigateToSearch() {
@@ -73,7 +65,7 @@ sealed class NavRoute(val route: String) {
 
     //Home
     data object Home : NavRoute(Constants.Screens.MainScreens.HOME_SCREEN)
-    data object HomeMore : NavRoute(Constants.Screens.HomeScreens.HOME_SCREEN_MORE)
+    data object HomeMore : NavRoute("${Constants.Screens.HomeScreensMore.HOME_SCREEN_MORE}/{type}")
 
     //Search
     data object Search : NavRoute(Constants.Screens.MainScreens.SEARCH_SCREEN)

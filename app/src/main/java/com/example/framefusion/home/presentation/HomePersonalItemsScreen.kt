@@ -6,13 +6,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.utils.homePersonalItemsScreen.content.HomePersonalItemsContent
 import com.example.framefusion.home.utils.homePersonalItemsScreen.content.HomePersonalItemsTopAppBarContent
 import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun HomePersonalItemsScreen(
-    navigator: Navigator
+    navigator: Navigator,
+    type: String?,
+    homeScreenViewModel: HomeScreenViewModel
 ) {
     var currentType by remember { mutableStateOf("") }
 
@@ -23,7 +26,9 @@ fun HomePersonalItemsScreen(
         content = { paddingValues ->
             HomePersonalItemsContent(
                 paddingValues,
-                navigator
+                navigator,
+                type,
+                homeScreenViewModel
             ) { type ->
                 currentType = type
             }

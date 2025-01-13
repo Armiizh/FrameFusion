@@ -7,7 +7,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.person.utils.personFavoriteGenres.PersonGenresScreenContent
 import com.example.framefusion.person.utils.personFavoriteGenres.PersonGenresTopAppBar
@@ -17,7 +16,7 @@ import com.example.framefusion.utils.navigation.Navigator
 @Composable
 fun PersonFavoriteGenresScreen(
     navigator: Navigator,
-    viewModel: PersonScreenViewModel = hiltViewModel()
+    viewModel: PersonScreenViewModel
 ) {
 
     val allGenres = Constants.AllGenresObject.allGenres

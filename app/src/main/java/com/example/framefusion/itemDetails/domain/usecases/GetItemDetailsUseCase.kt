@@ -21,7 +21,7 @@ class GetItemDetailsUseCase @Inject constructor(
     private val favoriteItemDatabase: FavoriteItemDatabase
 ) {
     suspend fun invoke(id: Int): Result<ItemDetails> {
-        // Первым делом показываем состояние загрузки
+
         return try {
             // Проверяем локальную базу данных
             val existingItem =
@@ -124,5 +124,3 @@ class GetItemDetailsUseCase @Inject constructor(
         }
     }
 }
-
-

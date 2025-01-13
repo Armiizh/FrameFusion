@@ -3,7 +3,6 @@ package com.example.framefusion.person.utils.personScreen
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.R
 import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.utils.navigation.Navigator
@@ -14,7 +13,7 @@ import com.example.framefusion.utils.ui.FrameFusionColumn
 fun PersonScreenContent(
     paddingValues: PaddingValues,
     navigator: Navigator,
-    personScreenViewModel: PersonScreenViewModel = hiltViewModel()
+    personScreenViewModel: PersonScreenViewModel
 ) {
     Background()
     FrameFusionColumn(paddingValues) {

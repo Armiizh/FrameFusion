@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import com.example.framefusion.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.itemDetails.utils.itemDetailsScreen.ItemDetailsBackdrop
+import com.example.framefusion.person.PersonScreenViewModel
 import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.state.Result
 import com.example.framefusion.utils.ui.Background
@@ -17,14 +18,23 @@ import com.example.framefusion.utils.ui.FrameFusionColumn
 @Composable
 fun ItemDetailsScreenSuccessContent(
     state: Result.Success<ItemDetails>,
-    viewModel: DetailsScreenViewModel,
     navigator: Navigator,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    itemDetailsScreenViewModel: DetailsScreenViewModel,
+    personScreenViewModel: PersonScreenViewModel
 ) {
     Background()
     Column(Modifier.fillMaxWidth()) {
         LazyColumn {
-            item { ItemDetailsBackdrop(state.data, viewModel, navigator, paddingValues) }
+            item {
+                ItemDetailsBackdrop(
+                    state.data,
+                    itemDetailsScreenViewModel,
+                    navigator,
+                    paddingValues,
+                    personScreenViewModel
+                )
+            }
         }
         FrameFusionColumn(
             paddingValues,
