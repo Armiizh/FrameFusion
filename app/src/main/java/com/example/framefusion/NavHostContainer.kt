@@ -1,12 +1,21 @@
 package com.example.framefusion
 
+import android.app.Activity.MODE_PRIVATE
+import android.content.SharedPreferences
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.framefusion.greeting.presentation.GreetingScreen
+import com.example.framefusion.greeting.presentation.OnboardingScreen
 import com.example.framefusion.home.HomeScreenViewModel
 import com.example.framefusion.home.presentation.HomePersonalItemsScreen
 import com.example.framefusion.home.presentation.HomeScreen
@@ -20,69 +29,104 @@ import com.example.framefusion.person.presentation.PersonFavoriteMoviesScreen
 import com.example.framefusion.person.presentation.PersonScreen
 import com.example.framefusion.person.presentation.PersonSettingsScreen
 import com.example.framefusion.search.presentation.SearchScreen
+import com.example.framefusion.utils.composable.BottomNavigationBar
 import com.example.framefusion.utils.navigation.NavRoute
 import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun NavHostContainer(
-    navController: NavHostController,
+    navController: NavHostController = rememberNavController(),
     homeScreenViewModel: HomeScreenViewModel = hiltViewModel(),
     personScreenViewModel: PersonScreenViewModel = hiltViewModel()
 ) {
     val navigator = Navigator(navController)
 
-    NavHost(
-        navController = navController,
-        startDestination = NavRoute.Home.route,
-        builder = {
-            //Home
-            composable(NavRoute.Home.route) {
-                HomeScreen(navigator, homeScreenViewModel)
-            }
-            composable(
-                route = NavRoute.HomeMore.route,
-                arguments = listOf(navArgument("type") { type = NavType.StringType })
-            ) { backStackEntry ->
-                val type = backStackEntry.arguments?.getString("type")
-                HomePersonalItemsScreen(navigator, type, homeScreenViewModel)
-            }
+    val context = LocalContext.current
+    val prefs: SharedPreferences = context.getSharedPreferences("user_prefs", MODE_PRIVATE)
+    val isFirstLaunch = remember { mutableStateOf(prefs.getBoolean("first_launch", true)) }
 
-            //Search
-            composable(NavRoute.Search.route) {
-                SearchScreen(navigator)
-            }
+    if (isFirstLaunch.value) {
+        Scaffold { paddingValues ->
+            val pad = paddingValues
+            NavHost(
+                navController = navController,
+                startDestination = NavRoute.Greeting.route,
+                builder = {
 
-            //Person
-            composable(NavRoute.Person.route) {
-                PersonScreen(navigator, personScreenViewModel)
-            }
-            composable(NavRoute.PersonFavoriteGenres.route) {
-                PersonFavoriteGenresScreen(navigator, personScreenViewModel)
-            }
-            composable(NavRoute.PersonFavoriteMovies.route) {
-                PersonFavoriteMoviesScreen(navigator, personScreenViewModel)
-            }
-            composable(NavRoute.PersonFavoriteActors.route) {
-                PersonFavoriteActorsScreen(navigator)
-            }
-            composable(NavRoute.PersonSettings.route) {
-                PersonSettingsScreen(navigator)
-            }
+                    composable(NavRoute.Greeting.route) {
+                        GreetingScreen { navController.navigate(NavRoute.Onboarding.route) }
+                    }
 
-            //ItemDetails
-            composable(
-                route = NavRoute.ItemDetails.route,
-                arguments = listOf(navArgument("itemId") { type = NavType.IntType })
-            ) { backStackEntry ->
-                val itemId = backStackEntry.arguments?.getInt("itemId")
-                ItemDetailsScreen(navigator, itemId ?: -1, personScreenViewModel)
-            }
-            composable(NavRoute.FullItemCast.route) {
-                FullItemCastScreen(navigator)
-            }
-            composable(NavRoute.ActorDetails.route) {
-                ActorsDetailsScreen(navigator)
-            }
+                    composable(NavRoute.Onboarding.route) {
+                        OnboardingScreen() {
+                            prefs.edit().putBoolean("first_launch", false).apply()
+                            isFirstLaunch.value = false
+                        }
+                    }
+                }
+            )
         }
-    )
+    }
+
+    if (!isFirstLaunch.value) {
+        Scaffold(
+            bottomBar = { BottomNavigationBar(navController) }
+        ) { paddingValues ->
+            val pad = paddingValues
+            NavHost(
+                navController = navController,
+                startDestination = NavRoute.Home.route,
+                builder = {
+                    //Home
+                    composable(NavRoute.Home.route) {
+                        HomeScreen(navigator, homeScreenViewModel)
+                    }
+                    composable(
+                        route = NavRoute.HomeMore.route,
+                        arguments = listOf(navArgument("type") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        val type = backStackEntry.arguments?.getString("type")
+                        HomePersonalItemsScreen(navigator, type, homeScreenViewModel)
+                    }
+
+                    //Search
+                    composable(NavRoute.Search.route) {
+                        SearchScreen(navigator)
+                    }
+
+                    //Person
+                    composable(NavRoute.Person.route) {
+                        PersonScreen(navigator, personScreenViewModel)
+                    }
+                    composable(NavRoute.PersonFavoriteGenres.route) {
+                        PersonFavoriteGenresScreen(navigator, personScreenViewModel)
+                    }
+                    composable(NavRoute.PersonFavoriteMovies.route) {
+                        PersonFavoriteMoviesScreen(navigator, personScreenViewModel)
+                    }
+                    composable(NavRoute.PersonFavoriteActors.route) {
+                        PersonFavoriteActorsScreen(navigator)
+                    }
+                    composable(NavRoute.PersonSettings.route) {
+                        PersonSettingsScreen(navigator)
+                    }
+
+                    //ItemDetails
+                    composable(
+                        route = NavRoute.ItemDetails.route,
+                        arguments = listOf(navArgument("itemId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val itemId = backStackEntry.arguments?.getInt("itemId")
+                        ItemDetailsScreen(navigator, itemId ?: -1, personScreenViewModel)
+                    }
+                    composable(NavRoute.FullItemCast.route) {
+                        FullItemCastScreen(navigator)
+                    }
+                    composable(NavRoute.ActorDetails.route) {
+                        ActorsDetailsScreen(navigator)
+                    }
+                }
+            )
+        }
+    }
 }

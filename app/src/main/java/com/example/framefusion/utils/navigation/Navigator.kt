@@ -63,6 +63,10 @@ class Navigator(
 
 sealed class NavRoute(val route: String) {
 
+    //Onboarding
+    data object Greeting : NavRoute(Constants.Screens.GreetingScreens.GREETING_SCREEN)
+    data object Onboarding : NavRoute(Constants.Screens.GreetingScreens.ONBOARDING_SCREEN)
+
     //Home
     data object Home : NavRoute(Constants.Screens.MainScreens.HOME_SCREEN)
     data object HomeMore : NavRoute("${Constants.Screens.HomeScreensMore.HOME_SCREEN_MORE}/{type}")
