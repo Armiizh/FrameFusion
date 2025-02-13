@@ -16,19 +16,6 @@ fun Modifier.defaultColumnModifier() = this
     .padding(bottom = 80.dp)
     .fillMaxWidth()
 
-//@Composable
-//fun FrameFusionColumn(
-//    paddingValues: PaddingValues,
-//    content: @Composable () -> Unit
-//) {
-//    Column(
-//        modifier = Modifier
-//            .padding(paddingValues)
-//            .defaultColumnModifier()
-//    ) {
-//        content()
-//    }
-//}
 
 @Composable
 fun FrameFusionColumn(

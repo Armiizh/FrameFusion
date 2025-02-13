@@ -4,9 +4,9 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
-import com.example.framefusion.home.data.service.HomeService
-import com.example.framefusion.itemDetails.data.service.ItemDetailsService
-import com.example.framefusion.search.data.service.SearchService
+import com.example.framefusion.features.home.data.service.HomeService
+import com.example.framefusion.features.itemDetails.data.service.ItemDetailsService
+import com.example.framefusion.features.search.data.service.SearchService
 import com.example.framefusion.utils.interceptors.AuthorizationInterceptor
 import dagger.Module
 import dagger.Provides

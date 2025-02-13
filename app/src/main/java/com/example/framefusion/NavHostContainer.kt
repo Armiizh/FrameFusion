@@ -14,21 +14,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.framefusion.greeting.presentation.GreetingScreen
-import com.example.framefusion.greeting.presentation.OnboardingScreen
-import com.example.framefusion.home.HomeScreenViewModel
-import com.example.framefusion.home.presentation.HomePersonalItemsScreen
-import com.example.framefusion.home.presentation.HomeScreen
-import com.example.framefusion.itemDetails.presentation.ActorsDetailsScreen
-import com.example.framefusion.itemDetails.presentation.FullItemCastScreen
-import com.example.framefusion.itemDetails.presentation.ItemDetailsScreen
-import com.example.framefusion.person.PersonScreenViewModel
-import com.example.framefusion.person.presentation.PersonFavoriteActorsScreen
-import com.example.framefusion.person.presentation.PersonFavoriteGenresScreen
-import com.example.framefusion.person.presentation.PersonFavoriteMoviesScreen
-import com.example.framefusion.person.presentation.PersonScreen
-import com.example.framefusion.person.presentation.PersonSettingsScreen
-import com.example.framefusion.search.presentation.SearchScreen
+import com.example.framefusion.features.greeting.presentation.GreetingScreen
+import com.example.framefusion.features.greeting.presentation.OnboardingScreen
+import com.example.framefusion.features.home.HomeScreenViewModel
+import com.example.framefusion.features.home.presentation.HomePersonalItemsScreen
+import com.example.framefusion.features.home.presentation.HomeScreen
+import com.example.framefusion.features.itemDetails.presentation.ActorsDetailsScreen
+import com.example.framefusion.features.itemDetails.presentation.FullItemCastScreen
+import com.example.framefusion.features.itemDetails.presentation.ItemDetailsScreen
+import com.example.framefusion.features.person.PersonScreenViewModel
+import com.example.framefusion.features.person.presentation.PersonFavoriteActorsScreen
+import com.example.framefusion.features.person.presentation.PersonFavoriteGenresScreen
+import com.example.framefusion.features.person.presentation.PersonFavoriteMoviesScreen
+import com.example.framefusion.features.person.presentation.PersonScreen
+import com.example.framefusion.features.person.presentation.PersonSettingsScreen
+import com.example.framefusion.features.search.presentation.SearchScreen
 import com.example.framefusion.utils.composable.BottomNavigationBar
 import com.example.framefusion.utils.navigation.NavRoute
 import com.example.framefusion.utils.navigation.Navigator
@@ -52,13 +52,12 @@ fun NavHostContainer(
                 navController = navController,
                 startDestination = NavRoute.Greeting.route,
                 builder = {
-
+                    //Greeting
                     composable(NavRoute.Greeting.route) {
-                        GreetingScreen { navController.navigate(NavRoute.Onboarding.route) }
+                        GreetingScreen(navigator)
                     }
-
                     composable(NavRoute.Onboarding.route) {
-                        OnboardingScreen() {
+                        OnboardingScreen {
                             prefs.edit().putBoolean("first_launch", false).apply()
                             isFirstLaunch.value = false
                         }
@@ -82,8 +81,8 @@ fun NavHostContainer(
                         HomeScreen(navigator, homeScreenViewModel)
                     }
                     composable(
-                        route = NavRoute.HomeMore.route,
-                        arguments = listOf(navArgument("type") { type = NavType.StringType })
+                        NavRoute.HomeMore.route,
+                        listOf(navArgument("type") { type = NavType.StringType })
                     ) { backStackEntry ->
                         val type = backStackEntry.arguments?.getString("type")
                         HomePersonalItemsScreen(navigator, type, homeScreenViewModel)

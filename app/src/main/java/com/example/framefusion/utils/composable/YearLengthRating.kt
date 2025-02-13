@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.framefusion.itemDetails.utils.converters.minutesToHoursAndMinutes
-import com.example.framefusion.itemDetails.utils.converters.ratingColor
+import com.example.framefusion.features.itemDetails.utils.converters.minutesToHoursAndMinutes
+import com.example.framefusion.features.itemDetails.utils.converters.ratingColor
 
 @Composable
 fun YearLengthRating(

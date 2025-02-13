@@ -6,6 +6,9 @@ import com.example.framefusion.utils.Constants
 class Navigator(
     private val navController: NavHostController
 ) {
+    fun navigateToOnboarding() {
+        navController.navigate(NavRoute.Onboarding.route)
+    }
 
     fun navigateBack() {
         navController.popBackStack()
