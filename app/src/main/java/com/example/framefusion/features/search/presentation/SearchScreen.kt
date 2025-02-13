@@ -15,12 +15,9 @@ fun SearchScreen(
     Scaffold(
         topBar = { TopAppBarContent(stringResource(R.string.FindScreen)) },
         content = { paddingValues ->
-            SearchScreenContent(
-                paddingValues,
-                onItemDetailsScreen = { id ->
-                    navigator.navigateToItemDetails(id)
-                }
-            )
+            SearchScreenContent(paddingValues) { id ->
+                navigator.navigateToItemDetails(id)
+            }
         }
     )
 }

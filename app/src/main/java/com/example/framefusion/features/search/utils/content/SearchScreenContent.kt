@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun SearchScreenContent(
     paddingValues: PaddingValues,
-    onItemDetailsScreen: (Int?) -> Unit,
-    viewModel: SearchItemViewModel = hiltViewModel()
+    viewModel: SearchItemViewModel = hiltViewModel(),
+    onItemDetailsScreen: (Int?) -> Unit
 ) {
     Background()
 
@@ -29,7 +29,7 @@ fun SearchScreenContent(
                 if (newSearch.isEmpty()) {
                     viewModel.deleteSearch()
                 } else {
-                    viewModel.initData(newSearch)
+                    viewModel.searchData(newSearch)
                 }
             }
         }

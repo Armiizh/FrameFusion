@@ -5,8 +5,8 @@ import com.example.framefusion.features.home.data.HomeServiceRepository
 import com.example.framefusion.features.home.data.Top10PersonalMovieRepository
 import com.example.framefusion.features.home.data.local.models.Top10PersonalMovie
 import com.example.framefusion.features.home.data.rest.model.toTop10MoviesList
-import com.example.framefusion.features.home.utils.homeScreen.Fields.Top10PersonalMovies.notNullFields
-import com.example.framefusion.features.home.utils.homeScreen.Fields.Top10PersonalMovies.selectedFields
+import com.example.framefusion.features.home.utils.FieldsForHomeScreenUseCases.Top10PersonalMovies.notNullFields
+import com.example.framefusion.features.home.utils.FieldsForHomeScreenUseCases.Top10PersonalMovies.selectedFields
 import com.example.framefusion.utils.Constants
 import com.example.framefusion.utils.handleErrors
 import com.example.framefusion.utils.state.AppError
@@ -42,9 +42,10 @@ class Get10PersonalMoviesUseCase @Inject constructor(
 
             // Проверяем успешность ответа
             if (response.isSuccessful) {
-                if (response.body() != null) {
+                val body = response.body()
+                if (body != null) {
                     // Сохраняем в локальную базу данных
-                    val movies = response.body()!!.toTop10MoviesList()
+                    val movies = body.toTop10MoviesList()
                     personalMovieRepository.updateMovies(movies)
                     // Возвращаем успешный результат
                     Result.Success(movies)

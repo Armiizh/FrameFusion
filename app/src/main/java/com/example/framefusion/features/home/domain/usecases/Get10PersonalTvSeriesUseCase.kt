@@ -5,8 +5,8 @@ import com.example.framefusion.features.home.data.HomeServiceRepository
 import com.example.framefusion.features.home.data.Top10PersonalTvSeriesRepository
 import com.example.framefusion.features.home.data.local.models.Top10PersonalTvSeries
 import com.example.framefusion.features.home.data.rest.model.toTop10TvSeriesList
-import com.example.framefusion.features.home.utils.homeScreen.Fields.Top10PersonalTvSeries.notNullFields
-import com.example.framefusion.features.home.utils.homeScreen.Fields.Top10PersonalTvSeries.selectedFields
+import com.example.framefusion.features.home.utils.FieldsForHomeScreenUseCases.Top10PersonalTvSeries.notNullFields
+import com.example.framefusion.features.home.utils.FieldsForHomeScreenUseCases.Top10PersonalTvSeries.selectedFields
 import com.example.framefusion.utils.Constants
 import com.example.framefusion.utils.handleErrors
 import com.example.framefusion.utils.state.AppError

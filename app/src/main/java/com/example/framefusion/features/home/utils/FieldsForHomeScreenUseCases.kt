@@ -1,6 +1,6 @@
-package com.example.framefusion.features.home.utils.homeScreen
+package com.example.framefusion.features.home.utils
 
-object Fields {
+object FieldsForHomeScreenUseCases {
 
     object Top10PersonalMovies {
 
