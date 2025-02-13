@@ -2,8 +2,8 @@ package com.example.framefusion.features.person
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.framefusion.features.greeting.data.model.UserGenres
-import com.example.framefusion.features.greeting.domain.InsertGenresUseCase
+import com.example.framefusion.features.greeting.data.local.model.UserGenres
+import com.example.framefusion.features.greeting.domain.usecases.InsertGenresUseCase
 import com.example.framefusion.features.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.features.person.data.local.FavoriteItemDatabase
 import com.example.framefusion.features.person.data.local.model.FavoriteItem
@@ -21,7 +21,6 @@ class PersonScreenViewModel @Inject constructor(
     private val insertGenresUseCase: InsertGenresUseCase,
     private val addAnItemToFavoritesUseCase: AddAnItemToFavoritesUseCase,
     private val favoriteItemDatabase: FavoriteItemDatabase
-
 ) : ViewModel() {
 
     private val _genres = MutableStateFlow<List<String>>(emptyList())
@@ -38,6 +37,7 @@ class PersonScreenViewModel @Inject constructor(
     }
 
     fun getPersonGenres() {
+
         viewModelScope.launch {
             val genres = getPersonGenresUseCase.invoke()
             _genres.value = genres

@@ -1,4 +1,4 @@
-package com.example.framefusion.features.greeting.data.model
+package com.example.framefusion.features.greeting.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

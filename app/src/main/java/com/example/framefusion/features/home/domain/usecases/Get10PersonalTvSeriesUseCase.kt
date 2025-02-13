@@ -11,6 +11,8 @@ import com.example.framefusion.utils.Constants
 import com.example.framefusion.utils.handleErrors
 import com.example.framefusion.utils.state.AppError
 import com.example.framefusion.utils.state.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
@@ -19,9 +21,9 @@ class Get10PersonalTvSeriesUseCase @Inject constructor(
     private val genresRepository: GenresRepository,
     private val top10PersonalTvSeriesRepository: Top10PersonalTvSeriesRepository
 ) {
-    suspend fun invoke(): Result<List<Top10PersonalTvSeries>> {
-        return try {
+    suspend fun invoke(): Result<List<Top10PersonalTvSeries>> = withContext(Dispatchers.IO) {
 
+        try {
             // Запрос выбранных пользователем жанров
             val genresString = genresRepository.getGenres().lowercase().split(",")
 
@@ -56,7 +58,7 @@ class Get10PersonalTvSeriesUseCase @Inject constructor(
                 }
             } else {
                 // Обработка ошибок от сервера
-                return handleErrors(response.code())
+                handleErrors(response.code())
             }
         } catch (e: IOException) {
             // Сетевые ошибки

@@ -11,6 +11,8 @@ import com.example.framefusion.utils.Constants
 import com.example.framefusion.utils.handleErrors
 import com.example.framefusion.utils.state.AppError
 import com.example.framefusion.utils.state.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
@@ -19,10 +21,9 @@ class Get10PersonalMoviesUseCase @Inject constructor(
     private val genresRepository: GenresRepository,
     private val personalMovieRepository: Top10PersonalMovieRepository
 ) {
-    suspend fun invoke(): Result<List<Top10PersonalMovie>> {
+    suspend fun invoke(): Result<List<Top10PersonalMovie>> = withContext(Dispatchers.IO) {
 
-        return try {
-
+        try {
             // Запрос выбранных пользователем жанров
             val genresString = genresRepository.getGenres().lowercase().split(",")
 
@@ -59,10 +60,8 @@ class Get10PersonalMoviesUseCase @Inject constructor(
                 handleErrors(response.code())
             }
         } catch (e: IOException) {
-            // Сетевые ошибки
             Result.Error(AppError.NetworkError(Constants.ErrorMessages.NETWORK_ERROR))
         } catch (e: Exception) {
-            // Прочие неизвестные ошибки
             Result.Error(
                 AppError.UnknownError(
                     e.localizedMessage ?: Constants.ErrorMessages.UNKNOWN_ERROR

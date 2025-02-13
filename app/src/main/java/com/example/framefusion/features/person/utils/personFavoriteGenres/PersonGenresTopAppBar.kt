@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.framefusion.features.greeting.data.model.Genres
-import com.example.framefusion.features.greeting.data.model.UserGenres
+import com.example.framefusion.features.greeting.data.local.model.Genres
+import com.example.framefusion.features.greeting.data.local.model.UserGenres
 import com.example.framefusion.features.home.HomeScreenViewModel
 import com.example.framefusion.features.person.PersonScreenViewModel
 import com.example.framefusion.utils.composable.IconBack

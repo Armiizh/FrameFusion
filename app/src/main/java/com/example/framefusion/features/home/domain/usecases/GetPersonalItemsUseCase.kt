@@ -5,10 +5,14 @@ import com.example.framefusion.features.home.data.HomeServiceRepository
 import com.example.framefusion.features.home.data.PersonalItemsRepository
 import com.example.framefusion.features.home.data.local.models.PersonalItems
 import com.example.framefusion.features.home.data.rest.model.toPersonalItemsList
+import com.example.framefusion.features.home.utils.homeScreen.Fields.PersonalItems.notNullFields
+import com.example.framefusion.features.home.utils.homeScreen.Fields.PersonalItems.selectedFields
 import com.example.framefusion.utils.Constants
 import com.example.framefusion.utils.handleErrors
 import com.example.framefusion.utils.state.AppError
 import com.example.framefusion.utils.state.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
@@ -17,17 +21,11 @@ class GetPersonalItemsUseCase @Inject constructor(
     private val genresRepository: GenresRepository,
     private val personalItemsRepository: PersonalItemsRepository
 ) {
-    suspend fun invoke(type: String?): Result<List<PersonalItems>> {
-        return try {
+    suspend fun invoke(type: String?): Result<List<PersonalItems>> = withContext(Dispatchers.IO) {
 
+        try {
             // Запрос выбранных пользователем жанров
             val genresString = genresRepository.getGenres().split(",")
-
-            // Выбор нужных полей в ответе
-            val selectedFields = listOf("id", "poster", "type")
-
-            // Выбор полей, которые не должны быть null
-            val notNullFields = listOf("id", "poster.url")
 
             // Выбор типа
             val list = when (type) {
@@ -55,7 +53,7 @@ class GetPersonalItemsUseCase @Inject constructor(
                     response.body()?.let { items ->
                         val personalItems = items.toPersonalItemsList()
                         personalItemsRepository.updateItems(personalItems)
-                        return Result.Success(personalItems)
+                        Result.Success(personalItems)
                     } ?: Result.Error(
                         AppError.NetworkError(
                             Constants.ErrorMessages.EMPTY_RESPONSE,
@@ -63,16 +61,14 @@ class GetPersonalItemsUseCase @Inject constructor(
                         )
                     )
                 } else {
-                    return handleErrors(response.code())
+                    handleErrors(response.code())
                 }
             } else {
                 Result.Error(AppError.UnknownError(Constants.ErrorMessages.INVALID_TYPE))
             }
         } catch (e: IOException) {
-            // Сетевые ошибки
             Result.Error(AppError.NetworkError(Constants.ErrorMessages.NETWORK_ERROR))
         } catch (e: Exception) {
-            // Прочие неизвестные ошибки
             Result.Error(
                 AppError.UnknownError(
                     e.localizedMessage ?: Constants.ErrorMessages.UNKNOWN_ERROR

@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.framefusion.R
-import com.example.framefusion.features.greeting.data.model.Genres
+import com.example.framefusion.features.greeting.data.local.model.Genres
 import com.example.framefusion.utils.composable.Title
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn

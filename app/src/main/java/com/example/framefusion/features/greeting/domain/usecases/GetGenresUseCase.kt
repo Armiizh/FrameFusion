@@ -1,4 +1,4 @@
-package com.example.framefusion.features.greeting.domain
+package com.example.framefusion.features.greeting.domain.usecases
 
 import com.example.framefusion.features.greeting.data.GenresRepository
 import javax.inject.Inject

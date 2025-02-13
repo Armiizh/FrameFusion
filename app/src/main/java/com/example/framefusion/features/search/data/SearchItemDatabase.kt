@@ -15,6 +15,6 @@ import com.example.framefusion.features.search.data.local.models.SearchItem
     RatingConverter::class,
     GenreListConverterForMovies::class,
 )
-abstract class ItemSearchDatabase: RoomDatabase() {
+abstract class SearchItemDatabase : RoomDatabase() {
     abstract fun searchItemDao(): SearchItemDao
 }

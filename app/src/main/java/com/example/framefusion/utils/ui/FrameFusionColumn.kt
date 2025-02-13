@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 
 fun Modifier.defaultColumnModifier() = this
-    .padding(horizontal = 16.dp)
+    .padding(horizontal = 8.dp)
     .padding(bottom = 80.dp)
     .fillMaxWidth()
 
@@ -20,12 +20,11 @@ fun Modifier.defaultColumnModifier() = this
 @Composable
 fun FrameFusionColumn(
     paddingValues: PaddingValues,
+    modifier: Modifier,
     content: @Composable () -> Unit
 ) {
-    val layoutDirection = LocalLayoutDirection.current
-
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(paddingValues)
             .defaultColumnModifier()
     ) {

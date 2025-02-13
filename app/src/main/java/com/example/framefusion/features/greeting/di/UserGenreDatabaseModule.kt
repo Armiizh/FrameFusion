@@ -2,8 +2,8 @@ package com.example.framefusion.features.greeting.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.framefusion.features.greeting.data.UserGenresDatabase
-import com.example.framefusion.features.greeting.data.dao.UserGenresDao
+import com.example.framefusion.features.greeting.data.local.UserGenresDatabase
+import com.example.framefusion.features.greeting.data.local.dao.UserGenresDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -2,9 +2,9 @@ package com.example.framefusion.features.greeting
 
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
-import com.example.framefusion.features.greeting.data.model.Genres
-import com.example.framefusion.features.greeting.domain.InsertGenresUseCase
-import com.example.framefusion.features.greeting.domain.SaveSelectedGenresUseCase
+import com.example.framefusion.features.greeting.data.local.model.Genres
+import com.example.framefusion.features.greeting.domain.usecases.InsertGenresUseCase
+import com.example.framefusion.features.greeting.domain.usecases.SaveSelectedGenresUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -2,7 +2,7 @@ package com.example.framefusion.features.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.framefusion.features.search.data.ItemSearchDatabase
+import com.example.framefusion.features.search.data.SearchItemDatabase
 import com.example.framefusion.features.search.data.Top10hdDatabase
 import com.example.framefusion.features.search.data.local.models.SearchItem
 import com.example.framefusion.features.search.data.local.models.Top10hd
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class SearchItemViewModel @Inject constructor(
     private val getSearchItemUseCase: GetSearchItemUseCase,
     private val getTop10hdUseCase: GetTop10hdUseCase,
-    private val searchDatabase: ItemSearchDatabase,
+    private val searchDatabase: SearchItemDatabase,
     private val top10hdDatabase: Top10hdDatabase
 ) : ViewModel() {
 

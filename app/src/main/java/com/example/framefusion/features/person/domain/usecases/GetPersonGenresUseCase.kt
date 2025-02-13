@@ -1,6 +1,6 @@
 package com.example.framefusion.features.person.domain.usecases
 
-import com.example.framefusion.features.greeting.domain.GetGenresUseCase
+import com.example.framefusion.features.greeting.domain.usecases.GetGenresUseCase
 import javax.inject.Inject
 
 class GetPersonGenresUseCase @Inject constructor(private val getGenresUseCase: GetGenresUseCase) {

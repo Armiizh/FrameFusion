@@ -24,7 +24,7 @@ fun PersonFavoriteGenresScreen(
         val state = remember { mutableStateOf(genre.isSelected) }
         state
     }
-    val genres by viewModel.genres.collectAsState(initial = emptyList())
+    val genres by viewModel.genres.collectAsState(emptyList())
     LaunchedEffect(Unit) {
         val selectedGenres = genres.map { it.trim() }
         allGenres.forEach { genre ->

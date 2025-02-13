@@ -2,7 +2,7 @@ package com.example.framefusion.features.search.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.framefusion.features.search.data.ItemSearchDatabase
+import com.example.framefusion.features.search.data.SearchItemDatabase
 import com.example.framefusion.features.search.data.Top10hdDatabase
 import com.example.framefusion.features.search.data.local.dao.SearchItemDao
 import com.example.framefusion.features.search.data.local.dao.Top10hdDao
@@ -17,13 +17,14 @@ import dagger.hilt.components.SingletonComponent
 object SearchItemDatabaseModule {
 
     @Provides
-    fun provideSearchItemDatabase(@ApplicationContext appContext: Context): ItemSearchDatabase {
-        return Room.databaseBuilder(appContext, ItemSearchDatabase::class.java, "search_item").build()
+    fun provideSearchItemDatabase(@ApplicationContext appContext: Context): SearchItemDatabase {
+        return Room.databaseBuilder(appContext, SearchItemDatabase::class.java, "search_item")
+            .build()
     }
 
     @Provides
-    fun provideSearchItemMovieDao(itemSearchDatabase: ItemSearchDatabase): SearchItemDao {
-        return itemSearchDatabase.searchItemDao()
+    fun provideSearchItemMovieDao(searchItemDatabase: SearchItemDatabase): SearchItemDao {
+        return searchItemDatabase.searchItemDao()
     }
 
     @Provides

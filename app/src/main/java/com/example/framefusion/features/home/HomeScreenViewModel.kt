@@ -11,6 +11,7 @@ import com.example.framefusion.features.home.domain.usecases.GetPersonalItemsUse
 import com.example.framefusion.utils.state.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -29,29 +30,38 @@ class HomeScreenViewModel @Inject constructor(
     private val _top10PersonalTvSeries =
         MutableStateFlow<Result<List<Top10PersonalTvSeries>>>(Result.Loading)
     private val _personalItems = MutableStateFlow<Result<List<PersonalItems>>>(Result.Loading)
+    private val _isRefreshing = MutableStateFlow(false)
 
     // Публичные StateFlow для наблюдения в UI
     val top10PersonalMovies: StateFlow<Result<List<Top10PersonalMovie>>> = _top10PersonalMovies
     val top10PersonalTvSeries: StateFlow<Result<List<Top10PersonalTvSeries>>> =
         _top10PersonalTvSeries
     val personalItems: StateFlow<Result<List<PersonalItems>>> = _personalItems
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
-    suspend fun initHomeTop10Personal() {
-        // Параллельная загрузка фильмов и сериалов
+    init {
         viewModelScope.launch {
-            val movies = async { get10PersonalMovieUseCase.invoke() }
-            val tvSeries = async { get10PersonalTvSeriesUseCase.invoke() }
-
-            // Обновляем StateFlow результатами
-            _top10PersonalMovies.value = movies.await()
-            _top10PersonalTvSeries.value = tvSeries.await()
+            initHomeTop10Personal()
         }
     }
 
+    suspend fun initHomeTop10Personal() = coroutineScope {
+        val movies = async { get10PersonalMovieUseCase.invoke() }
+        val tvSeries = async { get10PersonalTvSeriesUseCase.invoke() }
+        _top10PersonalMovies.value = movies.await()
+        _top10PersonalTvSeries.value = tvSeries.await()
+    }
+
     suspend fun initHomePersonalItems(type: String?) {
+        _personalItems.value = getPersonalItemsUseCase.invoke(type)
+    }
+
+    fun onRetry() {
+        _isRefreshing.value = true
         viewModelScope.launch {
-            val personalItems = getPersonalItemsUseCase.invoke(type)
-            _personalItems.value = personalItems
+            initHomeTop10Personal().also {
+                _isRefreshing.value = false
+            }
         }
     }
 }
