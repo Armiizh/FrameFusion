@@ -6,9 +6,10 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.example.framefusion.NavRoute
 import com.example.framefusion.R
-import com.example.framefusion.greeting.data.model.Genres
+import com.example.framefusion.features.greeting.data.local.model.Genres
+import com.example.framefusion.utils.navigation.BottomNavItem
+import com.example.framefusion.utils.navigation.NavRoute
 
 object Constants {
 
@@ -29,7 +30,7 @@ object Constants {
             const val PERSON_SCREEN = "person_screen"
         }
 
-        object HomeScreens {
+        object HomeScreensMore {
             const val HOME_SCREEN_MORE = "home_screen_more"
         }
 
@@ -49,50 +50,69 @@ object Constants {
 
     object GenresObject {
         val greetingGenres = listOf(
-            Genres("Комедия", false, R.drawable.comedies),
-            Genres("Ужасы", false, R.drawable.horrors),
-            Genres("Фантастика", false, R.drawable.fantastic),
-            Genres("Триллер", false, R.drawable.thrillers),
-            Genres("Боевик", false, R.drawable.fighters),
-            Genres("Мелодрама", false, R.drawable.melodramas),
-            Genres("Детектив", false, R.drawable.detectives),
-            Genres("Приключения", false, R.drawable.adventures),
-            Genres("Фэнтези", false, R.drawable.fantasy),
-            Genres("Драма", false, R.drawable.drama),
+            Genres(1, "Комедия", R.drawable.comedies),
+            Genres(2, "Ужасы", R.drawable.horrors),
+            Genres(3, "Фантастика", R.drawable.fantastic),
+            Genres(4, "Триллер", R.drawable.thrillers),
+            Genres(5, "Боевик", R.drawable.fighters),
+            Genres(6, "Мелодрама", R.drawable.melodramas),
+            Genres(7, "Детектив", R.drawable.detectives),
+            Genres(8, "Приключения", R.drawable.adventures),
+            Genres(9, "Фэнтези", R.drawable.fantasy),
+            Genres(10, "Драма", R.drawable.drama),
         )
     }
+
     object AllGenresObject {
         val allGenres = listOf(
-            Genres("Комедия", false, R.drawable.comedies),
-            Genres("Мультфильм", false, R.drawable.comedies),
-            Genres("Ужасы", false, R.drawable.comedies),
-            Genres("Фантастика", false, R.drawable.comedies),
-            Genres("Триллер", false, R.drawable.comedies),
-            Genres("Боевик", false, R.drawable.comedies),
-            Genres("Мелодрама", false, R.drawable.comedies),
-            Genres("Детектив", false, R.drawable.comedies),
-            Genres("Приключения", false, R.drawable.comedies),
-            Genres("Фэнтези", false, R.drawable.comedies),
-            Genres("Военный", false, R.drawable.comedies),
-            Genres("Семейный", false, R.drawable.comedies),
-            Genres("Аниме", false, R.drawable.comedies),
-            Genres("История", false, R.drawable.comedies),
-            Genres("Драма", false, R.drawable.comedies),
-            Genres("Документальный", false, R.drawable.comedies),
-            Genres("Детский", false, R.drawable.comedies),
-            Genres("Криминал", false, R.drawable.comedies),
-            Genres("Биография", false, R.drawable.comedies),
-            Genres("Вестерн", false, R.drawable.comedies),
-            Genres("Фильм-нуар", false, R.drawable.comedies),
-            Genres("Спорт", false, R.drawable.comedies),
-            Genres("Реальное ТВ", false, R.drawable.comedies),
-            Genres("Короткометражка", false, R.drawable.comedies),
-            Genres("Музыка", false, R.drawable.comedies),
-            Genres("Мюзикл", false, R.drawable.comedies),
-            Genres("Ток-шоу", false, R.drawable.comedies),
-            Genres("Игра", false, R.drawable.comedies),
+            Genres(1, "Комедия", R.drawable.comedies),
+            Genres(11, "Мультфильм", R.drawable.comedies),
+            Genres(2, "Ужасы", R.drawable.comedies),
+            Genres(3, "Фантастика", R.drawable.comedies),
+            Genres(4, "Триллер", R.drawable.comedies),
+            Genres(5, "Боевик", R.drawable.comedies),
+            Genres(6, "Мелодрама", R.drawable.comedies),
+            Genres(7, "Детектив", R.drawable.comedies),
+            Genres(8, "Приключения", R.drawable.comedies),
+            Genres(9, "Фэнтези", R.drawable.comedies),
+            Genres(12, "Военный", R.drawable.comedies),
+            Genres(13, "Семейный", R.drawable.comedies),
+            Genres(14, "Аниме", R.drawable.comedies),
+            Genres(15, "История", R.drawable.comedies),
+            Genres(10, "Драма", R.drawable.comedies),
+            Genres(16, "Документальный", R.drawable.comedies),
+            Genres(17, "Детский", R.drawable.comedies),
+            Genres(18, "Криминал", R.drawable.comedies),
+            Genres(19, "Биография", R.drawable.comedies),
+            Genres(20, "Вестерн", R.drawable.comedies),
+            Genres(21, "Фильм-нуар", R.drawable.comedies),
+            Genres(22, "Спорт", R.drawable.comedies),
+            Genres(23, "Реальное ТВ", R.drawable.comedies),
+            Genres(24, "Короткометражка", R.drawable.comedies),
+            Genres(25, "Музыка", R.drawable.comedies),
+            Genres(26, "Мюзикл", R.drawable.comedies),
+            Genres(27, "Ток-шоу", R.drawable.comedies),
+            Genres(28, "Игра", R.drawable.comedies),
         )
     }
+
+    object ErrorMessages {
+        const val EMPTY_RESPONSE = "Пустой ответ от сервера"
+        const val BAD_REQUEST = "Неверный запрос. Проверьте введенные данные."
+        const val NOT_FOUND = "Запрашиваемый ресурс не найден."
+        const val INTERNAL_SERVER_ERROR = "Внутренняя ошибка сервера. Попробуйте позже."
+        const val UNKNOWN_ERROR = "Неизвестная ошибка"
+        const val INVALID_TYPE = "Неверно передан тип фильма или сериала"
+        const val NETWORK_ERROR = "Проблема с подключением к интернету"
+
+        // Статическая карта кодов ошибок и соответствующих сообщений
+        val errorMessagesMap: Map<Int, String> = mapOf(
+            400 to BAD_REQUEST,
+            404 to NOT_FOUND,
+            500 to INTERNAL_SERVER_ERROR
+        )
+    }
+
     object Colors {
         val horizontalGradientBrush = Brush.horizontalGradient(
             colors = listOf(
@@ -101,6 +121,7 @@ object Constants {
             )
         )
     }
+
     val BottomNavItems = listOf(
         BottomNavItem(
             label = "Home",

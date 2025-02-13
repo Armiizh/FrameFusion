@@ -14,10 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
-fun IconBack(navController: NavHostController) {
+fun IconBack(navigator: Navigator) {
 
     Box(
         contentAlignment = Alignment.Center,
@@ -27,7 +27,7 @@ fun IconBack(navController: NavHostController) {
         Canvas(
             modifier = Modifier
                 .size(40.dp)
-                .clickable { navController.popBackStack() }
+                .clickable { navigator.navigateBack() }
         ) {
             drawCircle(
                 color = Color.Gray,

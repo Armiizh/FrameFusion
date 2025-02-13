@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.framefusion.home.data.local.models.Genre
-import com.example.framefusion.search.utils.ItemDescription
+import com.example.framefusion.features.home.data.local.models.Genre
+import com.example.framefusion.features.search.utils.ItemDescription
 
 @Composable
 fun Item(
