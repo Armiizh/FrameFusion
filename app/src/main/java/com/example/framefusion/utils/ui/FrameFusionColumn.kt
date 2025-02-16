@@ -35,13 +35,14 @@ fun FrameFusionColumn(
 @Composable
 fun FrameFusionColumn(
     paddingValues: PaddingValues,
+    modifier: Modifier = Modifier,
     withoutTop: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val layoutDirection = LocalLayoutDirection.current
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(
                 start = paddingValues.calculateStartPadding(layoutDirection),
                 end = paddingValues.calculateEndPadding(layoutDirection),

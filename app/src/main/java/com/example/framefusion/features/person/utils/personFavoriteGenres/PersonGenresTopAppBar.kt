@@ -15,24 +15,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.framefusion.features.greeting.data.local.model.Genres
 import com.example.framefusion.features.greeting.data.local.model.UserGenres
-import com.example.framefusion.features.home.HomeScreenViewModel
-import com.example.framefusion.features.person.PersonScreenViewModel
 import com.example.framefusion.utils.composable.IconBack
 import com.example.framefusion.utils.navigation.Navigator
-import kotlinx.coroutines.launch
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun PersonGenresTopAppBar(
     allGenres: List<Genres>,
     allGenreStates: Map<Genres, MutableState<Boolean>>,
-    personScreenViewModel: PersonScreenViewModel,
     navigator: Navigator,
-    homeScreenViewModel: HomeScreenViewModel = viewModel()
+    onSaveGenres: (UserGenres) -> Unit,
 ) {
     TopAppBar(
         title = {
@@ -47,10 +41,7 @@ fun PersonGenresTopAppBar(
                             allGenres.filter { allGenreStates[it]?.value == true }
                                 .joinToString(separator = ",") { it.name }
                         val userGenres = UserGenres(genres = selectedGenres)
-                        personScreenViewModel.viewModelScope.launch {
-                            personScreenViewModel.insertGenres(userGenres)
-                            homeScreenViewModel.initHomeTop10Personal()
-                        }
+                        onSaveGenres(userGenres)
                         navigator.navigateToPerson()
                     }
                 ) {

@@ -21,55 +21,63 @@ class Get10PersonalTvSeriesUseCase @Inject constructor(
     private val genresRepository: GenresRepository,
     private val top10PersonalTvSeriesRepository: Top10PersonalTvSeriesRepository
 ) {
-    suspend fun invoke(): Result<List<Top10PersonalTvSeries>> = withContext(Dispatchers.IO) {
+    suspend fun invoke(forceRefresh: Boolean = false): Result<List<Top10PersonalTvSeries>> =
+        withContext(Dispatchers.IO) {
 
-        try {
-            // Запрос выбранных пользователем жанров
-            val genresString = genresRepository.getGenres().lowercase().split(",")
-
-            // Запрос на предоставление топ10 фильмов
-            val response = homeServiceRepository.get10PersonalTvSeries(
-                page = 1,
-                limit = 10,
-                selectedFields = selectedFields,
-                notNullFields = notNullFields,
-                sortField = "rating.kp",
-                sortType = "-1",
-                type = "tv-series",
-                genresName = genresString,
-                lists = "popular-series"
-            )
-
-            // Проверяем успешность ответа
-            if (response.isSuccessful) {
-                if (response.body() != null) {
-                    // Сохраняем в локальную базу данных
-                    val tvSeries = response.body()!!.toTop10TvSeriesList()
-                    top10PersonalTvSeriesRepository.updateTvSeries(tvSeries)
-                    // Возвращаем успешный результат
-                    Result.Success(tvSeries)
-                } else {
-                    Result.Error(
-                        AppError.NetworkError(
-                            Constants.ErrorMessages.EMPTY_RESPONSE,
-                            response.code()
-                        )
-                    )
+            try {
+                if (!forceRefresh) {
+                    val cachedMovies = top10PersonalTvSeriesRepository.getTvSeries()
+                    if (cachedMovies.isNotEmpty()) {
+                        return@withContext Result.Success(cachedMovies)
+                    }
                 }
-            } else {
-                // Обработка ошибок от сервера
-                handleErrors(response.code())
-            }
-        } catch (e: IOException) {
-            // Сетевые ошибки
-            Result.Error(AppError.NetworkError(Constants.ErrorMessages.NETWORK_ERROR))
-        } catch (e: Exception) {
-            // Прочие неизвестные ошибки
-            Result.Error(
-                AppError.UnknownError(
-                    e.localizedMessage ?: Constants.ErrorMessages.UNKNOWN_ERROR
+
+                // Запрос выбранных пользователем жанров
+                val genresString = genresRepository.getGenres().lowercase().split(",")
+
+                // Запрос на предоставление топ10 фильмов
+                val response = homeServiceRepository.get10PersonalTvSeries(
+                    page = 1,
+                    limit = 10,
+                    selectedFields = selectedFields,
+                    notNullFields = notNullFields,
+                    sortField = "rating.kp",
+                    sortType = "-1",
+                    type = "tv-series",
+                    genresName = genresString,
+                    lists = "popular-series"
                 )
-            )
+
+                // Проверяем успешность ответа
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        // Сохраняем в локальную базу данных
+                        val tvSeries = response.body()!!.toTop10TvSeriesList()
+                        top10PersonalTvSeriesRepository.updateTvSeries(tvSeries)
+                        // Возвращаем успешный результат
+                        Result.Success(tvSeries)
+                    } else {
+                        Result.Error(
+                            AppError.NetworkError(
+                                Constants.ErrorMessages.EMPTY_RESPONSE,
+                                response.code()
+                            )
+                        )
+                    }
+                } else {
+                    // Обработка ошибок от сервера
+                    handleErrors(response.code())
+                }
+            } catch (e: IOException) {
+                // Сетевые ошибки
+                Result.Error(AppError.NetworkError(Constants.ErrorMessages.NETWORK_ERROR))
+            } catch (e: Exception) {
+                // Прочие неизвестные ошибки
+                Result.Error(
+                    AppError.UnknownError(
+                        e.localizedMessage ?: Constants.ErrorMessages.UNKNOWN_ERROR
+                    )
+                )
+            }
         }
-    }
 }

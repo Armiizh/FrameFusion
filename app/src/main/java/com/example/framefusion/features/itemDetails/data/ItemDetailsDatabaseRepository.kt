@@ -2,13 +2,12 @@ package com.example.framefusion.features.itemDetails.data
 
 import com.example.framefusion.features.itemDetails.data.local.dao.ItemDetailsDao
 import com.example.framefusion.features.itemDetails.data.local.models.ItemDetails
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ItemDetailsDatabaseRepository @Inject constructor(private val itemDetailsDao: ItemDetailsDao) {
 
-    fun getItemDetailsById(id: Int): Flow<ItemDetails> {
-        return itemDetailsDao.getItemDetailsById(id)
+    fun getItem(): ItemDetails {
+        return itemDetailsDao.getItem()
     }
 
     suspend fun updateItemDetails(itemDetails: ItemDetails?) {

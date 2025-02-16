@@ -10,9 +10,11 @@ import com.example.framefusion.features.person.data.local.model.FavoriteItem
 import com.example.framefusion.features.person.domain.usecases.AddAnItemToFavoritesUseCase
 import com.example.framefusion.features.person.domain.usecases.GetPersonGenresUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,14 +39,19 @@ class PersonScreenViewModel @Inject constructor(
     }
 
     fun getPersonGenres() {
-
         viewModelScope.launch {
             val genres = getPersonGenresUseCase.invoke()
             _genres.value = genres
         }
     }
 
-    suspend fun insertGenres(uGenres: UserGenres) {
+    fun insertGenres(uGenres: UserGenres) {
+        viewModelScope.launch {
+            insert(uGenres)
+        }
+    }
+
+    private suspend fun insert(uGenres: UserGenres) = withContext(Dispatchers.IO) {
         insertGenresUseCase.invoke(uGenres)
     }
 

@@ -24,7 +24,9 @@ fun ItemDetailsScreenSuccessContent(
     personScreenViewModel: PersonScreenViewModel
 ) {
     Background()
-    Column(Modifier.fillMaxWidth()) {
+    Column(
+        Modifier.fillMaxWidth()
+    ) {
         LazyColumn {
             item {
                 ItemDetailsBackdrop(

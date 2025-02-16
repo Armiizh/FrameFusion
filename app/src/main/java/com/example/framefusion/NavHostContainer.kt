@@ -98,7 +98,9 @@ fun NavHostContainer(
                         PersonScreen(navigator, personScreenViewModel)
                     }
                     composable(NavRoute.PersonFavoriteGenres.route) {
-                        PersonFavoriteGenresScreen(navigator, personScreenViewModel)
+                        PersonFavoriteGenresScreen(navigator, personScreenViewModel) {
+                            homeScreenViewModel.onRetry()
+                        }
                     }
                     composable(NavRoute.PersonFavoriteMovies.route) {
                         PersonFavoriteMoviesScreen(navigator, personScreenViewModel)

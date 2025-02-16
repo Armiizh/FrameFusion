@@ -25,8 +25,10 @@ class SearchItemViewModel @Inject constructor(
 
     private val _itemsSearch = MutableStateFlow<Result<List<SearchItem>>>(Result.Loading)
     private val _top10hd = MutableStateFlow<Result<List<Top10hd>>>(Result.Loading)
+    private val _isRefreshing = MutableStateFlow(false)
     val itemsSearch: StateFlow<Result<List<SearchItem>>> = _itemsSearch
     val top10hd: StateFlow<Result<List<Top10hd>>> = _top10hd
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
     init {
         viewModelScope.launch {
@@ -34,17 +36,32 @@ class SearchItemViewModel @Inject constructor(
         }
     }
 
-    private suspend fun initTop10hd() = coroutineScope {
-        val top10hd = async { getTop10hdUseCase.invoke() }
+    fun searchData(search: String) {
+        viewModelScope.launch {
+            initSearch(search)
+        }
+    }
+
+    fun onRetry() {
+        _isRefreshing.value = true
+        viewModelScope.launch {
+            initTop10hd(true).also {
+                _isRefreshing.value = false
+            }
+        }
+    }
+
+    private suspend fun initSearch(search: String) = coroutineScope {
+        if (search.isEmpty()) {
+            deleteSearchBarUseCase.invoke()
+        } else {
+            val searchItems = async { getSearchItemUseCase.invoke(search) }
+            _itemsSearch.value = searchItems.await()
+        }
+    }
+
+    private suspend fun initTop10hd(forceRefresh: Boolean = false) = coroutineScope {
+        val top10hd = async { getTop10hdUseCase.invoke(forceRefresh) }
         _top10hd.value = top10hd.await()
-    }
-
-    suspend fun searchData(name: String) = coroutineScope {
-        val searchItems = async { getSearchItemUseCase.invoke(name) }
-        _itemsSearch.value = searchItems.await()
-    }
-
-    suspend fun deleteSearch() {
-        deleteSearchBarUseCase.invoke()
     }
 }

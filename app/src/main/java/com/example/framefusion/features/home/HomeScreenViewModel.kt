@@ -45,9 +45,9 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    suspend fun initHomeTop10Personal() = coroutineScope {
-        val movies = async { get10PersonalMovieUseCase.invoke() }
-        val tvSeries = async { get10PersonalTvSeriesUseCase.invoke() }
+    private suspend fun initHomeTop10Personal(forceRefresh: Boolean = false) = coroutineScope {
+        val movies = async { get10PersonalMovieUseCase.invoke(forceRefresh) }
+        val tvSeries = async { get10PersonalTvSeriesUseCase.invoke(forceRefresh) }
         _top10PersonalMovies.value = movies.await()
         _top10PersonalTvSeries.value = tvSeries.await()
     }
@@ -56,10 +56,10 @@ class HomeScreenViewModel @Inject constructor(
         _personalItems.value = getPersonalItemsUseCase.invoke(type)
     }
 
-    fun onRetry() {
+    fun onRetry(forceRefresh: Boolean = true) {
         _isRefreshing.value = true
         viewModelScope.launch {
-            initHomeTop10Personal().also {
+            initHomeTop10Personal(forceRefresh).also {
                 _isRefreshing.value = false
             }
         }

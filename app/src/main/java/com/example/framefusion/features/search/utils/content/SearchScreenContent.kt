@@ -1,42 +1,53 @@
 package com.example.framefusion.features.search.utils.content
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.framefusion.features.search.SearchItemViewModel
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
-import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreenContent(
     paddingValues: PaddingValues,
-    viewModel: SearchItemViewModel = hiltViewModel(),
+    searchItemViewModel: SearchItemViewModel = hiltViewModel(),
     onItemDetailsScreen: (Int?) -> Unit
 ) {
     Background()
 
-    FrameFusionColumn(paddingValues) {
-        var search by remember { mutableStateOf("") }
-        SearchBarContent(search) { newSearch ->
-            search = newSearch
-            viewModel.viewModelScope.launch {
-                if (newSearch.isEmpty()) {
-                    viewModel.deleteSearch()
-                } else {
-                    viewModel.searchData(newSearch)
-                }
+    val isRefreshing by searchItemViewModel.isRefreshing.collectAsState()
+    val pullToRefreshState = rememberPullToRefreshState()
+
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = { searchItemViewModel.onRetry() },
+        state = pullToRefreshState
+    ) {
+        FrameFusionColumn(paddingValues, Modifier.verticalScroll(rememberScrollState())) {
+            var search by remember { mutableStateOf("") }
+
+            SearchBarContent(search) { newSearch ->
+                search = newSearch
+                searchItemViewModel.searchData(newSearch)
+            }
+            if (search == "") {
+                Top10hdContent(searchItemViewModel, onItemDetailsScreen)
+            } else {
+                SearchContent(searchItemViewModel, onItemDetailsScreen)
             }
         }
-        if (search == "") {
-            Top10hdContent(viewModel, onItemDetailsScreen)
-        } else {
-            SearchContent(viewModel, onItemDetailsScreen)
-        }
     }
+
 }

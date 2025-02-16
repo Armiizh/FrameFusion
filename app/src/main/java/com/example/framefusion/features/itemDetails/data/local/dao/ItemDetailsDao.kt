@@ -6,13 +6,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.framefusion.features.itemDetails.data.local.models.ItemDetails
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ItemDetailsDao {
 
-    @Query("SELECT * FROM item_details WHERE id = :id")
-    fun getItemDetailsById(id: Int): Flow<ItemDetails>
+    @Query("SELECT * FROM item_details")
+    fun getItem(): ItemDetails
 
     @Query("DELETE FROM item_details")
     suspend fun deleteItemDetails()

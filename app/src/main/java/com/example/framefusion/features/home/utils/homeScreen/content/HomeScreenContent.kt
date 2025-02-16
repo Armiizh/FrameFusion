@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -24,16 +25,20 @@ import com.example.framefusion.utils.ui.FrameFusionColumn
 fun HomeScreenContent(
     paddingValues: PaddingValues,
     navigator: Navigator,
-    viewModel: HomeScreenViewModel
+    homeScreenViewModel: HomeScreenViewModel
 ) {
 
-    val isRefreshing by viewModel.isRefreshing.collectAsState()
+    val isRefreshing by homeScreenViewModel.isRefreshing.collectAsState()
     val pullToRefreshState = rememberPullToRefreshState()
+
+    LaunchedEffect(Unit) {
+        homeScreenViewModel.onRetry(false)
+    }
 
     Background()
     PullToRefreshBox(
         isRefreshing = isRefreshing,
-        onRefresh = { viewModel.onRetry() },
+        onRefresh = { homeScreenViewModel.onRetry() },
         state = pullToRefreshState
     ) {
         FrameFusionColumn(
@@ -41,7 +46,7 @@ fun HomeScreenContent(
             Modifier.verticalScroll(rememberScrollState())
         ) {
             //Фильмы
-            val movies by viewModel.top10PersonalMovies.collectAsState()
+            val movies by homeScreenViewModel.top10PersonalMovies.collectAsState()
 
             HomeTop10PersonalContent(
                 type = MOVIES,
@@ -54,11 +59,11 @@ fun HomeScreenContent(
                         navigator.navigateToItemDetails(movieItem.id)
                     }
                 },
-                onRetry = { viewModel.onRetry() }
+                onRetry = { homeScreenViewModel.onRetry() }
             )
 
             //Сериалы
-            val tvSeries by viewModel.top10PersonalTvSeries.collectAsState()
+            val tvSeries by homeScreenViewModel.top10PersonalTvSeries.collectAsState()
 
             HomeTop10PersonalContent(
                 type = TV_SERIES,
@@ -71,7 +76,7 @@ fun HomeScreenContent(
                         navigator.navigateToItemDetails(tvSeriesItem.id)
                     }
                 },
-                onRetry = { viewModel.onRetry() }
+                onRetry = { homeScreenViewModel.onRetry() }
             )
         }
     }

@@ -20,48 +20,65 @@ class GetTop10hdUseCase @Inject constructor(
     private val searchServiceRepository: SearchServiceRepository,
     private val top10hdDatabaseRepository: Top10hdDatabaseRepository
 ) {
-    suspend fun invoke(): Result<List<Top10hd>> = withContext(Dispatchers.IO) {
+    suspend fun invoke(forceRefresh: Boolean = false): Result<List<Top10hd>> =
+        withContext(Dispatchers.IO) {
 
-        try {
-            val response = searchServiceRepository.getTop10hd(
-                page = 1,
-                limit = 10,
-                selectedFields = selectedFields,
-                notNullFields = notNullFields,
-                lists = "top10-hd"
-            )
+            try {
 
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body != null) {
-                    val top10hd = body.toTop10hdItemList()
-                    val orderMap = sortOrder.withIndex().associate { it.value to it.index }
-                    val sortedTop10hd = top10hd
-                        .sortedWith(compareBy { orderMap[it.name] ?: Int.MAX_VALUE })
-                        .mapIndexed { index, item ->
-                            item.copy(displayId = index + 1)
-                        }
-                    top10hdDatabaseRepository.updateSearchItem(sortedTop10hd)
-                    Result.Success(sortedTop10hd)
-                } else {
-                    Result.Error(
-                        AppError.NetworkError(
-                            Constants.ErrorMessages.EMPTY_RESPONSE,
-                            response.code()
-                        )
-                    )
+                if (!forceRefresh) {
+                    val data = top10hdDatabaseRepository.getTop10hd()
+                    if (data.isNotEmpty()) {
+                        return@withContext Result.Success(data)
+                    }
                 }
-            } else {
-                handleErrors(response.code())
-            }
-        } catch (e: IOException) {
-            Result.Error(AppError.NetworkError(Constants.ErrorMessages.NETWORK_ERROR))
-        } catch (e: Exception) {
-            Result.Error(
-                AppError.UnknownError(
-                    e.localizedMessage ?: Constants.ErrorMessages.UNKNOWN_ERROR
+
+                val response = searchServiceRepository.getTop10hd(
+                    page = 1,
+                    limit = 10,
+                    selectedFields = selectedFields,
+                    notNullFields = notNullFields,
+                    lists = "top10-hd"
                 )
-            )
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body != null) {
+                        val top10hd = body.toTop10hdItemList()
+                        val orderMap = sortOrder.withIndex().associate { it.value to it.index }
+                        val sortedTop10hd = top10hd
+                            .sortedWith(compareBy { orderMap[it.name] ?: Int.MAX_VALUE })
+                            .mapIndexed { index, item ->
+                                item.copy(displayId = index + 1)
+                            }
+                        top10hdDatabaseRepository.updateSearchItem(sortedTop10hd)
+                        Result.Success(sortedTop10hd)
+                    } else {
+                        Result.Error(
+                            AppError.NetworkError(
+                                Constants.ErrorMessages.EMPTY_RESPONSE,
+                                response.code()
+                            )
+                        )
+                    }
+                } else {
+                    handleErrors(response.code())
+                }
+            } catch (e: IOException) {
+                Result.Error(AppError.NetworkError(Constants.ErrorMessages.NETWORK_ERROR))
+            } catch (e: Exception) {
+                Result.Error(
+                    AppError.UnknownError(
+                        e.localizedMessage ?: Constants.ErrorMessages.UNKNOWN_ERROR
+                    )
+                )
+            }
         }
+
+    // Функция для проверки совпадения sortOrder
+    private fun isSortOrderMatching(data: List<Top10hd>, sortOrder: List<String>): Boolean {
+        // Здесь вы можете реализовать логику сравнения
+        // Например, если у вас есть поле name в Top10hd, вы можете сравнить его с sortOrder
+        val currentOrder = data.map { it.name } // Предполагаем, что у Top10hd есть поле name
+        return currentOrder == sortOrder
     }
 }

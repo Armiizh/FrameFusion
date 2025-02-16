@@ -13,6 +13,6 @@ fun Title(title: String, fontSize: TextUnit = 30.sp) {
         text = title,
         fontSize = fontSize,
         fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colorScheme.onBackground
+        color = MaterialTheme.colorScheme.onBackground.copy(alpha = .5f)
     )
 }
