@@ -2,19 +2,24 @@ package com.example.framefusion.features.itemDetails.data
 
 import com.example.framefusion.features.itemDetails.data.local.dao.ActorDetailsDao
 import com.example.framefusion.features.itemDetails.data.local.models.ActorDetails
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ActorDetailsDatabaseRepository @Inject constructor(private val actorDetailsDao: ActorDetailsDao) {
 
-    suspend fun getActorDetailsById(id: Int): ActorDetails? {
-        return actorDetailsDao.getActorDetailsById(id)
+    suspend fun getActorDetails(): Flow<ActorDetails> = withContext(Dispatchers.IO) {
+        actorDetailsDao.getActorDetails()
     }
 
-    suspend fun insertOrUpdate(actorDetails: ActorDetails) {
-        actorDetailsDao.insertOrUpdate(actorDetails)
+    suspend fun updateActorDetails(actorDetails: ActorDetails) = withContext(Dispatchers.IO) {
+        actorDetailsDao.deleteActorDetails()
+        actorDetailsDao.insertActorDetails(actorDetails)
     }
 
-    suspend fun deleteAllActorDetails() {
-        actorDetailsDao.deleteAllActorDetails()
-    }
+    suspend fun updateActorLikedStatus(actorId: Int, isFavorite: Boolean) =
+        withContext(Dispatchers.IO) {
+            actorDetailsDao.updateActorLikedStatus(actorId, isFavorite)
+        }
 }

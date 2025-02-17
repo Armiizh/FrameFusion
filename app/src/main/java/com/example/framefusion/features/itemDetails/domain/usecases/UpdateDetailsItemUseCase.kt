@@ -5,6 +5,7 @@ import com.example.framefusion.features.itemDetails.data.local.models.ItemDetail
 import com.example.framefusion.utils.state.AppError
 import com.example.framefusion.utils.state.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class UpdateDetailsItemUseCase @Inject constructor(
                     Result.Error(AppError.ValidationError("Неверный ID элемента"))
                 } else {
                     itemDetailsDatabaseRepository.updateItemLikedStatus(itemId, isLiked)
-                    val updatedItem = itemDetailsDatabaseRepository.getItem()
+                    val updatedItem = itemDetailsDatabaseRepository.getItem().first()
                     Result.Success(updatedItem)
                 }
             } catch (e: Exception) {

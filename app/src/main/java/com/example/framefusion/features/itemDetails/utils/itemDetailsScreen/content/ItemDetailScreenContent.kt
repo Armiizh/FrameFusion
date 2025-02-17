@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.features.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.features.itemDetails.utils.itemDetailsScreen.DetailsScreenShimmer
 import com.example.framefusion.features.person.PersonScreenViewModel
@@ -19,13 +18,13 @@ fun ItemDetailsScreenContent(
     navigator: Navigator,
     itemId: Int,
     personScreenViewModel: PersonScreenViewModel,
-    itemDetailsScreenViewModel: DetailsScreenViewModel = hiltViewModel()
+    itemDetailsScreenViewModel: DetailsScreenViewModel
 ) {
 
     val itemDetailsState by itemDetailsScreenViewModel.itemDetailsState.collectAsState()
 
     LaunchedEffect(Unit) {
-        itemDetailsScreenViewModel.initData(itemId)
+        itemDetailsScreenViewModel.initItemDetails(itemId)
     }
 
     when (val state = itemDetailsState) {
@@ -49,7 +48,7 @@ fun ItemDetailsScreenContent(
                 paddingValues,
                 state.error
             ) {
-                itemDetailsScreenViewModel.initData(itemId)
+                itemDetailsScreenViewModel.initItemDetails(itemId)
             }
         }
     }

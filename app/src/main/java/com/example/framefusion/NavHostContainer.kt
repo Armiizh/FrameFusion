@@ -19,6 +19,7 @@ import com.example.framefusion.features.greeting.presentation.OnboardingScreen
 import com.example.framefusion.features.home.HomeScreenViewModel
 import com.example.framefusion.features.home.presentation.HomePersonalItemsScreen
 import com.example.framefusion.features.home.presentation.HomeScreen
+import com.example.framefusion.features.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.features.itemDetails.presentation.ActorsDetailsScreen
 import com.example.framefusion.features.itemDetails.presentation.FullItemCastScreen
 import com.example.framefusion.features.itemDetails.presentation.ItemDetailsScreen
@@ -37,7 +38,8 @@ import com.example.framefusion.utils.navigation.Navigator
 fun NavHostContainer(
     navController: NavHostController = rememberNavController(),
     homeScreenViewModel: HomeScreenViewModel = hiltViewModel(),
-    personScreenViewModel: PersonScreenViewModel = hiltViewModel()
+    personScreenViewModel: PersonScreenViewModel = hiltViewModel(),
+    detailsScreenViewModel: DetailsScreenViewModel = hiltViewModel()
 ) {
     val navigator = Navigator(navController)
 
@@ -118,13 +120,22 @@ fun NavHostContainer(
                         arguments = listOf(navArgument("itemId") { type = NavType.IntType })
                     ) { backStackEntry ->
                         val itemId = backStackEntry.arguments?.getInt("itemId")
-                        ItemDetailsScreen(navigator, itemId ?: -1, personScreenViewModel)
+                        ItemDetailsScreen(
+                            navigator,
+                            itemId ?: -1,
+                            personScreenViewModel,
+                            detailsScreenViewModel
+                        )
                     }
                     composable(NavRoute.FullItemCast.route) {
                         FullItemCastScreen(navigator)
                     }
-                    composable(NavRoute.ActorDetails.route) {
-                        ActorsDetailsScreen(navigator)
+                    composable(
+                        route = NavRoute.ActorDetails.route,
+                        arguments = listOf(navArgument("id") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val id = backStackEntry.arguments?.getInt("id")
+                        ActorsDetailsScreen(navigator, id ?: -1, detailsScreenViewModel)
                     }
                 }
             )

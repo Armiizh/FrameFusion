@@ -16,6 +16,10 @@ fun Modifier.defaultColumnModifier() = this
     .padding(bottom = 80.dp)
     .fillMaxWidth()
 
+fun Modifier.columnModifierWithOutHorizontal() = this
+    .padding(bottom = 80.dp)
+    .fillMaxWidth()
+
 
 @Composable
 fun FrameFusionColumn(
@@ -37,20 +41,34 @@ fun FrameFusionColumn(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
     withoutTop: Boolean = false,
+    withoutHorizontal: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val layoutDirection = LocalLayoutDirection.current
 
-    Column(
-        modifier = modifier
-            .padding(
-                start = paddingValues.calculateStartPadding(layoutDirection),
-                end = paddingValues.calculateEndPadding(layoutDirection),
-                bottom = paddingValues.calculateBottomPadding(),
-                top = if (withoutTop) 0.dp else paddingValues.calculateTopPadding()
-            )
-            .defaultColumnModifier()
-    ) {
-        content()
+    if (withoutHorizontal) {
+        Column(
+            modifier = modifier
+                .padding(
+                    bottom = paddingValues.calculateBottomPadding(),
+                    top = if (withoutTop) 0.dp else paddingValues.calculateTopPadding()
+                )
+                .columnModifierWithOutHorizontal()
+        ) {
+            content()
+        }
+    } else {
+        Column(
+            modifier = modifier
+                .padding(
+                    start = paddingValues.calculateStartPadding(layoutDirection),
+                    end = paddingValues.calculateEndPadding(layoutDirection),
+                    bottom = paddingValues.calculateBottomPadding(),
+                    top = if (withoutTop) 0.dp else paddingValues.calculateTopPadding()
+                )
+                .defaultColumnModifier()
+        ) {
+            content()
+        }
     }
 }

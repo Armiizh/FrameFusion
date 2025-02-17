@@ -2,8 +2,11 @@ package com.example.framefusion.features.itemDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.framefusion.features.itemDetails.data.local.models.ActorDetails
 import com.example.framefusion.features.itemDetails.data.local.models.ItemDetails
+import com.example.framefusion.features.itemDetails.domain.usecases.GetActorDetailsUseCase
 import com.example.framefusion.features.itemDetails.domain.usecases.GetItemDetailsUseCase
+import com.example.framefusion.features.itemDetails.domain.usecases.UpdateActorDetailsUseCase
 import com.example.framefusion.features.itemDetails.domain.usecases.UpdateDetailsItemUseCase
 import com.example.framefusion.utils.state.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,18 +20,28 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsScreenViewModel @Inject constructor(
     private val getItemDetailsUseCase: GetItemDetailsUseCase,
+    private val getActorDetailsUseCase: GetActorDetailsUseCase,
+    private val updateActorDetailsUseCase: UpdateActorDetailsUseCase,
     private val updateDetailsItemUseCase: UpdateDetailsItemUseCase
 ) : ViewModel() {
 
     // StateFlow для хранения данных
     private val _itemDetailsState = MutableStateFlow<Result<ItemDetails>>(Result.Loading)
+    private val _actorDetailsState = MutableStateFlow<Result<ActorDetails>>(Result.Loading)
 
     // Публичные StateFlow для наблюдения в UI
     val itemDetailsState: StateFlow<Result<ItemDetails>> = _itemDetailsState
+    val actorDetailsState: StateFlow<Result<ActorDetails>> = _actorDetailsState
 
-    fun initData(itemId: Int) {
+    fun initItemDetails(itemId: Int) {
         viewModelScope.launch {
-            initItemDetails(itemId)
+            initItemDetailsData(itemId)
+        }
+    }
+
+    fun initActorDetails(actorId: Int) {
+        viewModelScope.launch {
+            initActorDetailsData(actorId)
         }
     }
 
@@ -38,11 +51,28 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun initItemDetails(itemId: Int, forceRefresh: Boolean = false) =
+    fun updateActor(actorId: Int, isLiked: Boolean) {
+        viewModelScope.launch {
+            updateActorDetails(actorId, isLiked)
+        }
+    }
+
+    private suspend fun initItemDetailsData(itemId: Int) =
         coroutineScope {
-            val itemDetails = async { getItemDetailsUseCase.invoke(itemId, forceRefresh) }
+            val itemDetails = async { getItemDetailsUseCase.invoke(itemId) }
             _itemDetailsState.value = itemDetails.await()
         }
+
+    private suspend fun initActorDetailsData(actorId: Int) =
+        coroutineScope {
+            val actorDetails = async { getActorDetailsUseCase.invoke(actorId) }
+            _actorDetailsState.value = actorDetails.await()
+        }
+
+    private suspend fun updateActorDetails(actorId: Int, isLiked: Boolean) = coroutineScope {
+        val updatedActor = async { updateActorDetailsUseCase.invoke(actorId, isLiked) }
+        _actorDetailsState.value = updatedActor.await()
+    }
 
     private suspend fun updateItemDetails(itemId: Int, isLiked: Boolean) = coroutineScope {
         val updatedItem = async { updateDetailsItemUseCase.invoke(itemId, isLiked) }

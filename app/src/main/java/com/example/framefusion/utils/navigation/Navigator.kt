@@ -52,9 +52,8 @@ class Navigator(
 
     fun navigateToActorDetails(id: Int?) {
         if (id != null) {
-
+            navController.navigate("${Constants.Screens.ItemDetailsScreens.ACTOR_DETAILS_SCREEN}/$id")
         }
-        navController.navigate(NavRoute.ActorDetails.route)
     }
 
     fun navigateToItemDetails(id: Int?) {
@@ -95,5 +94,6 @@ sealed class NavRoute(val route: String) {
         NavRoute("${Constants.Screens.ItemDetailsScreens.ITEM_DETAILS_SCREEN}/{itemId}")
 
     data object FullItemCast : NavRoute(Constants.Screens.ItemDetailsScreens.FULL_ITEM_CAST_SCREEN)
-    data object ActorDetails : NavRoute(Constants.Screens.ItemDetailsScreens.ACTOR_DETAILS_SCREEN)
+    data object ActorDetails :
+        NavRoute("${Constants.Screens.ItemDetailsScreens.ACTOR_DETAILS_SCREEN}/{id}")
 }

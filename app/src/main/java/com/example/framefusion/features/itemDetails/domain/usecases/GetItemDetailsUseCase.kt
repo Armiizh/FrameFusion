@@ -1,5 +1,6 @@
 package com.example.framefusion.features.itemDetails.domain.usecases
 
+import android.util.Log
 import com.example.framefusion.features.home.data.local.models.Genre
 import com.example.framefusion.features.home.data.local.models.Poster
 import com.example.framefusion.features.itemDetails.data.ItemDetailsDatabaseRepository
@@ -13,6 +14,7 @@ import com.example.framefusion.utils.Constants
 import com.example.framefusion.utils.state.AppError
 import com.example.framefusion.utils.state.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
@@ -22,14 +24,15 @@ class GetItemDetailsUseCase @Inject constructor(
     private val itemDetailsDatabaseRepository: ItemDetailsDatabaseRepository,
     private val favoriteItemDatabaseRepository: FavoriteItemDatabaseRepository
 ) {
-    suspend fun invoke(itemId: Int, forceRefresh: Boolean = false): Result<ItemDetails> =
+    suspend fun invoke(itemId: Int): Result<ItemDetails> =
         withContext(Dispatchers.IO) {
 
             try {
 
-                if (!forceRefresh) {
-                    val cachedItem = itemDetailsDatabaseRepository.getItem()
+                val cachedItem = itemDetailsDatabaseRepository.getItem().firstOrNull()
+                if (cachedItem != null) {
                     if (cachedItem.id == itemId) {
+                        Log.d("???", "cachedActor")
                         return@withContext Result.Success(cachedItem)
                     }
                 }

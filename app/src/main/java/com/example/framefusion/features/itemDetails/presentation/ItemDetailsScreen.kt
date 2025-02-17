@@ -2,6 +2,7 @@ package com.example.framefusion.features.itemDetails.presentation
 
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import com.example.framefusion.features.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.features.itemDetails.utils.itemDetailsScreen.content.ItemDetailsScreenContent
 import com.example.framefusion.features.person.PersonScreenViewModel
 import com.example.framefusion.utils.navigation.Navigator
@@ -10,11 +11,18 @@ import com.example.framefusion.utils.navigation.Navigator
 fun ItemDetailsScreen(
     navigator: Navigator,
     itemId: Int,
-    personScreenViewModel: PersonScreenViewModel
+    personScreenViewModel: PersonScreenViewModel,
+    itemDetailsScreenViewModel: DetailsScreenViewModel
 ) {
     Scaffold(
         content = { paddingValues ->
-            ItemDetailsScreenContent(paddingValues, navigator, itemId, personScreenViewModel)
+            ItemDetailsScreenContent(
+                paddingValues,
+                navigator,
+                itemId,
+                personScreenViewModel,
+                itemDetailsScreenViewModel
+            )
         }
     )
 }
