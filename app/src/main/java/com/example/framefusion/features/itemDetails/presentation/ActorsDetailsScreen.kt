@@ -44,7 +44,13 @@ fun ActorDetailsScreenContent(
         }
 
         is Result.Success -> {
-            ActorDetailsScreenSuccessContent(paddingValues, state)
+            ActorDetailsScreenSuccessContent(paddingValues, state) {
+                state.data.id?.let {
+                    detailsScreenViewModel.updateActor(
+                        it, !state.data.isFavorite
+                    )
+                }
+            }
         }
 
         is Result.Error -> {

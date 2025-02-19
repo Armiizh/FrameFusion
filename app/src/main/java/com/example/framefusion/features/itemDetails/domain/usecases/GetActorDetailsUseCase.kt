@@ -35,12 +35,15 @@ class GetActorDetailsUseCase @Inject constructor(
 
                 val response = itemDetailsServiceRepository.getActorDetails(id)
 
+                // Проверяем, является ли актре избранным
+                val isLiked = favoriteActorDatabaseRepository.isActorFavorite(id)
+
                 if (response.isSuccessful) {
 
                     response.body()?.let { body ->
                         val actor = ActorDetails(
                             id = body.id ?: 0,
-                            isFavorite = false,
+                            isFavorite = isLiked,
                             age = body.age,
                             birthPlace = body.birthPlace,
                             birthday = body.birthday,
@@ -75,15 +78,11 @@ class GetActorDetailsUseCase @Inject constructor(
                             updatedAt = body.updatedAt
                         )
 
-                        // Проверяем, является ли элемент избранным
-                        val isLiked = favoriteActorDatabaseRepository.isActorFavorite(id)
-                        val updatedActorDetails = actor.copy(isFavorite = isLiked)
-
                         // Сохраняем в локальную базу данных
-                        actorDetailsDatabaseRepository.updateActorDetails(updatedActorDetails)
+                        actorDetailsDatabaseRepository.updateActorDetails(actor)
 
                         // Возвращаем успешный результат
-                        return@withContext Result.Success(updatedActorDetails)
+                        return@withContext Result.Success(actor)
                     } ?: Result.Error(
                         AppError.NetworkError(
                             Constants.ErrorMessages.EMPTY_RESPONSE,
