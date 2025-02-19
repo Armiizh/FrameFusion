@@ -70,6 +70,7 @@ fun NavHostContainer(
     }
 
     if (!isFirstLaunch.value) {
+
         Scaffold(
             bottomBar = { BottomNavigationBar(navController) }
         ) { paddingValues ->

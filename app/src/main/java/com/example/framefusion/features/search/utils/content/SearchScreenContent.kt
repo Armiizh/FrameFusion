@@ -1,8 +1,6 @@
 package com.example.framefusion.features.search.utils.content
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -35,7 +33,8 @@ fun SearchScreenContent(
         onRefresh = { searchItemViewModel.onRetry() },
         state = pullToRefreshState
     ) {
-        FrameFusionColumn(paddingValues, Modifier.verticalScroll(rememberScrollState())) {
+        FrameFusionColumn(paddingValues, Modifier) {
+
             var search by remember { mutableStateOf("") }
 
             SearchBarContent(search) { newSearch ->
