@@ -19,6 +19,10 @@ sealed class AppError(open val message: String) {
         override val message: String
     ) : AppError(message)
 
+    data class ValidationError(
+        override val message: String
+    ) : AppError(message)
+
     // Метод для получения локализованного сообщения
     fun getLocalizedMessage(): String = when (this) {
         is NetworkError -> when {
@@ -31,6 +35,7 @@ sealed class AppError(open val message: String) {
         is ServerError -> serverMessage ?: "Ошибка сервера"
         is DatabaseError -> "Ошибка базы данных"
         is UnknownError -> "Непредвиденная ошибка"
+        is ValidationError -> "Неверный ID элемента"
     }
 
     override fun toString(): String = message

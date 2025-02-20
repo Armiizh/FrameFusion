@@ -6,13 +6,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.framefusion.features.search.data.local.models.Top10hd
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface Top10hdDao {
 
     @Query("SELECT * FROM top10hd")
-    fun getTop10hd(): Flow<List<Top10hd>>
+    fun getTop10hd(): List<Top10hd>
 
     @Query("DELETE FROM top10hd")
     suspend fun deleteTop10hd()

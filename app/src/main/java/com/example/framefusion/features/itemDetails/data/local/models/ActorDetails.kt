@@ -10,6 +10,8 @@ data class ActorDetails(
     @PrimaryKey
     @ColumnInfo("id")
     val id: Int? = null,
+    @ColumnInfo("isFavorite")
+    val isFavorite: Boolean = false,
     @ColumnInfo("age")
     val age: Int? = null,
     @ColumnInfo("birthday")
@@ -17,13 +19,13 @@ data class ActorDetails(
     @ColumnInfo("countAwards")
     val countAwards: Int? = null,
     @ColumnInfo("createdAt")
-    val createdAt: String?,
+    val createdAt: String? = null,
     @ColumnInfo("death")
     val death: String? = null,
     @ColumnInfo("deathPlace")
     val deathPlace: List<DeathPlace>?,
     @ColumnInfo("enName")
-    val enName: String,
+    val enName: String? = null,
     @ColumnInfo("facts")
     val facts: List<Facts>?,
     @ColumnInfo("birthPlace")
@@ -33,15 +35,15 @@ data class ActorDetails(
     @ColumnInfo("movies")
     val movies: List<ActorsMovie>?,
     @ColumnInfo("name")
-    val name: String?,
+    val name: String? = null,
     @ColumnInfo("photo")
-    val photo: String?,
+    val photo: String? = null,
     @ColumnInfo("profession")
     val profession: List<Profession>?,
     @ColumnInfo("sex")
-    val sex: String?,
+    val sex: String? = null,
     @ColumnInfo("spouses")
     val spouses: List<Spouse>?,
     @ColumnInfo("updatedAt")
-    val updatedAt: String?
+    val updatedAt: String? = null
 )

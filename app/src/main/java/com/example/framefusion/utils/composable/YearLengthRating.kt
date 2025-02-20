@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.framefusion.features.itemDetails.utils.converters.minutesToHoursAndMinutes
 import com.example.framefusion.features.itemDetails.utils.converters.ratingColor
+import java.util.Locale
 
 @Composable
 fun YearLengthRating(
@@ -46,7 +47,7 @@ fun YearLengthRating(
             } else null
 
         val ratingText = if (rating != null && rating.toFloat() != 0.0f) {
-            rating.toString()
+            "%.1f".format(Locale.US, rating)
         } else null
 
         val displayText = when (type) {

@@ -101,6 +101,7 @@ object Constants {
         const val BAD_REQUEST = "Неверный запрос. Проверьте введенные данные."
         const val NOT_FOUND = "Запрашиваемый ресурс не найден."
         const val INTERNAL_SERVER_ERROR = "Внутренняя ошибка сервера. Попробуйте позже."
+        const val SERVER_ERROR = "Ошибка сервера"
         const val UNKNOWN_ERROR = "Неизвестная ошибка"
         const val INVALID_TYPE = "Неверно передан тип фильма или сериала"
         const val NETWORK_ERROR = "Проблема с подключением к интернету"

@@ -6,13 +6,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.framefusion.features.home.data.local.models.Top10PersonalMovie
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface Top10PersonalMoviesDao {
 
     @Query("SELECT * FROM movies")
-    fun getMovies(): Flow<List<Top10PersonalMovie>>
+    fun getMovies(): List<Top10PersonalMovie>
 
     @Query("DELETE FROM movies")
     suspend fun deleteAllMovies()

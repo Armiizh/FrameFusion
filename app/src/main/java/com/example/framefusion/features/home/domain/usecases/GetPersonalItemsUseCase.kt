@@ -5,8 +5,8 @@ import com.example.framefusion.features.home.data.HomeServiceRepository
 import com.example.framefusion.features.home.data.PersonalItemsRepository
 import com.example.framefusion.features.home.data.local.models.PersonalItems
 import com.example.framefusion.features.home.data.rest.model.toPersonalItemsList
-import com.example.framefusion.features.home.utils.homeScreen.Fields.PersonalItems.notNullFields
-import com.example.framefusion.features.home.utils.homeScreen.Fields.PersonalItems.selectedFields
+import com.example.framefusion.features.home.utils.FieldsForHomeScreenUseCases.PersonalItems.notNullFields
+import com.example.framefusion.features.home.utils.FieldsForHomeScreenUseCases.PersonalItems.selectedFields
 import com.example.framefusion.utils.Constants
 import com.example.framefusion.utils.handleErrors
 import com.example.framefusion.utils.state.AppError

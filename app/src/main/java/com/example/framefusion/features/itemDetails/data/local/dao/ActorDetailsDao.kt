@@ -4,17 +4,28 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.framefusion.features.itemDetails.data.local.models.ActorDetails
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ActorDetailsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdate(actorDetails: ActorDetails)
-
-    @Query("SELECT * FROM actor_details WHERE id = :id")
-    suspend fun getActorDetailsById(id: Int): ActorDetails?
+    @Query("SELECT * FROM actor_details")
+    fun getActorDetails(): Flow<ActorDetails>
 
     @Query("DELETE FROM actor_details")
-    suspend fun deleteAllActorDetails()
+    suspend fun deleteActorDetails()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertActorDetails(actorDetails: ActorDetails)
+
+    @Update
+    suspend fun updateActorDetails(actorDetails: ActorDetails) {
+        deleteActorDetails()
+        insertActorDetails(actorDetails)
+    }
+
+    @Query("UPDATE actor_details SET isFavorite = :isFavorite WHERE id = :actorId")
+    suspend fun updateActorLikedStatus(actorId: Int, isFavorite: Boolean)
 }

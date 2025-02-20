@@ -23,9 +23,7 @@ fun ItemDetailsContent(
     itemDetails: ItemDetails,
     navigator: Navigator
 ) {
-
     ItemName(itemDetails.name)
-
     Column(
         Modifier
             .fillMaxWidth()

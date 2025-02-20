@@ -98,18 +98,19 @@ fun ItemDetailsBackdrop(
                             onClick = {
                                 val isFavorite = !(itemDetails?.isFavorite ?: false)
                                 itemDetails.let {
-                                    personScreenViewModel.viewModelScope.launch {
-                                        if (it != null) {
+                                    if (it != null) {
+                                        personScreenViewModel.viewModelScope.launch {
                                             personScreenViewModel.changeFavoriteStatus(
                                                 it,
                                                 isFavorite
                                             )
+                                            personScreenViewModel.initData()
                                         }
-                                        personScreenViewModel.initData()
-                                    }
-                                    detailsScreenViewModel.viewModelScope.launch {
-                                        if (it != null) {
-                                            detailsScreenViewModel.updateItem(it, isFavorite)
+                                        it.id?.let { it1 ->
+                                            detailsScreenViewModel.updateItem(
+                                                it1,
+                                                isFavorite
+                                            )
                                         }
                                     }
                                 }
@@ -149,7 +150,12 @@ fun ItemDetailsBackdrop(
                             }
                             detailsScreenViewModel.viewModelScope.launch {
                                 if (it != null) {
-                                    detailsScreenViewModel.updateItem(it, isFavorite)
+                                    it.id?.let { it1 ->
+                                        detailsScreenViewModel.updateItem(
+                                            it1,
+                                            isFavorite
+                                        )
+                                    }
                                 }
                             }
                         }

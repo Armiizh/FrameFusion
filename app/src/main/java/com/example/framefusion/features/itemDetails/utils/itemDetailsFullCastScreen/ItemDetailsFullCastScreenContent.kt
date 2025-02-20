@@ -36,7 +36,7 @@ fun ItemDetailsFullCastScreenContent(
 //            val data = (itemDetailsState as Result.Success).data
 //            if (data != null) {
 //                items(data.persons) { person ->
-//                    PersonItem(person, navigator)
+//                    PersonItem(person., navigator)
 //                }
 //            }
         }

@@ -1,7 +1,5 @@
 package com.example.framefusion.utils.composable
 
-
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme

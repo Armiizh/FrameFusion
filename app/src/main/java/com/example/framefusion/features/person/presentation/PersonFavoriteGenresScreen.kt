@@ -10,21 +10,23 @@ import androidx.compose.runtime.remember
 import com.example.framefusion.features.person.PersonScreenViewModel
 import com.example.framefusion.features.person.utils.personFavoriteGenres.PersonGenresScreenContent
 import com.example.framefusion.features.person.utils.personFavoriteGenres.PersonGenresTopAppBar
-import com.example.framefusion.utils.Constants
+import com.example.framefusion.utils.Constants.AllGenresObject.allGenres
 import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
 fun PersonFavoriteGenresScreen(
     navigator: Navigator,
-    viewModel: PersonScreenViewModel
+    personScreenViewModel: PersonScreenViewModel,
+    initHomeDataAfterChangesGenres: () -> Unit
 ) {
 
-    val allGenres = Constants.AllGenresObject.allGenres
+    val allGenres = remember { allGenres }
     val allGenreStates = allGenres.associateWith { genre ->
         val state = remember { mutableStateOf(genre.isSelected) }
         state
     }
-    val genres by viewModel.genres.collectAsState(emptyList())
+    val genres by personScreenViewModel.genres.collectAsState()
+
     LaunchedEffect(Unit) {
         val selectedGenres = genres.map { it.trim() }
         allGenres.forEach { genre ->
@@ -37,9 +39,11 @@ fun PersonFavoriteGenresScreen(
             PersonGenresTopAppBar(
                 allGenres,
                 allGenreStates,
-                viewModel,
                 navigator
-            )
+            ) {
+                personScreenViewModel.insertGenres(it)
+                initHomeDataAfterChangesGenres()
+            }
         },
         content = { paddingValues ->
             PersonGenresScreenContent(paddingValues, allGenres, allGenreStates)
