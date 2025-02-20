@@ -44,13 +44,18 @@ fun ActorDetailsScreenContent(
         }
 
         is Result.Success -> {
-            ActorDetailsScreenSuccessContent(paddingValues, state) {
-                state.data.id?.let {
-                    detailsScreenViewModel.updateActor(
-                        it, !state.data.isFavorite
-                    )
-                }
-            }
+            ActorDetailsScreenSuccessContent(
+                paddingValues,
+                state,
+                onFavoriteActor = {
+                    state.data.id?.let {
+                        detailsScreenViewModel.updateActor(
+                            it, !state.data.isFavorite
+                        )
+                    }
+                },
+                getMoviesInfo = detailsScreenViewModel.
+            )
         }
 
         is Result.Error -> {

@@ -1,6 +1,7 @@
 package com.example.framefusion.features.itemDetails.data
 
 import com.example.framefusion.features.itemDetails.data.local.models.ActorDetails
+import com.example.framefusion.features.itemDetails.data.local.models.ActorsMovie
 import com.example.framefusion.features.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.features.itemDetails.data.service.ItemDetailsService
 import kotlinx.coroutines.Dispatchers
@@ -13,10 +14,14 @@ class ItemDetailsServiceRepository @Inject constructor(private val itemDetailsSe
     suspend fun getItemDetails(actorId: Int): Response<ItemDetails> =
         withContext(Dispatchers.IO) {
             itemDetailsService.getItemDetails(actorId)
-    }
+        }
 
     suspend fun getActorDetails(actorId: Int): Response<ActorDetails> =
         withContext(Dispatchers.IO) {
             itemDetailsService.getActorDetails(actorId)
         }
+
+    suspend fun getMovieInfo(movieId: Int): Response<ActorsMovie> = withContext(Dispatchers.IO) {
+        itemDetailsService.getMovieInfo(movieId)
+    }
 }

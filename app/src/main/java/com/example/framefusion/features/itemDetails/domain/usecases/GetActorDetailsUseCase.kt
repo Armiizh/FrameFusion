@@ -1,5 +1,6 @@
 package com.example.framefusion.features.itemDetails.domain.usecases
 
+import com.example.framefusion.features.home.data.local.models.Poster
 import com.example.framefusion.features.itemDetails.data.ActorDetailsDatabaseRepository
 import com.example.framefusion.features.itemDetails.data.ItemDetailsServiceRepository
 import com.example.framefusion.features.itemDetails.data.local.models.ActorDetails
@@ -57,7 +58,11 @@ class GetActorDetailsUseCase @Inject constructor(
                             movies = body.movies?.map { movie ->
                                 ActorsMovie(
                                     id = movie.id,
-                                    name = movie.name
+                                    name = movie.name,
+                                    poster = Poster(
+                                        url = "",
+                                        previewUrl = ""
+                                    )
                                 )
                             },
                             name = body.name,

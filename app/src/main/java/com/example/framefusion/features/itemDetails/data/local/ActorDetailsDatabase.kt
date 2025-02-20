@@ -3,6 +3,7 @@ package com.example.framefusion.features.itemDetails.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.framefusion.features.home.data.local.converters.PosterConverter
 import com.example.framefusion.features.itemDetails.data.local.convertes.ActorsMovieConverter
 import com.example.framefusion.features.itemDetails.data.local.convertes.BirthPlaceConverter
 import com.example.framefusion.features.itemDetails.data.local.convertes.DeathPlaceConverter
@@ -19,7 +20,8 @@ import com.example.framefusion.features.itemDetails.data.local.models.ActorDetai
     FactsConverter::class,
     ActorsMovieConverter::class,
     ProfessionConverter::class,
-    SpouseConverter::class
+    SpouseConverter::class,
+    PosterConverter::class
 )
 abstract class ActorDetailsDatabase : RoomDatabase() {
     abstract fun actorDetailsDao(): ActorDetailsDao

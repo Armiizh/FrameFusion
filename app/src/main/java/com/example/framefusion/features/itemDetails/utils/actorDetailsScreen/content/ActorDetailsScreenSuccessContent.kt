@@ -11,12 +11,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,13 +37,19 @@ import com.example.framefusion.utils.ui.FrameFusionColumn
 fun ActorDetailsScreenSuccessContent(
     paddingValues: PaddingValues,
     state: Result.Success<ActorDetails>,
-    onFavoriteActor: () -> Unit
+    onFavoriteActor: () -> Unit,
+    getMoviesInfo: () -> Unit,
 ) {
     FrameFusionColumn(
         paddingValues,
         modifier = Modifier,
         withoutHorizontal = true
     ) {
+
+        LaunchedEffect(Unit) {
+            getMoviesInfo()
+        }
+
         Column(
             Modifier
                 .fillMaxWidth()
@@ -113,12 +119,6 @@ private fun MoviesInfo(
                 text = "Фильмы ${movies?.size}",
                 modifier = Modifier.padding(vertical = 12.dp)
             )
-        }
-
-        LazyRow(
-            Modifier.fillMaxWidth()
-        ) {
-
         }
     }
 }

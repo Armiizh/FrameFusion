@@ -3,8 +3,10 @@ package com.example.framefusion.features.itemDetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.features.itemDetails.data.local.models.ActorDetails
+import com.example.framefusion.features.itemDetails.data.local.models.ActorsMovie
 import com.example.framefusion.features.itemDetails.data.local.models.ItemDetails
 import com.example.framefusion.features.itemDetails.domain.usecases.GetActorDetailsUseCase
+import com.example.framefusion.features.itemDetails.domain.usecases.GetFullActorMoviesInfoUseCase
 import com.example.framefusion.features.itemDetails.domain.usecases.GetItemDetailsUseCase
 import com.example.framefusion.features.itemDetails.domain.usecases.UpdateActorDetailsUseCase
 import com.example.framefusion.features.itemDetails.domain.usecases.UpdateDetailsItemUseCase
@@ -22,7 +24,8 @@ class DetailsScreenViewModel @Inject constructor(
     private val getItemDetailsUseCase: GetItemDetailsUseCase,
     private val getActorDetailsUseCase: GetActorDetailsUseCase,
     private val updateActorDetailsUseCase: UpdateActorDetailsUseCase,
-    private val updateDetailsItemUseCase: UpdateDetailsItemUseCase
+    private val updateDetailsItemUseCase: UpdateDetailsItemUseCase,
+    private val getFullActorMoviesInfoUseCase: GetFullActorMoviesInfoUseCase
 ) : ViewModel() {
 
     // StateFlow для хранения данных
@@ -55,6 +58,17 @@ class DetailsScreenViewModel @Inject constructor(
         viewModelScope.launch {
             updateActorDetails(actorId, isLiked)
         }
+    }
+
+    fun initActorMovies(movies: List<ActorsMovie>) {
+        viewModelScope.launch {
+
+        }
+    }
+
+    private suspend fun initActorMoviesInfoData(movies: List<ActorsMovie>) = coroutineScope {
+        val fullMoviesInfo = async { getFullActorMoviesInfoUseCase.invoke() }
+        _actorDetailsState.value = fullMoviesInfo.await()
     }
 
     private suspend fun initItemDetailsData(itemId: Int) =

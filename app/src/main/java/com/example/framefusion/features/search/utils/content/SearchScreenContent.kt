@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.framefusion.features.search.SearchItemViewModel
 import com.example.framefusion.utils.ui.Background
@@ -33,7 +32,7 @@ fun SearchScreenContent(
         onRefresh = { searchItemViewModel.onRetry() },
         state = pullToRefreshState
     ) {
-        FrameFusionColumn(paddingValues, Modifier) {
+        FrameFusionColumn(paddingValues) {
 
             var search by remember { mutableStateOf("") }
 
