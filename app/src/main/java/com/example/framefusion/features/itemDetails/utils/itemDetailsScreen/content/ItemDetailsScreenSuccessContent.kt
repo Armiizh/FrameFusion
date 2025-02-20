@@ -23,6 +23,7 @@ fun ItemDetailsScreenSuccessContent(
     itemDetailsScreenViewModel: DetailsScreenViewModel,
     personScreenViewModel: PersonScreenViewModel
 ) {
+
     Background()
     Column(
         Modifier.fillMaxWidth()
@@ -31,11 +32,22 @@ fun ItemDetailsScreenSuccessContent(
             item {
                 ItemDetailsBackdrop(
                     state.data,
-                    itemDetailsScreenViewModel,
                     navigator,
                     paddingValues,
-                    personScreenViewModel
-                )
+                ) {
+                    val isFavorite = !(state.data.isFavorite ?: false)
+                    state.data.isFavorite.let {
+                        if (it != null) {
+                            personScreenViewModel.changeFavoriteStatus(state.data, isFavorite)
+                            state.data.id?.let { it1 ->
+                                itemDetailsScreenViewModel.updateItem(
+                                    it1,
+                                    isFavorite
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
         FrameFusionColumn(

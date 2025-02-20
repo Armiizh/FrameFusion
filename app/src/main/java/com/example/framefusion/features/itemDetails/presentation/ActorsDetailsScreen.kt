@@ -17,13 +17,11 @@ import com.example.framefusion.utils.ui.Background
 
 @Composable
 fun ActorsDetailsScreen(
-    navigator: Navigator,
-    id: Int,
-    detailsScreenViewModel: DetailsScreenViewModel
+    navigator: Navigator, id: Int, detailsScreenViewModel: DetailsScreenViewModel
 ) {
     Scaffold { paddingValues ->
         Background()
-        ActorDetailsScreenContent(paddingValues, id, detailsScreenViewModel)
+        ActorDetailsScreenContent(paddingValues, id, navigator, detailsScreenViewModel)
     }
 }
 
@@ -31,6 +29,7 @@ fun ActorsDetailsScreen(
 fun ActorDetailsScreenContent(
     paddingValues: PaddingValues,
     id: Int,
+    navigator: Navigator,
     detailsScreenViewModel: DetailsScreenViewModel
 ) {
     val actorDetailsState by detailsScreenViewModel.actorDetailsState.collectAsState()
@@ -44,8 +43,8 @@ fun ActorDetailsScreenContent(
         }
 
         is Result.Success -> {
-            ActorDetailsScreenSuccessContent(
-                paddingValues,
+            ActorDetailsScreenSuccessContent(paddingValues,
+                navigator,
                 state,
                 onFavoriteActor = {
                     state.data.id?.let {
@@ -54,8 +53,11 @@ fun ActorDetailsScreenContent(
                         )
                     }
                 },
-                getMoviesInfo = detailsScreenViewModel.
-            )
+                getMoviesInfo = {
+                    state.data.movies?.let {
+                        detailsScreenViewModel.initActorMovies(it)
+                    }
+                })
         }
 
         is Result.Error -> {

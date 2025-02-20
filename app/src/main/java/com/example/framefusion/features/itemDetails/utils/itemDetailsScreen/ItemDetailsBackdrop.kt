@@ -20,24 +20,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewModelScope
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.framefusion.R
-import com.example.framefusion.features.itemDetails.DetailsScreenViewModel
 import com.example.framefusion.features.itemDetails.data.local.models.ItemDetails
-import com.example.framefusion.features.person.PersonScreenViewModel
 import com.example.framefusion.utils.composable.IconBack
 import com.example.framefusion.utils.navigation.Navigator
-import kotlinx.coroutines.launch
 
 @Composable
 fun ItemDetailsBackdrop(
     itemDetails: ItemDetails?,
-    detailsScreenViewModel: DetailsScreenViewModel,
     navigator: Navigator,
     paddingValues: PaddingValues,
-    personScreenViewModel: PersonScreenViewModel
+    onClick: () -> Unit
 ) {
     Box(
         Modifier
@@ -95,26 +90,7 @@ fun ItemDetailsBackdrop(
                                 .align(Alignment.BottomEnd)
                                 .offset(y = 16.dp),
                             isLiked = itemDetails?.isFavorite ?: false,
-                            onClick = {
-                                val isFavorite = !(itemDetails?.isFavorite ?: false)
-                                itemDetails.let {
-                                    if (it != null) {
-                                        personScreenViewModel.viewModelScope.launch {
-                                            personScreenViewModel.changeFavoriteStatus(
-                                                it,
-                                                isFavorite
-                                            )
-                                            personScreenViewModel.initData()
-                                        }
-                                        it.id?.let { it1 ->
-                                            detailsScreenViewModel.updateItem(
-                                                it1,
-                                                isFavorite
-                                            )
-                                        }
-                                    }
-                                }
-                            }
+                            onClick = { onClick() }
                         )
                     }
 
@@ -139,29 +115,90 @@ fun ItemDetailsBackdrop(
                 ChangeFavoriteStatusButton(
                     modifier = Modifier,
                     isLiked = itemDetails?.isFavorite ?: false,
-                    onClick = {
-                        val isFavorite = !(itemDetails?.isFavorite ?: false)
-                        itemDetails.let {
-                            personScreenViewModel.viewModelScope.launch {
-                                if (it != null) {
-                                    personScreenViewModel.changeFavoriteStatus(it, isFavorite)
-                                }
-                                personScreenViewModel.initData()
-                            }
-                            detailsScreenViewModel.viewModelScope.launch {
-                                if (it != null) {
-                                    it.id?.let { it1 ->
-                                        detailsScreenViewModel.updateItem(
-                                            it1,
-                                            isFavorite
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    onClick = { onClick() }
                 )
             }
         }
     }
 }
+//
+//@Composable
+//fun ItemDetailsBackdrop(
+//    url: String?
+//) {
+//    Box(
+//        Modifier
+//            .fillMaxWidth()
+//            .fillMaxHeight(0.5f), // Установка фиксированной высоты
+//        contentAlignment = Alignment.TopCenter // Выравнивание содержимого по верхнему краю
+//    ) {
+//        var isLoading by remember { mutableStateOf(false) }
+//        var hasError by remember { mutableStateOf(false) }
+//        var isSuccess by remember { mutableStateOf(false) }
+//
+//        if (isLoading) {
+//            BackDropShimmer()
+//        }
+//
+//        val screenWidth = with(LocalDensity.current) {
+//            LocalConfiguration.current.screenWidthDp.dp.toPx().toInt()
+//        }
+//
+//        url?.let {
+//            AsyncImage(
+//                modifier = Modifier
+//                    .fillMaxWidth(), // Установка фиксированной ширины
+//                model = ImageRequest.Builder(LocalContext.current)
+//                    .data(url)
+//                    .size(screenWidth)
+//                    .build(),
+//                contentDescription = null,
+//                contentScale = ContentScale.FillWidth, // Растягивание изображения
+//                onLoading = {
+//                    isLoading = true
+//                },
+//                onError = {
+//                    isLoading = false
+//                    hasError = true
+//                    isSuccess = false
+//                },
+//                onSuccess = {
+//                    isLoading = false
+//                    hasError = false
+//                    isSuccess = true
+//                },
+//            )
+//
+//            // Градиентный Box с размытие
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .background(
+//                        brush = Brush.verticalGradient(
+//                            colors = listOf(
+//                                Color.Transparent, // Прозрачный цвет
+//                                Color.Black.copy(alpha = 0.7f) // Непрозрачный цвет
+//                            ),
+//                            startY = 0f,
+//                            endY = Float.POSITIVE_INFINITY // Градиент будет растягиваться вниз
+//                        )
+//                    )
+//                    .blur(10.dp) // Применение размытия
+//            )
+//
+//            // Второй Box для контента
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .padding(bottom = 16.dp) // Отступ для контента
+//            ) {
+//                // Здесь можно добавить контент, который будет проявляться
+//                Text(
+//                    text = "Контент",
+//                    modifier = Modifier.align(Alignment.Center),
+//                    color = Color.White,
+//                )
+//            }
+//        }
+//    }
+//}

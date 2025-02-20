@@ -3,11 +3,13 @@ package com.example.framefusion.features.greeting.domain.usecases
 import android.util.Log
 import com.example.framefusion.features.greeting.data.GenresRepository
 import com.example.framefusion.features.greeting.data.local.model.UserGenres
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
 class InsertGenresUseCase @Inject constructor(private val genresRepository: GenresRepository) {
-    suspend fun invoke(uGenres: UserGenres) {
+    suspend fun invoke(uGenres: UserGenres) = withContext(Dispatchers.IO) {
         try {
             genresRepository.insertGenres(uGenres)
         } catch (e: IOException) {

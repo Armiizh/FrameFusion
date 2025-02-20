@@ -18,7 +18,7 @@ import com.example.framefusion.features.home.data.local.models.Genre
 import com.example.framefusion.features.search.utils.ItemDescription
 
 @Composable
-fun Item(
+fun MoviePersonItem(
     id: Int?,
     posterUrl: String?,
     name: String?,

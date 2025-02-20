@@ -6,9 +6,11 @@ import androidx.compose.animation.core.SpringSpec
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -30,12 +32,15 @@ import com.example.framefusion.features.itemDetails.data.local.models.ActorDetai
 import com.example.framefusion.features.itemDetails.data.local.models.ActorsMovie
 import com.example.framefusion.features.itemDetails.utils.actorDetailsScreen.composable.FactInfo
 import com.example.framefusion.features.itemDetails.utils.actorDetailsScreen.composable.SubscribeButton
+import com.example.framefusion.utils.composable.Poster
+import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.state.Result
 import com.example.framefusion.utils.ui.FrameFusionColumn
 
 @Composable
 fun ActorDetailsScreenSuccessContent(
     paddingValues: PaddingValues,
+    navigator: Navigator,
     state: Result.Success<ActorDetails>,
     onFavoriteActor: () -> Unit,
     getMoviesInfo: () -> Unit,
@@ -92,14 +97,15 @@ fun ActorDetailsScreenSuccessContent(
                 }
             }
 
-            MoviesInfo(state.data.movies)
+            MoviesInfo(state.data.movies, navigator)
         }
     }
 }
 
 @Composable
 private fun MoviesInfo(
-    movies: List<ActorsMovie>?
+    movies: List<ActorsMovie>?,
+    navigator: Navigator
 ) {
     Column(Modifier.fillMaxWidth()) {
 
@@ -119,6 +125,19 @@ private fun MoviesInfo(
                 text = "Фильмы ${movies?.size}",
                 modifier = Modifier.padding(vertical = 12.dp)
             )
+        }
+        Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState()),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            movies?.take(10)?.forEach { item ->
+                Poster(item.poster?.url) {
+                    navigator.navigateToItemDetails(item.id)
+                }
+            }
+//            OnHomePersonalItemsScreenButton {
+//                onHomePersonalItemsScreen(type)
+//            }
         }
     }
 }

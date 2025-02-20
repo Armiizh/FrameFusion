@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.framefusion.features.person.data.local.model.FavoriteItem
-import com.example.framefusion.utils.composable.Item
+import com.example.framefusion.utils.composable.MoviePersonItem
 import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
@@ -18,7 +18,7 @@ fun FavoriteMoviesContent(
         modifier = Modifier.fillMaxWidth()
     ) {
         items(favoriteItems) { favoriteItem ->
-            Item(
+            MoviePersonItem(
                 id = favoriteItem.id,
                 posterUrl = favoriteItem.poster?.url,
                 name = favoriteItem.name,

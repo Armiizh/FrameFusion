@@ -1,4 +1,4 @@
-package com.example.framefusion.features.person.utils.personFavoriteMovies.content
+package com.example.framefusion.features.person.utils.personFavoriteActors
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.framefusion.R
 import com.example.framefusion.features.person.PersonScreenViewModel
+import com.example.framefusion.features.person.utils.personFavoriteMovies.content.PersonFavoriteMoviesEmptyContent
 import com.example.framefusion.utils.composable.Title
 import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.state.Result
@@ -19,12 +20,12 @@ import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
 
 @Composable
-fun PersonFavoriteMoviesContent(
+fun PersonFavoriteActorsContent(
     paddingValues: PaddingValues,
     navigator: Navigator,
     personScreenViewModel: PersonScreenViewModel
 ) {
-    val favoritesItem by personScreenViewModel.favoritesMovies.collectAsState()
+    val favoritesItem by personScreenViewModel.favoritesActors.collectAsState()
 
     Background()
 
@@ -47,7 +48,7 @@ fun PersonFavoriteMoviesContent(
                 if (state.data.isEmpty()) {
                     PersonFavoriteMoviesEmptyContent(navigator)
                 } else {
-                    FavoriteMoviesContent(state.data, navigator)
+                    FavoriteActorContent(state.data, navigator)
                 }
             }
         }

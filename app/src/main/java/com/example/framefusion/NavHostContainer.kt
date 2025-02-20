@@ -109,7 +109,7 @@ fun NavHostContainer(
                         PersonFavoriteMoviesScreen(navigator, personScreenViewModel)
                     }
                     composable(NavRoute.PersonFavoriteActors.route) {
-                        PersonFavoriteActorsScreen(navigator)
+                        PersonFavoriteActorsScreen(navigator, personScreenViewModel)
                     }
                     composable(NavRoute.PersonSettings.route) {
                         PersonSettingsScreen(navigator)
