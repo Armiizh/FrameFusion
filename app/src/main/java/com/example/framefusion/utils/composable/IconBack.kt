@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.framefusion.utils.navigation.Navigator
 
 @Composable
@@ -23,6 +24,7 @@ fun IconBack(navigator: Navigator) {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .padding(16.dp)
+            .zIndex(1f)
     ) {
         Canvas(
             modifier = Modifier

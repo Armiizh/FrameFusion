@@ -2,6 +2,7 @@ package com.example.framefusion.features.itemDetails.utils.itemDetailsScreen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,13 +25,18 @@ fun ChangeFavoriteStatusButton(
 ) {
     val isLike = isLiked ?: false
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier.padding(16.dp)
+        modifier = modifier,
+        contentAlignment = Alignment.Center
     ) {
         Canvas(
             modifier = Modifier
-                .size(40.dp)
-                .clickable { onClick() }
+                .size(64.dp)
+                .padding(8.dp)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = onClick
+                )
         ) {
             drawCircle(
                 color = if (isLike) Color.Red else Color.Gray,

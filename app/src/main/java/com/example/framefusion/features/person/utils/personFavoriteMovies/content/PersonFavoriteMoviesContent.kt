@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -26,9 +27,13 @@ fun PersonFavoriteMoviesContent(
 ) {
     val favoritesItem by personScreenViewModel.favoritesMovies.collectAsState()
 
+    LaunchedEffect(Unit) {
+        personScreenViewModel.init()
+    }
+
     Background()
 
-    FrameFusionColumn(paddingValues) {
+    FrameFusionColumn(paddingValues, withoutScroll = true) {
 
         when (val state = favoritesItem) {
             is Result.Loading -> {
@@ -36,7 +41,7 @@ fun PersonFavoriteMoviesContent(
             }
 
             is Result.Error -> {
-                Text(text = "Loading")
+                Text(text = "Error")
             }
 
             is Result.Success -> {

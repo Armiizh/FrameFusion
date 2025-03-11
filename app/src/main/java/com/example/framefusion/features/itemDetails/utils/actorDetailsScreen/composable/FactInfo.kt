@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -24,12 +25,12 @@ import com.example.framefusion.features.itemDetails.data.local.models.Facts
 
 @Composable
 fun FactInfo(
-    facts: List<Facts>?,
-    isExpanded: Boolean,
-    onExpandChange: () -> Unit
+    facts: List<Facts>?
 ) {
     val listOfFacts = facts?.map { it.value }
     val maxLines = 4
+
+    var isExpanded by remember { mutableStateOf(false) }
     var linesCount by remember { mutableIntStateOf(maxLines) }
 
     if (!listOfFacts.isNullOrEmpty()) {
@@ -40,7 +41,7 @@ fun FactInfo(
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
-                    onClick = onExpandChange
+                    onClick = { isExpanded = !isExpanded }
                 )
         ) {
             val textBrush = if (isExpanded || linesCount < maxLines) {

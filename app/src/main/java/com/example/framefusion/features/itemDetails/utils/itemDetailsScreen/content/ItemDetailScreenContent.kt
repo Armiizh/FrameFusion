@@ -12,47 +12,6 @@ import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.state.Result
 import com.example.framefusion.utils.ui.ErrorScreen
 
-//@Composable
-//fun ItemDetailsScreenContent(
-//    paddingValues: PaddingValues,
-//    navigator: Navigator,
-//    itemId: Int,
-//    personScreenViewModel: PersonScreenViewModel,
-//    itemDetailsScreenViewModel: DetailsScreenViewModel
-//) {
-//
-//    val itemDetailsState by itemDetailsScreenViewModel.itemDetailsState.collectAsState()
-//
-//    LaunchedEffect(Unit) {
-//        itemDetailsScreenViewModel.initItemDetails(itemId)
-//    }
-//
-//    when (val state = itemDetailsState) {
-//
-//        is Result.Loading -> {
-//            DetailsScreenShimmer()
-//        }
-//
-//        is Result.Success -> {
-//            ItemDetailsScreenSuccessContent(
-//                state,
-//                navigator,
-//                paddingValues,
-//                itemDetailsScreenViewModel,
-//                personScreenViewModel
-//            )
-//        }
-//
-//        is Result.Error -> {
-//            ErrorScreen(
-//                paddingValues,
-//                state.error
-//            ) {
-//                itemDetailsScreenViewModel.initItemDetails(itemId)
-//            }
-//        }
-//    }
-//}
 @Composable
 fun ItemDetailsScreenContent(
     paddingValues: PaddingValues,
@@ -76,9 +35,9 @@ fun ItemDetailsScreenContent(
 
         is Result.Success -> {
             ItemDetailsScreenSuccessContent(
-                state,
-                navigator,
                 paddingValues,
+                state.data,
+                navigator,
                 itemDetailsScreenViewModel,
                 personScreenViewModel
             )

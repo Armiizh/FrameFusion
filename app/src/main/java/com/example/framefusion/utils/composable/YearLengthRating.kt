@@ -1,13 +1,11 @@
 package com.example.framefusion.utils.composable
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import com.example.framefusion.features.itemDetails.utils.converters.minutesToHoursAndMinutes
 import com.example.framefusion.features.itemDetails.utils.converters.ratingColor
@@ -23,8 +21,7 @@ fun YearLengthRating(
     rating: Double?
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+        modifier = Modifier.fillMaxWidth()
     ) {
         val yearText =
             if (year != null && year != "null" && year != "") {
@@ -76,8 +73,8 @@ fun YearLengthRating(
                 displayText.split(" * ").filter { it != ratingText }.joinToString(" * ")
             Text(
                 text = "$otherText * ",
-                modifier = Modifier.padding(vertical = 8.dp),
-                fontSize = 16.sp
+                fontSize = 16.sp,
+                color = Color.White.copy(.5f)
             )
         }
 
@@ -85,7 +82,6 @@ fun YearLengthRating(
             Text(
                 text = ratingText,
                 color = ratingColor(rating),
-                modifier = Modifier.padding(vertical = 8.dp),
                 fontSize = 16.sp
             )
         }

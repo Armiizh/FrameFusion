@@ -32,7 +32,7 @@ fun <T> HomeTop10PersonalContent(
         }
 
         is Result.Error -> {
-            ErrorView(result.error.getLocalizedMessage()) { stableOnRetry() }
+            ErrorView(result.error) { stableOnRetry() }
         }
 
         is Result.Success -> {

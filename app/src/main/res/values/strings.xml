@@ -31,6 +31,7 @@
     <string name="Main_screen">главном</string>
     <string name="Search_screen">поиска</string>
     <string name="Your_favorite_items">Ваши любимые фильмы и сериалы</string>
+    <string name="Your_favorite_actors">Ваши любимые актеры</string>
     <string name="Backdrop_error_message">Загрузка фона закончилась ошибкой</string>
     <string name="Full_cast">Полный актерский состав здесь</string>
     <string name="Tv_series">Сериал</string>

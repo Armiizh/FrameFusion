@@ -12,7 +12,7 @@ data class ItemDetails(
     @ColumnInfo("id")
     val id: Int? = 0,
     @ColumnInfo("isFavorite")
-    val isFavorite: Boolean? = false,
+    val isFavorite: Boolean = false,
     @ColumnInfo("type")
     val type: String? = "",
     @ColumnInfo("name")

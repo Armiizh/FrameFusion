@@ -54,6 +54,11 @@ fun ErrorScreen(
                 textAlign = TextAlign.Center
             )
 
+            Text(
+                text = error.message,
+                textAlign = TextAlign.Center
+            )
+
             Spacer(modifier = Modifier.height(8.dp))
 
             // Детальное описание ошибки

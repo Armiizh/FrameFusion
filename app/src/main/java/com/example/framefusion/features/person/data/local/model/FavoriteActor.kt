@@ -14,6 +14,12 @@ data class FavoriteActor(
     val isFavorite: Boolean = false,
     @ColumnInfo("name")
     val name: String?,
+    @ColumnInfo("age")
+    val age: Int? = null,
+    @ColumnInfo("birthday")
+    val birthday: String? = null,
+    @ColumnInfo("countAwards")
+    val countAwards: Int? = null,
     @ColumnInfo("photo")
     val photo: String?,
     @ColumnInfo("profession")

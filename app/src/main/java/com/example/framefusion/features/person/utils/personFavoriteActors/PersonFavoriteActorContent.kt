@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,9 +28,12 @@ fun PersonFavoriteActorsContent(
 ) {
     val favoritesItem by personScreenViewModel.favoritesActors.collectAsState()
 
-    Background()
+    LaunchedEffect(Unit) {
+        personScreenViewModel.init()
+    }
 
-    FrameFusionColumn(paddingValues) {
+    Background()
+    FrameFusionColumn(paddingValues, withoutScroll = true) {
 
         when (val state = favoritesItem) {
             is Result.Loading -> {
@@ -37,14 +41,12 @@ fun PersonFavoriteActorsContent(
             }
 
             is Result.Error -> {
-                Text(text = "Loading")
+                Text(text = "Error")
             }
 
             is Result.Success -> {
-                Title(stringResource(R.string.Your_favorite_items))
-
+                Title(stringResource(R.string.Your_favorite_actors))
                 Spacer(Modifier.height(12.dp))
-
                 if (state.data.isEmpty()) {
                     PersonFavoriteMoviesEmptyContent(navigator)
                 } else {

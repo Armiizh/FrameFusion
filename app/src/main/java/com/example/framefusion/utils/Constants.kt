@@ -121,6 +121,18 @@ object Constants {
                 Color(0xff09faca)
             )
         )
+
+        val transparentColors =
+            listOf(Color.White.copy(.2f), Color.White.copy(.2f))
+
+
+        val gradientColors = listOf(
+            Color(0xFFBD2300),
+            Color(0xFFE44500),
+            Color(0xFFF47C00),
+            Color(0xFFFFAC69),
+            Color(0xFFFFE4D4),
+        )
     }
 
     val BottomNavItems = listOf(

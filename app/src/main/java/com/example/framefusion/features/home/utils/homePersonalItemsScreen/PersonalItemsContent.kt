@@ -92,7 +92,7 @@ fun PersonalItemsContent(
         is Result.Error -> {
             // Обработка ошибки
             ErrorView(
-                message = result.error.getLocalizedMessage(),
+                error = result.error,
                 onRetry = {
                     viewModel.viewModelScope.launch {
                         viewModel.initHomePersonalItems(type)

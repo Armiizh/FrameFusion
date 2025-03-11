@@ -39,7 +39,7 @@ class PersonScreenViewModel @Inject constructor(
     val favoritesMovies: StateFlow<Result<List<FavoriteItem>>> = _favoritesMovies
     val favoritesActors: StateFlow<Result<List<FavoriteActor>>> = _favoritesActors
 
-    init {
+    fun init() {
         viewModelScope.launch {
             initData()
         }

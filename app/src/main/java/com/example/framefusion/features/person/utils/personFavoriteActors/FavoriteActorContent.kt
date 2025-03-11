@@ -19,8 +19,10 @@ fun FavoriteActorContent(
         items(favoriteItems) { favoriteItem ->
             ActorPersonItem(
                 id = favoriteItem.id,
-                isFavorite = favoriteItem.isFavorite,
                 name = favoriteItem.name,
+                age = favoriteItem.age,
+                birthday = favoriteItem.birthday,
+                countAwards = favoriteItem.countAwards,
                 photo = favoriteItem.photo,
                 profession = favoriteItem.profession
             ) { navigator.navigateToActorDetails(favoriteItem.id) }

@@ -14,7 +14,7 @@ class GenresRepository @Inject constructor(
         userGenresDao.getGenres()
     }
 
-    suspend fun insertGenres(genres: UserGenres): String = withContext(Dispatchers.IO) {
+    suspend fun insertGenres(genres: UserGenres) = withContext(Dispatchers.IO) {
         userGenresDao.insertGenres(genres)
     }
 }
