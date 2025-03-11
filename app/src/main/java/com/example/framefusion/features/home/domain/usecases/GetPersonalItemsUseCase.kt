@@ -1,6 +1,6 @@
 package com.example.framefusion.features.home.domain.usecases
 
-import com.example.framefusion.features.greeting.data.GenresRepository
+import com.example.framefusion.features.greeting.data.GenresRepositoryImpl
 import com.example.framefusion.features.home.data.HomeServiceRepository
 import com.example.framefusion.features.home.data.PersonalItemsRepository
 import com.example.framefusion.features.home.data.local.models.PersonalItems
@@ -18,14 +18,14 @@ import javax.inject.Inject
 
 class GetPersonalItemsUseCase @Inject constructor(
     private val homeServiceRepository: HomeServiceRepository,
-    private val genresRepository: GenresRepository,
+    private val genresRepositoryImpl: GenresRepositoryImpl,
     private val personalItemsRepository: PersonalItemsRepository
 ) {
     suspend fun invoke(type: String?): Result<List<PersonalItems>> = withContext(Dispatchers.IO) {
 
         try {
             // Запрос выбранных пользователем жанров
-            val genresString = genresRepository.getGenres().split(",")
+            val genresString = genresRepositoryImpl.getGenres().split(",")
 
             // Выбор типа
             val list = when (type) {

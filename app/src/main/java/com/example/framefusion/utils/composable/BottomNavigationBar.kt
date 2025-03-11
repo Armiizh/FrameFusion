@@ -1,9 +1,9 @@
 package com.example.framefusion.utils.composable
 
-import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.colorResource
@@ -29,7 +29,7 @@ fun BottomNavigationBar(
             } else {
                 MaterialTheme.colorScheme.primaryContainer
             }
-            BottomNavigationItem(
+            NavigationBarItem(
                 selected = currentRoute == navItem.route,
                 onClick = {
                     navController.navigate(navItem.route)
