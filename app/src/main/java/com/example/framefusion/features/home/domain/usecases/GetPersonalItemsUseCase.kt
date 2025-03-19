@@ -1,6 +1,6 @@
 package com.example.framefusion.features.home.domain.usecases
 
-import com.example.framefusion.features.greeting.data.GenresRepositoryImpl
+import com.example.framefusion.features.greeting.data.repository.GenresRepositoryImpl
 import com.example.framefusion.features.home.data.HomeServiceRepository
 import com.example.framefusion.features.home.data.PersonalItemsRepository
 import com.example.framefusion.features.home.data.local.models.PersonalItems

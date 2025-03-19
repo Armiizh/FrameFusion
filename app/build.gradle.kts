@@ -56,7 +56,6 @@ android {
     testOptions {
         unitTests.all {
             it.useJUnitPlatform()
-            it.systemProperty("junit.jupiter.extensions.autodetection.enabled", "true")
         }
     }
 }

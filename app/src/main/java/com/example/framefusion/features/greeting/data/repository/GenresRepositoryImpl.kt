@@ -1,4 +1,4 @@
-package com.example.framefusion.features.greeting.data
+package com.example.framefusion.features.greeting.data.repository
 
 import com.example.framefusion.features.greeting.data.local.dao.UserGenresDao
 import com.example.framefusion.features.greeting.data.local.model.UserGenres
