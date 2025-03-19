@@ -1,6 +1,6 @@
 package com.example.framefusion.features.home.domain.usecases
 
-import com.example.framefusion.features.greeting.data.GenresRepository
+import com.example.framefusion.features.greeting.data.repository.GenresRepositoryImpl
 import com.example.framefusion.features.home.data.HomeServiceRepository
 import com.example.framefusion.features.home.data.Top10PersonalMovieRepository
 import com.example.framefusion.features.home.data.local.models.Top10PersonalMovie
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class Get10PersonalMoviesUseCase @Inject constructor(
     private val homeServiceRepository: HomeServiceRepository,
-    private val genresRepository: GenresRepository,
+    private val genresRepositoryImpl: GenresRepositoryImpl,
     private val top10PersonalMovieRepository: Top10PersonalMovieRepository
 ) {
     suspend fun invoke(forceRefresh: Boolean = false): Result<List<Top10PersonalMovie>> =
@@ -34,7 +34,7 @@ class Get10PersonalMoviesUseCase @Inject constructor(
                 }
 
                 // Запрос выбранных пользователем жанров
-                val genresString = genresRepository.getGenres().lowercase().split(",")
+                val genresString = genresRepositoryImpl.getGenres().lowercase().split(",")
 
                 // Запрос на предоставление топ10 фильмов
                 val response = homeServiceRepository.get10PersonalMovie(

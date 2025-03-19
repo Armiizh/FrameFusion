@@ -5,9 +5,16 @@ import com.example.framefusion.features.itemDetails.data.local.models.ActorDetai
 fun ActorDetails.toFavoriteActor(): FavoriteActor {
     return FavoriteActor(
         id = this.id,
-        isFavorite = this.isFavorite,
         name = this.name,
+        age = this.age,
+        birthday = this.birthday,
+        countAwards = this.countAwards,
         photo = this.photo,
         profession = this.profession
     )
 }
+
+
+/**
+ * Проследить где не сохранются актеры в любимые
+ */

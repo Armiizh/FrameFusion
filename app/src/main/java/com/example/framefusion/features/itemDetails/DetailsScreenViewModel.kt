@@ -62,13 +62,14 @@ class DetailsScreenViewModel @Inject constructor(
 
     fun initActorMovies(movies: List<ActorsMovie>) {
         viewModelScope.launch {
-
+            initActorMoviesInfoData(movies)
         }
     }
 
     private suspend fun initActorMoviesInfoData(movies: List<ActorsMovie>) = coroutineScope {
-        val fullMoviesInfo = async { getFullActorMoviesInfoUseCase.invoke() }
-        _actorDetailsState.value = fullMoviesInfo.await()
+        val updatedActorDetailsWithFullMoviesInfo =
+            async { getFullActorMoviesInfoUseCase.invoke(movies) }
+        _actorDetailsState.value = updatedActorDetailsWithFullMoviesInfo.await()
     }
 
     private suspend fun initItemDetailsData(itemId: Int) =

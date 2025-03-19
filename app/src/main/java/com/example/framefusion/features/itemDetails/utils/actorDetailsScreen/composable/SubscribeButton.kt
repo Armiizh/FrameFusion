@@ -26,20 +26,14 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.framefusion.utils.Constants.Colors.gradientColors
+import com.example.framefusion.utils.Constants.Colors.transparentColors
 
 @Composable
 fun SubscribeButton(
     isFavorite: Boolean,
     changeSubscribe: () -> Unit
 ) {
-    val gradientColors = listOf(
-        Color(0xFFBD2300),
-        Color(0xFFE44500),
-        Color(0xFFF47C00),
-        Color(0xFFFFAC69),
-        Color(0xFFFFE4D4),
-    )
-
     val progress by animateFloatAsState(
         targetValue = if (isFavorite) 1f else 0f,
         animationSpec = tween(1000, easing = FastOutSlowInEasing), label = ""
@@ -69,7 +63,7 @@ fun SubscribeButton(
                 endX = buttonSize.width.toFloat() * progress
             )
         } else {
-            Brush.linearGradient(colors = listOf(Color.Transparent, Color.Transparent))
+            Brush.horizontalGradient(colors = transparentColors)
         }
     }
 

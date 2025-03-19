@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.framefusion.features.search.SearchItemViewModel
 import com.example.framefusion.features.search.data.local.models.SearchItem
-import com.example.framefusion.utils.composable.Item
+import com.example.framefusion.utils.composable.MoviePersonItem
 import com.example.framefusion.utils.state.Result
 
 @Composable
@@ -30,7 +30,7 @@ fun SearchContent(
             val items = (searchItems as Result.Success<List<SearchItem>>).data
             LazyColumn {
                 items(items) { searchItem ->
-                    Item(
+                    MoviePersonItem(
                         id = searchItem.id,
                         posterUrl = searchItem.poster?.url,
                         name = searchItem.name,

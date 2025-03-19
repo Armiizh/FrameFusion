@@ -35,9 +35,9 @@ fun ItemDetailsScreenContent(
 
         is Result.Success -> {
             ItemDetailsScreenSuccessContent(
-                state,
-                navigator,
                 paddingValues,
+                state.data,
+                navigator,
                 itemDetailsScreenViewModel,
                 personScreenViewModel
             )

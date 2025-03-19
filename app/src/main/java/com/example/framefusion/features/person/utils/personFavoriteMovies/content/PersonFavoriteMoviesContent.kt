@@ -3,7 +3,9 @@ package com.example.framefusion.features.person.utils.personFavoriteMovies.conte
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -13,6 +15,7 @@ import com.example.framefusion.R
 import com.example.framefusion.features.person.PersonScreenViewModel
 import com.example.framefusion.utils.composable.Title
 import com.example.framefusion.utils.navigation.Navigator
+import com.example.framefusion.utils.state.Result
 import com.example.framefusion.utils.ui.Background
 import com.example.framefusion.utils.ui.FrameFusionColumn
 
@@ -22,20 +25,36 @@ fun PersonFavoriteMoviesContent(
     navigator: Navigator,
     personScreenViewModel: PersonScreenViewModel
 ) {
-    val favoritesItem by personScreenViewModel.favorites.collectAsState()
+    val favoritesItem by personScreenViewModel.favoritesMovies.collectAsState()
+
+    LaunchedEffect(Unit) {
+        personScreenViewModel.init()
+    }
 
     Background()
 
-    FrameFusionColumn(paddingValues) {
+    FrameFusionColumn(paddingValues, withoutScroll = true) {
 
-        Title(stringResource(R.string.Your_favorite_items))
+        when (val state = favoritesItem) {
+            is Result.Loading -> {
+                Text(text = "Loading")
+            }
 
-        Spacer(Modifier.height(12.dp))
+            is Result.Error -> {
+                Text(text = "Error")
+            }
 
-        if (favoritesItem.isEmpty()) {
-            PersonFavoriteMoviesEmptyContent(navigator)
-        } else {
-            FavoriteMoviesContent(favoritesItem, navigator)
+            is Result.Success -> {
+                Title(stringResource(R.string.Your_favorite_items))
+
+                Spacer(Modifier.height(12.dp))
+
+                if (state.data.isEmpty()) {
+                    PersonFavoriteMoviesEmptyContent(navigator)
+                } else {
+                    FavoriteMoviesContent(state.data, navigator)
+                }
+            }
         }
     }
 }

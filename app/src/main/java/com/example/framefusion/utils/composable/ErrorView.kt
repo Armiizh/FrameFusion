@@ -18,10 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.framefusion.R
+import com.example.framefusion.utils.state.AppError
 
 @Composable
 fun ErrorView(
-    message: String,
+    error: AppError,
     onRetry: () -> Unit
 ) {
     Column(
@@ -37,7 +38,11 @@ fun ErrorView(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = message,
+            text = error.getLocalizedMessage(),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = error.message,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(8.dp))

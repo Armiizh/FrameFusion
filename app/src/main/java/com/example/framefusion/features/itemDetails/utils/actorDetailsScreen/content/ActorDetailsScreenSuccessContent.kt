@@ -11,16 +11,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,12 +25,14 @@ import com.example.framefusion.features.itemDetails.data.local.models.ActorDetai
 import com.example.framefusion.features.itemDetails.data.local.models.ActorsMovie
 import com.example.framefusion.features.itemDetails.utils.actorDetailsScreen.composable.FactInfo
 import com.example.framefusion.features.itemDetails.utils.actorDetailsScreen.composable.SubscribeButton
+import com.example.framefusion.utils.navigation.Navigator
 import com.example.framefusion.utils.state.Result
 import com.example.framefusion.utils.ui.FrameFusionColumn
 
 @Composable
 fun ActorDetailsScreenSuccessContent(
     paddingValues: PaddingValues,
+    navigator: Navigator,
     state: Result.Success<ActorDetails>,
     onFavoriteActor: () -> Unit,
     getMoviesInfo: () -> Unit,
@@ -47,22 +44,26 @@ fun ActorDetailsScreenSuccessContent(
     ) {
 
         LaunchedEffect(Unit) {
-            getMoviesInfo()
+//            getMoviesInfo()
         }
 
         Column(
             Modifier
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
         ) {
-            var isExpanded by remember { mutableStateOf(false) }
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(24.dp))
                     .background(Color.Magenta.copy(alpha = .1f))
-                    .animateContentSize(remember { SpringSpec(stiffness = Spring.StiffnessLow) })
+                    .animateContentSize(
+                        remember {
+                            SpringSpec(
+                                dampingRatio = Spring.DampingRatioLowBouncy,
+                                stiffness = Spring.StiffnessLow
+                            )
+                        }
+                    )
 
             ) {
                 Column(Modifier.fillMaxWidth()) {
@@ -81,10 +82,7 @@ fun ActorDetailsScreenSuccessContent(
                         state.data.profession
                     )
 
-                    FactInfo(
-                        state.data.facts,
-                        isExpanded
-                    ) { isExpanded = !isExpanded }
+                    FactInfo(state.data.facts)
 
                     SubscribeButton(
                         state.data.isFavorite
@@ -92,14 +90,15 @@ fun ActorDetailsScreenSuccessContent(
                 }
             }
 
-            MoviesInfo(state.data.movies)
+            MoviesInfo(state.data.movies, navigator)
         }
     }
 }
 
 @Composable
 private fun MoviesInfo(
-    movies: List<ActorsMovie>?
+    movies: List<ActorsMovie>?,
+    navigator: Navigator
 ) {
     Column(Modifier.fillMaxWidth()) {
 
@@ -120,5 +119,17 @@ private fun MoviesInfo(
                 modifier = Modifier.padding(vertical = 12.dp)
             )
         }
+//        Row(
+//            modifier = Modifier.horizontalScroll(rememberScrollState()),
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            movies?.take(10)?.forEach { item ->
+//                Poster(item.poster?.url) {
+//                    navigator.navigateToItemDetails(item.id)
+//                }
+//            }
+//            OnHomePersonalItemsScreenButton {
+//                onHomePersonalItemsScreen(type)
+//            }
     }
 }

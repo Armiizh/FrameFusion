@@ -14,15 +14,13 @@ fun ItemDetailsScreen(
     personScreenViewModel: PersonScreenViewModel,
     itemDetailsScreenViewModel: DetailsScreenViewModel
 ) {
-    Scaffold(
-        content = { paddingValues ->
-            ItemDetailsScreenContent(
-                paddingValues,
-                navigator,
-                itemId,
-                personScreenViewModel,
-                itemDetailsScreenViewModel
-            )
-        }
-    )
+    Scaffold { paddingValues ->
+        ItemDetailsScreenContent(
+            paddingValues,
+            navigator,
+            itemId,
+            personScreenViewModel,
+            itemDetailsScreenViewModel
+        )
+    }
 }

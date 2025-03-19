@@ -3,13 +3,12 @@ package com.example.framefusion.features.person.data
 import com.example.framefusion.features.person.data.local.dao.FavoriteItemDao
 import com.example.framefusion.features.person.data.local.model.FavoriteItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FavoriteItemDatabaseRepository @Inject constructor(private val favoriteItemDao: FavoriteItemDao) {
 
-    suspend fun getFavoriteItem(): Flow<List<FavoriteItem>> = withContext(Dispatchers.IO) {
+    suspend fun getFavoriteItem(): List<FavoriteItem> = withContext(Dispatchers.IO) {
         favoriteItemDao.getFavoriteItem()
     }
 

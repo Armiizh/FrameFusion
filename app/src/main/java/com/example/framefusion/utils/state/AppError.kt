@@ -1,6 +1,7 @@
 package com.example.framefusion.utils.state
 
 sealed class AppError(open val message: String) {
+
     data class NetworkError(
         override val message: String,
         val code: Int? = null

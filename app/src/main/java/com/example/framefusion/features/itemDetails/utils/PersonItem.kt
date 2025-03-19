@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -65,15 +66,15 @@ fun PersonItem(person: Person, navigator: Navigator) {
                 .padding(start = 8.dp),
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = fio[0])
+            Text(text = fio[0], color = Color.White.copy(.5f))
             if (fio.size > 1) {
-                Text(text = fio[1])
+                Text(text = fio[1], color = Color.White.copy(.5f))
             }
             if (fio.size > 2) {
-                Text(text = fio[2])
+                Text(text = fio[2], color = Color.White.copy(.5f))
             }
             if (fio.size > 3) {
-                Text(text = fio[3])
+                Text(text = fio[3], color = Color.White.copy(.5f))
             }
         }
     }
