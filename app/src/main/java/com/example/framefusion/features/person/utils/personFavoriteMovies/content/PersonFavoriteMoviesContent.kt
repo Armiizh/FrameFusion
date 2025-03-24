@@ -50,7 +50,7 @@ fun PersonFavoriteMoviesContent(
                 Spacer(Modifier.height(12.dp))
 
                 if (state.data.isEmpty()) {
-                    PersonFavoriteMoviesEmptyContent(navigator)
+                    PersonFavoriteMoviesEmptyContent(true, navigator)
                 } else {
                     FavoriteMoviesContent(state.data, navigator)
                 }

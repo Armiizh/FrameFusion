@@ -18,8 +18,5 @@ class ActorDetailsDatabaseRepository @Inject constructor(private val actorDetail
         actorDetailsDao.insertActorDetails(actorDetails)
     }
 
-    suspend fun updateActorLikedStatus(actorId: Int, isFavorite: Boolean) =
-        withContext(Dispatchers.IO) {
-            actorDetailsDao.updateActorLikedStatus(actorId, isFavorite)
-        }
+    fun getActorDetailsById(actorId: Int): ActorDetails = actorDetailsDao.getActorById(actorId)
 }

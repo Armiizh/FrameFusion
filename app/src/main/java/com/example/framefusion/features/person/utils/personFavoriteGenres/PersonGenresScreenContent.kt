@@ -24,7 +24,7 @@ fun PersonGenresScreenContent(
 ) {
     Background()
 
-    FrameFusionColumn(paddingValues) {
+    FrameFusionColumn(paddingValues, withoutScroll = true) {
 
         Title(
             title = stringResource(R.string.Choose_yout_favorite_genres),

@@ -7,7 +7,6 @@ import com.example.framefusion.features.person.data.local.model.toFavoriteActor
 import com.example.framefusion.utils.state.AppError
 import com.example.framefusion.utils.state.Result
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -22,8 +21,8 @@ class UpdateActorDetailsUseCase @Inject constructor(
                 if (actorId == null) {
                     Result.Error(AppError.ValidationError("Неверный ID актера"))
                 } else {
-                    actorDetailsDatabaseRepository.updateActorLikedStatus(actorId, isLiked)
-                    val updatedActor = actorDetailsDatabaseRepository.getActorDetails().first()
+                    val updatedActor = actorDetailsDatabaseRepository.getActorDetailsById(actorId)
+                    actorDetailsDatabaseRepository.updateActorDetails(updatedActor.copy(isFavorite = isLiked))
                     favoriteActorDatabaseRepository.insertFavoriteItem(updatedActor.toFavoriteActor())
                     Result.Success(updatedActor)
                 }

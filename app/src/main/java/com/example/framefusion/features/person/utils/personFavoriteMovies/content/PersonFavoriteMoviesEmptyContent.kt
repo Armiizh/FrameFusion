@@ -20,8 +20,15 @@ import com.example.framefusion.utils.navigation.Navigator
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PersonFavoriteMoviesEmptyContent(
+    isMovie: Boolean,
     navigator: Navigator
 ) {
+    val type = if (isMovie) {
+        "фильмы и сериалы"
+    } else {
+        "актеров"
+    }
+
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -32,7 +39,7 @@ fun PersonFavoriteMoviesEmptyContent(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = stringResource(R.string.Add_item_can))
+            Text(text = "Добавить $type можно на ")
             Text(
                 modifier = Modifier.clickable { navigator.navigateToHome() },
                 textDecoration = TextDecoration.Underline,

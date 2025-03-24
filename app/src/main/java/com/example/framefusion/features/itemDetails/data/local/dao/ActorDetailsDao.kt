@@ -14,6 +14,9 @@ interface ActorDetailsDao {
     @Query("SELECT * FROM actor_details")
     fun getActorDetails(): Flow<ActorDetails>
 
+    @Query("SELECT * FROM actor_details WHERE id = :actorId")
+    fun getActorById(actorId: Int): ActorDetails
+
     @Query("DELETE FROM actor_details")
     suspend fun deleteActorDetails()
 

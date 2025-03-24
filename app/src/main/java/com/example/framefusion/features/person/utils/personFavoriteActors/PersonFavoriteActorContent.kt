@@ -48,7 +48,7 @@ fun PersonFavoriteActorsContent(
                 Title(stringResource(R.string.Your_favorite_actors))
                 Spacer(Modifier.height(12.dp))
                 if (state.data.isEmpty()) {
-                    PersonFavoriteMoviesEmptyContent(navigator)
+                    PersonFavoriteMoviesEmptyContent(false, navigator)
                 } else {
                     FavoriteActorContent(state.data, navigator)
                 }

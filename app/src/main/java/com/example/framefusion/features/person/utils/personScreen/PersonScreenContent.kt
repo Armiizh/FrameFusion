@@ -16,7 +16,7 @@ fun PersonScreenContent(
     personScreenViewModel: PersonScreenViewModel
 ) {
     Background()
-    FrameFusionColumn(paddingValues) {
+    FrameFusionColumn(paddingValues, withoutScroll = true) {
 
         MenuItem(stringResource(R.string.PersonMenuItem1)) {
             personScreenViewModel.getPersonGenres()
