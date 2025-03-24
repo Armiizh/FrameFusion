@@ -30,7 +30,7 @@
     <img src="SearchScreen.png" alt="Экран Поиск с топ-10" width="20%" />
     <img src="SearchScreen2.png" alt="Экран Поиск" width="20%" />
     <img src="Profile.png" alt="Профиль" width="20%" />
-    <img src="Profile1.png" alt="Выбор жанров (больше)" width="20%" />
+    <img src="ProfileScreen1.png" alt="Выбор жанров (больше)" width="20%" />
     <img src="Profile2.png" alt="Просмотр избранных фильмов" width="20%" />
 </div>
 
