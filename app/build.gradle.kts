@@ -1,18 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.jetbrains.kotlin.kapt)
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.room)
 }
 
 android {
     namespace = "com.example.framefusion"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.framefusion"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -44,7 +46,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion =
+            libs.versions.composeBom.get() // Используйте версию из toml
     }
 
     packaging {
@@ -57,6 +60,11 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
+    }
+
+    val schemas = "$projectDir/src/test/assets"
+    room {
+        schemaDirectory(schemas)
     }
 }
 
@@ -84,12 +92,12 @@ dependencies {
     // Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.sqlite)
+    ksp(libs.androidx.room.compiler)
 
-    // DI
+    // Dependency Injection
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Utilities
@@ -97,8 +105,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.coil.compose)
     implementation(libs.compose.shimmer)
+
+    // Debugging
     debugImplementation(libs.library)
-    releaseImplementation(libs.library.no.op)
+    releaseImplementation(libs.libraryNoOp)
 
     // Testing
     testImplementation(libs.junit.jupiter)
@@ -111,11 +121,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     testImplementation(libs.kotlinx.coroutines.test)
-}
-
-kapt {
-    correctErrorTypes = true
-    arguments {
-        arg("room.schemaLocation", "false")
-    }
 }
