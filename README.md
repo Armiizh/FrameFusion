@@ -29,9 +29,9 @@
     <img src="ActorDetailsScreen.png" alt="Детальная информация об актере" width="20%" />
     <img src="SearchScreen.png" alt="Экран Поиск с топ-10" width="20%" />
     <img src="SearchScreen2.png" alt="Экран Поиск" width="20%" />
-    <img src="Profile.png" alt="Профиль" width="30%" />
-    <img src="Profile1.png" alt="Выбор жанров (больше)" width="30%" />
-    <img src="Profile2.png" alt="Просмотр избранных фильмов" width="30%" />
+    <img src="Profile.png" alt="Профиль" width="20%" />
+    <img src="Profile1.png" alt="Выбор жанров (больше)" width="20%" />
+    <img src="Profile2.png" alt="Просмотр избранных фильмов" width="20%" />
 </div>
 
 <details>
