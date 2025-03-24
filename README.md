@@ -21,7 +21,7 @@
 
 ## Скриншоты
 
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div class="container" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
     <img src="OnboardingScreen.png" alt="Онбординг" width="20%" />
     <img src="OnboardingScreen2.png" alt="Первичный выбор жанров" width="20%" />
     <img src="HomeScreen.png" alt="Экран Домой" width="20%" />
@@ -29,7 +29,7 @@
     <img src="ActorDetailsScreen.png" alt="Детальная информация об актере" width="20%" />
     
 </div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div class="container" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
     <img src="SearchScreen.png" alt="Экран Поиск с топ-10" width="20%" />
     <img src="SearchScreen2.png" alt="Экран Поиск" width="20%" />
     <img src="Profile.png" alt="Профиль" width="20%" />
