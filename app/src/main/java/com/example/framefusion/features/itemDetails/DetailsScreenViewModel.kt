@@ -57,6 +57,7 @@ class DetailsScreenViewModel @Inject constructor(
     fun updateActor(actorId: Int, isLiked: Boolean) {
         viewModelScope.launch {
             updateActorDetails(actorId, isLiked)
+            initActorDetailsData(actorId)
         }
     }
 

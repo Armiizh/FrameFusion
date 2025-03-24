@@ -1,5 +1,6 @@
 package com.example.framefusion.features.person
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.framefusion.features.greeting.data.local.model.UserGenres
@@ -42,6 +43,7 @@ class PersonScreenViewModel @Inject constructor(
     fun init() {
         viewModelScope.launch {
             initData()
+            Log.d("TAG", "favoritesActors - ${favoritesActors.value}")
         }
     }
 

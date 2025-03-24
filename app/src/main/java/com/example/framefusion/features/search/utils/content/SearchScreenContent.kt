@@ -32,7 +32,7 @@ fun SearchScreenContent(
         onRefresh = { searchItemViewModel.onRetry() },
         state = pullToRefreshState
     ) {
-        FrameFusionColumn(paddingValues) {
+        FrameFusionColumn(paddingValues, withoutScroll = true) {
 
             var search by remember { mutableStateOf("") }
 
