@@ -22,19 +22,19 @@
 ## Скриншоты
 
 <div class="container" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
-    <img src="OnboardingScreen.png" alt="Онбординг" width="20%" />
-    <img src="OnboardingScreen2.png" alt="Первичный выбор жанров" width="20%" />
-    <img src="HomeScreen.png" alt="Экран Домой" width="20%" />
-    <img src="ItemDetails.png" alt="Детальная информация о фильме/сериале" width="20%" />
-    <img src="ActorDetailsScreen.png" alt="Детальная информация об актере" width="20%" />
+    <img src="OnboardingScreen.png" alt="Онбординг" width="18%" />
+    <img src="OnboardingScreen2.png" alt="Первичный выбор жанров" width="18%" />
+    <img src="HomeScreen.png" alt="Экран Домой" width="18%" />
+    <img src="ItemDetails.png" alt="Детальная информация о фильме/сериале" width="18%" />
+    <img src="ActorDetailsScreen.png" alt="Детальная информация об актере" width="18%" />
     
 </div>
 <div class="container" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
-    <img src="SearchScreen.png" alt="Экран Поиск с топ-10" width="20%" />
-    <img src="SearchScreen2.png" alt="Экран Поиск" width="20%" />
-    <img src="Profile.png" alt="Профиль" width="20%" />
-    <img src="ProfileScreen1.png" alt="Выбор жанров (больше)" width="20%" />
-    <img src="Profile2.png" alt="Просмотр избранных фильмов" width="20%" />
+    <img src="SearchScreen.png" alt="Экран Поиск с топ-10" width="18%" />
+    <img src="SearchScreen2.png" alt="Экран Поиск" width="18%" />
+    <img src="Profile.png" alt="Профиль" width="18%" />
+    <img src="ProfileScreen1.png" alt="Выбор жанров (больше)" width="18%" />
+    <img src="Profile2.png" alt="Просмотр избранных фильмов" width="18%" />
 </div>
 
 
