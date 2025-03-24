@@ -2,12 +2,8 @@
 
 **FrameFusion** — это современное приложение для поиска и подбора фильмов и сериалов, созданное с использованием передовых технологий. Мы стремимся предоставить пользователям интуитивно понятный интерфейс и мощные инструменты для поиска, фильтрации и получения информации о любимых фильмах и сериалах.
 
-<details>
-<summary>
 
 ## Зачем FrameFusion?
-
-</summary>
 
 В мире, где контент доступен в изобилии, пользователям становится все сложнее находить именно то, что они хотят посмотреть. FrameFusion решает эту проблему, предлагая:
 
@@ -16,12 +12,8 @@
 - **Интуитивно понятный интерфейс**: Легкий и современный дизайн, который делает навигацию по приложению простой и приятной.
 - **Избранное**: Добавляйте фильмы, сериалы и актеров в избранное, чтобы быстро возвращаться к ним позже.
 
-<details>
-<summary>
-  
-## Особенности
 
-</summary>
+## Особенности
 
 - **Мгновенный доступ к информации**: Получайте актуальные данные о фильмах и сериалах, включая описание, актерский состав и постеры.
 - **Интеграция с популярными API**: FrameFusion использует KinopoiskAPI, для получения самой свежей информации о контенте.
@@ -30,13 +22,13 @@
 ## Скриншоты
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-    <img src="OnboardingScreen.png" alt="Онбординг" width="30%" />
-    <img src="OnboardingScreen2.png" alt="Первичный выбор жанров" width="30%" />
-    <img src="HomeScreen.png" alt="Экран "Домой"" width="30%" />
-    <img src="ItemDetails.png" alt="Детальная информация о фильме/сериале" width="30%" />
-    <img src="ActorDetailsScreen.png" alt="Детальная информация об актере" width="30%" />
-    <img src="SearchScreen.png" alt="Экран "Поиск" с топ-10" width="30%" />
-    <img src="SearchScreen2.png" alt="Экран "Поиск"" width="30%" />
+    <img src="OnboardingScreen.png" alt="Онбординг" width="20%" />
+    <img src="OnboardingScreen2.png" alt="Первичный выбор жанров" width="20%" />
+    <img src="HomeScreen.png" alt="Экран "Домой"" width="20%" />
+    <img src="ItemDetails.png" alt="Детальная информация о фильме/сериале" width="20%" />
+    <img src="ActorDetailsScreen.png" alt="Детальная информация об актере" width="20%" />
+    <img src="SearchScreen.png" alt="Экран Поиск с топ-10" width="20%" />
+    <img src="SearchScreen2.png" alt="Экран Поиск" width="20%" />
     <img src="Profile.png" alt="Профиль" width="30%" />
     <img src="Profile1.png" alt="Выбор жанров (больше)" width="30%" />
     <img src="Profile2.png" alt="Просмотр избранных фильмов" width="30%" />
